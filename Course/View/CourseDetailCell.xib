@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="150" id="6MU-XN-YSS" customClass="CourseDetailTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="152"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6MU-XN-YSS" id="9DT-vr-WCc">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="151"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="藥物化學實驗" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iua-NA-7vu">
+                        <rect key="frame" x="7" y="5" width="295" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="8bl-Z0-ecS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MEDICINAL CHEMISTRY LABORATORY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6PT-yI-apS">
+                        <rect key="frame" x="7" y="30" width="300" height="39"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="39" id="2Px-im-1A1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BPAZ0023" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVV-u1-Xkm">
+                        <rect key="frame" x="7" y="69" width="83" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wU-DL-1a9">
+                        <rect key="frame" x="8" y="123" width="24" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="资讯科技学院" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P8B-Lt-TDa">
+                        <rect key="frame" x="8" y="97" width="104" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="JVV-u1-Xkm" firstAttribute="top" secondItem="6PT-yI-apS" secondAttribute="bottom" id="0F7-vA-nAF"/>
+                    <constraint firstItem="P8B-Lt-TDa" firstAttribute="top" secondItem="JVV-u1-Xkm" secondAttribute="bottom" constant="7" id="5HI-SN-pln"/>
+                    <constraint firstItem="Iua-NA-7vu" firstAttribute="top" secondItem="9DT-vr-WCc" secondAttribute="top" constant="5" id="G5S-Sc-uTM"/>
+                    <constraint firstItem="Iua-NA-7vu" firstAttribute="leading" secondItem="6PT-yI-apS" secondAttribute="leading" id="Jqr-ff-vd1"/>
+                    <constraint firstItem="6wU-DL-1a9" firstAttribute="top" secondItem="6PT-yI-apS" secondAttribute="bottom" constant="54" id="Ukm-cM-aKa"/>
+                    <constraint firstItem="6PT-yI-apS" firstAttribute="top" secondItem="9DT-vr-WCc" secondAttribute="topMargin" constant="22" id="VYE-9Y-9Ba"/>
+                    <constraint firstItem="Iua-NA-7vu" firstAttribute="leading" secondItem="9DT-vr-WCc" secondAttribute="leadingMargin" constant="-1" id="YvA-IE-sRw"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Iua-NA-7vu" secondAttribute="trailing" constant="65" id="eQW-Mi-ucT"/>
+                    <constraint firstItem="P8B-Lt-TDa" firstAttribute="leading" secondItem="6wU-DL-1a9" secondAttribute="leading" id="j8s-ob-yX2"/>
+                    <constraint firstItem="JVV-u1-Xkm" firstAttribute="top" secondItem="Iua-NA-7vu" secondAttribute="bottom" constant="35" id="jmF-bT-TMP"/>
+                    <constraint firstItem="6wU-DL-1a9" firstAttribute="leading" secondItem="9DT-vr-WCc" secondAttribute="leadingMargin" id="xCQ-qt-zzm"/>
+                    <constraint firstItem="Iua-NA-7vu" firstAttribute="leading" secondItem="JVV-u1-Xkm" secondAttribute="leading" id="xfP-d5-t10"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="Credit" destination="6wU-DL-1a9" id="pqz-o0-lKq"/>
+                <outlet property="TitleName" destination="Iua-NA-7vu" id="6Sk-WK-d2d"/>
+                <outlet property="courseCode" destination="JVV-u1-Xkm" id="UMa-Fw-bvl"/>
+                <outlet property="faculty" destination="P8B-Lt-TDa" id="UUu-11-deP"/>
+                <outlet property="subtitleName" destination="6PT-yI-apS" id="qfv-6L-56j"/>
+            </connections>
+            <point key="canvasLocation" x="-224.5" y="37"/>
+        </tableViewCell>
+    </objects>
+</document>

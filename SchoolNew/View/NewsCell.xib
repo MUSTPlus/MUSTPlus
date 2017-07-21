@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyCell" rowHeight="147" id="ffc-NM-0sg" customClass="SchoolNewTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="147"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ffc-NM-0sg" id="jF9-cA-ZOT">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="146"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tQQ-mD-7sJ">
+                        <rect key="frame" x="8" y="8" width="134" height="128"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="134" id="Jom-7b-bO1"/>
+                        </constraints>
+                    </imageView>
+                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(商学院) 取消课堂：COB205营销学(DC2,DC3,DC7)" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KW4-qj-J1R">
+                        <rect key="frame" x="150" y="5" width="217" height="108"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="108" id="i6n-TN-f6a"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-02-25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKF-pF-gXK">
+                        <rect key="frame" x="283" y="121" width="79" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="tow-Ed-Bke"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="0.58736795774647887" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="Xfx-uO-ysH">
+                        <rect key="frame" x="265" y="122" width="14" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="3bj-Sw-Mny"/>
+                            <constraint firstAttribute="width" constant="14" id="SbE-fa-3CQ"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Xfx-uO-ysH" firstAttribute="centerY" secondItem="rKF-pF-gXK" secondAttribute="centerY" id="1XD-ZW-ifB"/>
+                    <constraint firstItem="KW4-qj-J1R" firstAttribute="top" secondItem="jF9-cA-ZOT" secondAttribute="topMargin" constant="-3" id="271-dM-JhY"/>
+                    <constraint firstItem="tQQ-mD-7sJ" firstAttribute="leading" secondItem="jF9-cA-ZOT" secondAttribute="leadingMargin" id="7Y8-Ia-cxV"/>
+                    <constraint firstItem="KW4-qj-J1R" firstAttribute="trailing" secondItem="jF9-cA-ZOT" secondAttribute="trailingMargin" id="BD0-cm-iid"/>
+                    <constraint firstItem="rKF-pF-gXK" firstAttribute="top" secondItem="KW4-qj-J1R" secondAttribute="bottom" constant="8" id="HBH-VX-H4Y"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="tQQ-mD-7sJ" secondAttribute="bottom" constant="2" id="MTe-UT-f5l"/>
+                    <constraint firstItem="Xfx-uO-ysH" firstAttribute="bottom" secondItem="tQQ-mD-7sJ" secondAttribute="bottom" id="Pi2-y0-Abn"/>
+                    <constraint firstItem="tQQ-mD-7sJ" firstAttribute="top" secondItem="jF9-cA-ZOT" secondAttribute="topMargin" id="U4T-O0-JVQ"/>
+                    <constraint firstItem="KW4-qj-J1R" firstAttribute="leading" secondItem="tQQ-mD-7sJ" secondAttribute="trailing" constant="8" symbolic="YES" id="cdC-wX-Wur"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="rKF-pF-gXK" secondAttribute="trailing" constant="5" id="pmy-m1-F6o"/>
+                    <constraint firstItem="rKF-pF-gXK" firstAttribute="leading" secondItem="Xfx-uO-ysH" secondAttribute="trailing" constant="4" id="tue-g0-1uG"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="rKF-pF-gXK" secondAttribute="bottom" constant="1" id="ymu-Xl-Gx9"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="ImageView" destination="tQQ-mD-7sJ" id="GhF-XK-ixD"/>
+                <outlet property="Time" destination="rKF-pF-gXK" id="Js7-kW-Laz"/>
+                <outlet property="TimeIcon" destination="Xfx-uO-ysH" id="AF5-jo-g8E"/>
+                <outlet property="Title" destination="KW4-qj-J1R" id="hqy-No-5bU"/>
+            </connections>
+            <point key="canvasLocation" x="-274.5" y="-47.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="time" width="200" height="200"/>
+    </resources>
+</document>

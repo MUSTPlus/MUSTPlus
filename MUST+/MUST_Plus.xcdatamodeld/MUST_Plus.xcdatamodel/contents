@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="15G31" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="BorrowBooks" representedClassName="BorrowBooks" syncable="YES" codeGenerationType="class">
+        <attribute name="deadLine" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Example" representedClassName="Example" syncable="YES">
+        <attribute name="string1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="string2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="string3" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="MessageCircle_comments" representedClassName="MessageCircle_comments" syncable="YES" codeGenerationType="class">
+        <attribute name="commentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="face" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isReplyComment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isVip" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageContext" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="replyCommentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="studentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MessageCircle_main" inverseName="relationship" inverseEntity="MessageCircle_main" syncable="YES"/>
+    </entity>
+    <entity name="MessageCircle_main" representedClassName="MessageCircle_main" syncable="YES" codeGenerationType="class">
+        <attribute name="device" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="face" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gradeType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageArray" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isTop" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isVip" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="likes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="majorType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageContext" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="studentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageCircle_comments" inverseName="relationship" inverseEntity="MessageCircle_comments" syncable="YES"/>
+    </entity>
+    <entity name="MyClass" representedClassName="MyClass" syncable="YES">
+        <attribute name="class_EndMonth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="class_EndTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="class_Name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="class_No" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="class_Number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="class_Room" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="class_StartMonth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="class_StartTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="class_Teacher" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="class_Week" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="MyGrade" representedClassName="MyGrade" syncable="YES" codeGenerationType="class">
+        <attribute name="className_en" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="className_zh" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="credit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="grade" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="MyMessageCircle_comments" representedClassName="MyMessageCircle_comments" syncable="YES" codeGenerationType="class">
+        <attribute name="commentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="face" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isReplyComment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isVip" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageContext" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="replyCommentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="studentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MyMessageCircle_main" inverseName="relationship" inverseEntity="MyMessageCircle_main" syncable="YES"/>
+    </entity>
+    <entity name="MyMessageCircle_main" representedClassName="MyMessageCircle_main" syncable="YES" codeGenerationType="class">
+        <attribute name="device" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="face" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gradeType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageArray" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isTop" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isVip" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="likes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="majorType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageContext" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="messageID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="studentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MyMessageCircle_comments" inverseName="relationship" inverseEntity="MyMessageCircle_comments" syncable="YES"/>
+    </entity>
+    <entity name="School_news" representedClassName="School_news" syncable="YES" codeGenerationType="class">
+        <attribute name="schoolNewDescribe" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schoolNewImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schoolNewLabel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schoolNewsID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schoolNewTag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schoolNewTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schoolNewTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="schoolNewUrl" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="avatarPicUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gradeType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="mainbodyID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="majorType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="nickName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="verifiedType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="UserMail" representedClassName="UserMail" syncable="YES" codeGenerationType="class">
+        <attribute name="mail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="BorrowBooks" positionX="-27" positionY="153" width="128" height="75"/>
+        <element name="Example" positionX="-18" positionY="54" width="128" height="90"/>
+        <element name="MessageCircle_comments" positionX="-18" positionY="144" width="128" height="208"/>
+        <element name="MessageCircle_main" positionX="-27" positionY="108" width="128" height="270"/>
+        <element name="MyClass" positionX="-27" positionY="54" width="128" height="195"/>
+        <element name="MyMessageCircle_comments" positionX="-9" positionY="171" width="128" height="208"/>
+        <element name="MyMessageCircle_main" positionX="-18" positionY="162" width="128" height="268"/>
+        <element name="School_news" positionX="-27" positionY="99" width="128" height="165"/>
+        <element name="User" positionX="-9" positionY="153" width="128" height="150"/>
+        <element name="UserMail" positionX="-27" positionY="153" width="128" height="75"/>
+        <element name="MyGrade" positionX="-18" positionY="153" width="128" height="105"/>
+    </elements>
+</model>

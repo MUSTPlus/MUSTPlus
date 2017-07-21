@@ -1,0 +1,20 @@
+//
+//  MyClass+CoreDataClass.h
+//  MUST+
+//
+//  Created by zbc on 17/3/17.
+//  Copyright © 2017年 zbc. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface MyClass : NSManagedObject
+
+@end
+
+NS_ASSUME_NONNULL_END
+
+#import "MyClass+CoreDataProperties.h"

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="5aJ-BO-5ba" customClass="CourseCellTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="376" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5aJ-BO-5ba" id="ja1-Jb-28H">
+                <rect key="frame" x="0.0" y="0.0" width="376" height="99"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="藥理與臨床藥學Ⅰ— 基礎藥理學" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gf-iT-j6V">
+                        <rect key="frame" x="6" y="-2" width="353" height="40"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BPAZ0017" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n20-iA-tlF">
+                        <rect key="frame" x="8" y="40" width="80" height="25"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="资讯科技学院" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ai-4s-Glm">
+                        <rect key="frame" x="8" y="69" width="104" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uvz-Hn-7iq">
+                        <rect key="frame" x="9" y="-11" width="359" height="124"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="359" id="E8m-Cx-Uep"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="90"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IbE-1U-UQY">
+                        <rect key="frame" x="298" y="45" width="70" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="C3z-6R-Ed6"/>
+                            <constraint firstAttribute="width" constant="70" id="eBV-ek-oWj"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="uvz-Hn-7iq" firstAttribute="top" secondItem="ja1-Jb-28H" secondAttribute="topMargin" constant="-19" id="0AD-cy-ysa"/>
+                    <constraint firstAttribute="trailing" secondItem="uvz-Hn-7iq" secondAttribute="trailing" constant="8" id="0g5-Xp-N5z"/>
+                    <constraint firstItem="n20-iA-tlF" firstAttribute="leading" secondItem="0Ai-4s-Glm" secondAttribute="leading" id="DAa-MK-nEs"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="3gf-iT-j6V" secondAttribute="trailing" constant="9" id="HvF-xc-wLL"/>
+                    <constraint firstItem="IbE-1U-UQY" firstAttribute="top" secondItem="3gf-iT-j6V" secondAttribute="bottom" constant="7" id="KIB-4H-BfI"/>
+                    <constraint firstItem="n20-iA-tlF" firstAttribute="top" secondItem="ja1-Jb-28H" secondAttribute="topMargin" constant="32" id="LXr-Bt-4yB"/>
+                    <constraint firstItem="0Ai-4s-Glm" firstAttribute="top" secondItem="n20-iA-tlF" secondAttribute="bottom" constant="4" id="Md5-AV-8Bp"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="IbE-1U-UQY" secondAttribute="bottom" constant="2" id="NJD-OE-Jg5"/>
+                    <constraint firstItem="n20-iA-tlF" firstAttribute="leading" secondItem="ja1-Jb-28H" secondAttribute="leadingMargin" id="TKF-7H-iwN"/>
+                    <constraint firstItem="3gf-iT-j6V" firstAttribute="top" secondItem="ja1-Jb-28H" secondAttribute="topMargin" constant="-10" id="b1m-G3-PjM"/>
+                    <constraint firstItem="IbE-1U-UQY" firstAttribute="trailing" secondItem="ja1-Jb-28H" secondAttribute="trailingMargin" id="bo8-gU-Hai"/>
+                    <constraint firstItem="3gf-iT-j6V" firstAttribute="leading" secondItem="ja1-Jb-28H" secondAttribute="leadingMargin" constant="-2" id="hsg-RM-zCM"/>
+                    <constraint firstItem="uvz-Hn-7iq" firstAttribute="centerY" secondItem="ja1-Jb-28H" secondAttribute="centerY" constant="1.5" id="r9f-eI-8ZJ"/>
+                    <constraint firstItem="uvz-Hn-7iq" firstAttribute="centerY" secondItem="n20-iA-tlF" secondAttribute="centerY" constant="-1.5" id="tey-aM-4ZE"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="coursecode" destination="n20-iA-tlF" id="7IA-yD-jLh"/>
+                <outlet property="credit" destination="uvz-Hn-7iq" id="U6v-Py-Iw5"/>
+                <outlet property="faculty" destination="0Ai-4s-Glm" id="o1K-7X-g4z"/>
+                <outlet property="rare" destination="IbE-1U-UQY" id="Qvd-76-R59"/>
+                <outlet property="title" destination="3gf-iT-j6V" id="bTj-Aa-arA"/>
+            </connections>
+            <point key="canvasLocation" x="-97" y="-35"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -1,0 +1,80 @@
+PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - AliyunOSSiOS (2.5.4)
+  - Bugly (2.4.6)
+  - CNPPopupController (0.3.3)
+  - CYWebviewController (1.1.1)
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
+  - GPUImage (0.1.7)
+  - JDStatusBarNotification (1.5.5)
+  - JGProgressHUD (1.4)
+  - JPFPSStatus (0.0.2)
+  - LBXScan (1.1.1):
+    - ZXingObjC (~> 3.0)
+  - mailcore2-ios (0.6.4)
+  - MJRefresh (3.1.12)
+  - pop (1.0.9)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - tingyunApp (2.5.6)
+  - ZXingObjC (3.2.1):
+    - ZXingObjC/All (= 3.2.1)
+  - ZXingObjC/All (3.2.1)
+
+DEPENDENCIES:
+  - AFNetworking (~> 3.0)
+  - AliyunOSSiOS (~> 2.5.2)
+  - Bugly
+  - CNPPopupController
+  - CYWebviewController
+  - FMDB
+  - GPUImage
+  - JDStatusBarNotification
+  - JGProgressHUD
+  - JPFPSStatus (~> 0.0.2)
+  - LBXScan (~> 1.1.1)
+  - mailcore2-ios
+  - MJRefresh
+  - pop
+  - SDWebImage (~> 3.8)
+  - tingyunApp
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  AliyunOSSiOS: 2bd80cd234763b5cf3948d7eb51769cd1ae694a0
+  Bugly: 7756e72c59387b0d490f46e83ab458ae94ee7fba
+  CNPPopupController: 59b06290762f68beab5fb0bbfa87eb4dcbefb7de
+  CYWebviewController: 0787d55dddbfd8aa0588521d4480218ffdb4e5d3
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
+  JGProgressHUD: 1617b0940cf80bb53e8f7d6f0fd69252ea45d6d4
+  JPFPSStatus: 11de6027b4cbebfeee0c939dfe08f5ec124a0965
+  LBXScan: dfb4d8ae8e4cff2aa0c9e1771e43954dce1469a9
+  mailcore2-ios: 3ff0be2fa553d4da9c11d39c11d51863c768f24f
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  tingyunApp: c02e1e3b2f1da5a51606d36a439856b1c6f1e028
+  ZXingObjC: bbf7b8f0cf8933fdd33eb4f9f46e22308552869b
+
+PODFILE CHECKSUM: a7aab07cf1dbc1d279ee1e6e9ca374e2e5ded8d6
+
+COCOAPODS: 1.1.1
