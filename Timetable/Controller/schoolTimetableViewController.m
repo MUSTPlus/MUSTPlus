@@ -333,6 +333,7 @@
             NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
             id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSLog(@"json%@",json);
+            //1
             if([json[@"state"] isEqualToString:@"1"]){
                 id arr = json[@"ret"];
                 NSString* time = arr[@"Time"];
