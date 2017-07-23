@@ -455,7 +455,7 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 -(void)changeWeek:(NSDate*)date{
     NSMutableArray *array = [[NSMutableArray alloc] init];
