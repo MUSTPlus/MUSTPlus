@@ -455,12 +455,7 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    
-    //开启滑动
-    CirnoSideBarViewController * sideBar = [CirnoSideBarViewController share];
-    sideBar.diabled = TRUE;
-    [_head changeFace];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 -(void)changeWeek:(NSDate*)date{
     NSMutableArray *array = [[NSMutableArray alloc] init];

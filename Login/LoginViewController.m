@@ -217,7 +217,10 @@
     [self boomShakalaka:_midView];
 }
 -(void)toHomeController{
-    CirnoSideBarViewController *next  = [[CirnoSideBarViewController alloc] init];
+    UIViewController *next  = [[UIViewController alloc] init];
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    next = [storyBoard instantiateViewControllerWithIdentifier:@"Root"];
+//    CirnoSideBarViewController *next  = [[CirnoSideBarViewController alloc] init];
     [self presentViewController:next animated:NO completion:nil];
 }
 -(void)login{

@@ -125,12 +125,24 @@
     }
     application.applicationIconBadgeNumber = 0;
     [JPUSHService setBadge:0];
-    
-//    [self.window setFrame:[UIScreen mainScreen].bounds];
+    UIViewController *next  = [[UIViewController alloc] init];
+
+    if([[Account shared]getPassword] != nil && [[Account shared]getStudentLongID] != nil){
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        next = [storyBoard instantiateViewControllerWithIdentifier:@"Root"];
+    }
+    else{
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        next = [storyBoard instantiateViewControllerWithIdentifier:@"Login"];
+    }
+
+    UINavigationController * navCtrl = [[UINavigationController alloc]initWithRootViewController:next];
+    navCtrl.navigationBarHidden = YES;
+    [self.window setFrame:[UIScreen mainScreen].bounds];
 ////    CirnoSideBarViewController * sideBar = [[CirnoSideBarViewController alloc]init];
-////    self.window.rootViewController = sideBar;
-//    self.window.backgroundColor = [UIColor whiteColor];
-//    [self.window makeKeyAndVisible];
+    self.window.rootViewController = navCtrl;
+ //   self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

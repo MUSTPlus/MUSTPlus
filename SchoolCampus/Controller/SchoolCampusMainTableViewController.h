@@ -12,6 +12,5 @@
 #import "CirnoError.h"
 @interface SchoolCampusMainTableViewController : UITableViewController
 
-@property(nonatomic,strong) HeaderView *head;
-
+@property (nonatomic,strong)UIImageView *headerview;
 @end

@@ -48,7 +48,6 @@ int CellSelect;
     self.tableView.dataSource = self;
 
     self.navigationItem.title = NSLocalizedString(@"查询图书", "");
-    [self.tabBarController.tabBar setHidden:YES];
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     self.tableView.tableFooterView = footerView;
     
@@ -59,9 +58,7 @@ int CellSelect;
     self.SearchBar.placeholder = @"";
     self.tableView.tableHeaderView = self.SearchBar;
     
-    
 
-    [self.tabBarController.tabBar setHidden:YES];
 
 }
 
@@ -79,14 +76,14 @@ int CellSelect;
     self.navigationController.navigationBar.barTintColor = navigationTabColor;
     [self.navigationController.navigationBar setTranslucent:NO];
     //CYWebView里面轮子的螺丝，我把他拿出来了，简单的来说就是画个箭头
-    _backIcon = [UIImage cy_backButtonIcon:[UIColor whiteColor]];
-    self.backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage cy_backButtonIcon:nil] style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClicked:)];
-    
-    UIView * customView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-    UIButton *backBtn = [UIButton buttonBackWithImage:_backIcon buttontitle:NSLocalizedString(@"返回", "") target:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    backBtn.frame = CGRectMake(0, 0, 44, 44);
-    [customView addSubview:backBtn];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customView];
+//    _backIcon = [UIImage cy_backButtonIcon:[UIColor whiteColor]];
+//    self.backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage cy_backButtonIcon:nil] style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClicked:)];
+//    
+//    UIView * customView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+//    UIButton *backBtn = [UIButton buttonBackWithImage:_backIcon buttontitle:NSLocalizedString(@"返回", "") target:self action:@selector(backBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    backBtn.frame = CGRectMake(0, 0, 44, 44);
+//    [customView addSubview:backBtn];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customView];
 }
 
 -(void) backBtnClicked:(UIButton*)btn{

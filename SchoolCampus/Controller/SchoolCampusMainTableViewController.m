@@ -16,6 +16,7 @@
 #import "SchoolLibraryTableViewController.h"
 #import "CourseViewController.h"
 #import "SchoolFileController.h"
+#import "UIImageView+WebCache.h"
 @interface SchoolCampusMainTableViewController ()<UIDocumentInteractionControllerDelegate>{
     ChangePinNumberView* cpnv;
 }
@@ -59,6 +60,7 @@
     self.tabBarItem.title=NSLocalizedString(@"校园", "");
     self.navigationController.navigationBar.hidden =NO;
     self.navigationController.navigationBarHidden=NO;
+     [self.tabBarController.tabBar setHidden:NO];
    // self.navigationController.navigationBarHidden=YES;
 //    CirnoSideBarViewController * sideBar = [CirnoSideBarViewController share];
 //    sideBar.diabled = true;
@@ -73,20 +75,20 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (section==0) return 30;
     return 10;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(section==0){
+    if(section==1){
         return 3;
     }
-    else if(section == 1){
+    else if(section == 2){
         return 3;
     }
-    return 0;
+    return 1;
 }
 
 
@@ -96,8 +98,22 @@
 
     
     cell.imageView.image = [UIImage imageNamed:@"Touch"];
-    
-    if(indexPath.section == 0){
+    if (indexPath.section == 0){
+        _headerview = [[UIImageView alloc]initWithFrame:CGRectMake(16, 6, 65, 65)];
+        _headerview.layer.cornerRadius = _headerview.frame.size.width/2;
+        _headerview.clipsToBounds = YES;
+        _headerview.layer.borderWidth = 2;
+        _headerview.layer.borderColor = [UIColor clearColor].CGColor;
+        NSURL *url = [NSURL URLWithString:[[Account shared]getAvatar]];
+        UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(100, 0, Width-80, 80)];
+        label.text =[[Account shared]getNickname];
+        label.font = [UIFont systemFontOfSize:18];
+        label.textColor = [UIColor blackColor];
+        [_headerview sd_setImageWithURL:url];
+        [cell addSubview:_headerview];
+        [cell addSubview:label];
+    }
+    if(indexPath.section == 1){
         if(indexPath.row == 0){
             cell.textLabel.text = NSLocalizedString(@"查询图书", "");
             cell.imageView.image =[UIImage imageNamed:@"book"];
@@ -113,7 +129,7 @@
 
     }
     
-    if(indexPath.section == 1){
+    if(indexPath.section == 2){
         if(indexPath.row == 0){
 
             cell.textLabel.text = NSLocalizedString(@"成绩查询", "");
@@ -139,13 +155,19 @@
 
     return cell;
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) return 80;
+    return 44;
+}
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) {
+
+    if (section == 1) {
         return NSLocalizedString(@"图书馆", "");
     }
-    else
+    else if (section == 2)
         return NSLocalizedString(@"课业", "");
+    return nil;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = indexPath.section;
@@ -153,11 +175,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];    //取消选中
 
     switch (section){
-        case 0:
+        case 1:
             switch (row){
                 case 0:{
                     SchoolLibraryTableViewController  *next = [[SchoolLibraryTableViewController alloc] init];
-                    [self.navigationController pushViewController:next animated:YES];
+                    [self.navigationController pushViewController:next animated:NO];
 
                     }
                     break;
@@ -173,7 +195,7 @@
                 }
             }
             break;
-        case 1:
+        case 2:
             switch (row){
                 case 0:{//成绩
                     [self authforgrade];
