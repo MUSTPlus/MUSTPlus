@@ -15,7 +15,7 @@
 #import "receivceMessageLogic.h"
 #import "JDStatusBarNotification.h"
 #import "CirnoError.h"
-#import "CirnoSideBarViewController.h"
+//#import "CirnoSideBarViewController.h"
 #import "UserDetailsController.h"
 #import "CirnoError.h"
 #import "Account.h"
@@ -161,8 +161,8 @@
 
     [self.tabBarController.tabBar setHidden:NO];
     //关闭滑动
-    CirnoSideBarViewController * sideBar = [CirnoSideBarViewController share];
-    sideBar.diabled = YES;
+//    CirnoSideBarViewController * sideBar = [CirnoSideBarViewController share];
+//    sideBar.diabled = YES;
     self.tableView.userInteractionEnabled = YES;
     
     //体验第一

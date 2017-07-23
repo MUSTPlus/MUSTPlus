@@ -109,8 +109,8 @@ int pageNum = 0;//tableHeaderView消失时记录banner翻到第几页
     self.navigationController.navigationBarHidden=YES;
 
     //关闭滑动
-    CirnoSideBarViewController * sideBar = [CirnoSideBarViewController share];
-    sideBar.diabled = YES;
+//    CirnoSideBarViewController * sideBar = [CirnoSideBarViewController share];
+//    sideBar.diabled = YES;
 }
 
 

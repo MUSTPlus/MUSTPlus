@@ -20,7 +20,7 @@
 #import "SchoolNewsLogic.h"
 #import "SchoolCoreDataManagement.h"
 #import "CirnoError.h"
-#import "CirnoSideBarViewController.h"
+//#import "CirnoSideBarViewController.h"
 #import <SafariServices/SafariServices.h>
 @interface SchoolViewsTableViewController : UITableViewController<Banner,UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,SchoolNavigationViewDelegate,UIViewControllerPreviewingDelegate,SFSafariViewControllerDelegate>
 

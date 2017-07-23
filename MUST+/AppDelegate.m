@@ -126,11 +126,11 @@
     application.applicationIconBadgeNumber = 0;
     [JPUSHService setBadge:0];
     
-    [self.window setFrame:[UIScreen mainScreen].bounds];
-    CirnoSideBarViewController * sideBar = [[CirnoSideBarViewController alloc]init];
-    self.window.rootViewController = sideBar;
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+//    [self.window setFrame:[UIScreen mainScreen].bounds];
+////    CirnoSideBarViewController * sideBar = [[CirnoSideBarViewController alloc]init];
+////    self.window.rootViewController = sideBar;
+//    self.window.backgroundColor = [UIColor whiteColor];
+//    [self.window makeKeyAndVisible];
     return YES;
 }
 

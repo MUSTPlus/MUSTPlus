@@ -8,7 +8,7 @@
 
 #import "SchoolCampusMainTableViewController.h"
 #import "GradeCoreDateManager.h"
-#import "CirnoSideBarViewController.h"
+//#import "CirnoSideBarViewController.h"
 #import "BasicHead.h"
 #import "ChangePinNumberView.h"
 #import "SchoolBorrowBooksTableViewController.h"
@@ -60,8 +60,8 @@
     self.navigationController.navigationBar.hidden =NO;
     self.navigationController.navigationBarHidden=NO;
    // self.navigationController.navigationBarHidden=YES;
-    CirnoSideBarViewController * sideBar = [CirnoSideBarViewController share];
-    sideBar.diabled = true;
+//    CirnoSideBarViewController * sideBar = [CirnoSideBarViewController share];
+//    sideBar.diabled = true;
   //  [_head changeFace];
 }
 
