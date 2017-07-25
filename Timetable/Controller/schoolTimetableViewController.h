@@ -39,6 +39,7 @@
 @property (assign,nonatomic) BOOL sideBarShowing;
 /////////////////////////////////////////////////////////
 @property (nonatomic,strong) NewClassView* classView;
+@property (strong,nonatomic) NSArray<UIColor*>* colorArray;
 @property (nonatomic,strong) NewWeekTitleView *weeekTitle;
 @property (nonatomic,strong) NewTimeView *timeview;
 @property (nonatomic,strong) EKEventStore* 	eventStore;

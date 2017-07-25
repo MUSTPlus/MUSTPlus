@@ -11,14 +11,15 @@
 -(NSInteger)WeekForDate:(NSDate*)date{
     NSAssert(self.startDate,@"学期开始日期为空");
     NSAssert(self.endDate  ,@"学期结束日期为空");
-    BOOL earlier = [date earlierDate:self.startDate]!=date;
-    BOOL later   = [date laterDate  :self.endDate]  !=date;
     if ([[self.startDate class]isSubclassOfClass:[NSString class]]){
         self.startDate = [self StringToDate:(NSString*)self.startDate];
         self.endDate=[self StringToDate:(NSString*)self.endDate];
     }
-    NSAssert(earlier, @"早于学期开始日期");
-    NSAssert(later, @"晚于学期结束日期");
+//    BOOL earlier = [date earlierDate:self.startDate]!=date;
+//    BOOL later   = [date laterDate  :self.endDate]  !=date;
+
+//    NSAssert(earlier, @"早于学期开始日期");
+//    NSAssert(later, @"晚于学期结束日期");
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *dayComponents = [gregorian components:NSCalendarUnitDay
@@ -29,6 +30,7 @@
 }
 -(void)setStart:(NSString *)v{
     self.startDate = [self StringToDate:v];
+
 }
 -(void)setEnd:(NSString *)v{
     self.endDate = [self StringToDate:v];
@@ -48,11 +50,22 @@
                                                     options:0];
     return ceil(dayComponents.day/7.0);//一定要加.0!血的教训. 向上取整
 }
+//星期几
+-(NSInteger)weekday:(NSDate*)date{
+    NSDateComponents *theComponents = [[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian] components:NSCalendarUnitWeekday fromDate:date];
+    return [theComponents weekday]==0?7:[theComponents weekday];
+}
 -(NSDate*)WeekDateAt:(int)Week
                   On:(int)days{
     NSAssert(self.startDate,@"学期开始日期为空");
     if ([[self.startDate class]isSubclassOfClass:[NSString class]]){
         self.startDate = [self StringToDate:(NSString*)self.startDate];
+        NSInteger weekday = [self weekday:self.startDate];
+        if (weekday!=1){
+            NSInteger offset = weekday-1;
+            self.startDate = [[NSDate date] initWithTimeInterval:-24*60*60*offset sinceDate:self.startDate];
+
+        }
         self.endDate=[self StringToDate:(NSString*)self.endDate];
     }
     NSDateComponents *comps = [[NSDateComponents alloc]init];

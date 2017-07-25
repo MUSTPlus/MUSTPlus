@@ -12,5 +12,4 @@
 @interface NewClassView : UIView
 @property int week;
 -(void) addClassesInScrollView:(NSMutableArray<ClassButton*> *)Schoolclasses;
-
 @end

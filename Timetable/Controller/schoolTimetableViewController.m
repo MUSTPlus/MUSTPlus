@@ -28,7 +28,7 @@
 #import "ClassTool.h"
 @interface schoolTimetableViewController ()<CardDownAnimationViewDelegate,WeakTtileButtonDelegate,AlertDelegate>;
 @property (strong,nonatomic) UIViewController * leftViewController;
-@property (strong,nonatomic) NSArray<UIColor*>* colorArray;
+
 //侧边栏
 @end
 
@@ -61,7 +61,13 @@
         [[CirnoSideBarViewController share]showSideBarControllerWithDirection:SideBarShowDirectionLeft];
     }
 }
-
+- (WeekTool*)wt{
+    WeekTool * weektool = [[WeekTool alloc]init];
+    [weektool setStartDate:[self.sDate objectForKey:self.Semester]];
+    [weektool setEndDate:[self.eDate objectForKey:self.Semester]];
+    weektool.semester = self.Semester;
+    return weektool;
+}
 - (void) AddToCalendar{
     for(MyClass *class in classArray){
         NSString* classRoom = class.class_Room;
@@ -301,27 +307,44 @@
 -(void)alertView:(Alert *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self gotoUpdate];
 }
--(NSArray*)colorArray{
-    return  [[NSArray alloc]initWithObjects:
-                              kColor(84,188,225),
-                              kColor(240,132,134),
-                              kColor(124,214,149),
-                              kColor(248,152,115),
-                              kColor(120,210,209),
-                              kColor(209,150,133),
-                              kColor(118,156,228),
-                              kColor(109,191,166),
-                              kColor(161,142,215),
-                              kColor(247,187,98),
-                              kColor(229,128,162),
-                              kColor(165,202,98),
-                              kColor(240,132,134),
-                              kColor(132,174,210), nil];
+-(NSArray<UIColor*>*)colorArray{
+    if (!_colorArray){
+        _colorArray =[[NSArray alloc]initWithObjects:
+                      kColor(84,188,225),
+                      kColor(240,132,134),
+                      kColor(124,214,149),
+                      kColor(248,152,115),
+                      kColor(120,210,209),
+                      kColor(209,150,133),
+                      kColor(118,156,228),
+                      kColor(109,191,166),
+                      kColor(161,142,215),
+                      kColor(247,187,98),
+                      kColor(229,128,162),
+                      kColor(165,202,98),
+                      kColor(240,132,134),
+                      kColor(132,174,210), nil];
+    }
+    return _colorArray ;
 }
 - (void)viewDidLoad {
 
     [super viewDidLoad];
-
+    _colorArray =[[NSArray alloc]initWithObjects:
+                  kColor(84,188,225),
+                  kColor(240,132,134),
+                  kColor(124,214,149),
+                  kColor(248,152,115),
+                  kColor(120,210,209),
+                  kColor(209,150,133),
+                  kColor(118,156,228),
+                  kColor(109,191,166),
+                  kColor(161,142,215),
+                  kColor(247,187,98),
+                  kColor(229,128,162),
+                  kColor(165,202,98),
+                  kColor(240,132,134),
+                  kColor(132,174,210), nil];
     dispatch_group_t group = dispatch_group_create();
     //2.创建队列
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -344,7 +367,6 @@
         }
         dispatch_group_leave(group);
     });
-    dispatch_queue_t queue1 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_queue_t queue2 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
 //    dispatch_group_async(group, queue1, ^{
@@ -446,13 +468,6 @@
         } @finally {
 
         }
-        [_head changeFace];
-//        if (!(semester==nil)&&![semester isEqualToString:@"0"]){
-//            [[Account shared]setSemester:semester];
-//            NSLog(@"设置学期%@",[[Account shared]getSemester]);
-//            [_head drawHeadViewWithTtile:NSLocalizedString(@"课程表", "") buttonImage:@"more"
-//                                subTitle:[NSString stringWithFormat:@"%@%@",[[Account shared]getSemester],NSLocalizedString(@"学期", "")]];
-//        }
 
     });
 
@@ -461,8 +476,11 @@
     self.tabBarItem.title = NSLocalizedString(@"课程表", "");
     self.title = NSLocalizedString(@"课程表", "");
     _head = [[SchoolTimeTableHeadView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, StatusBarAndNavigationBarHeight)];
+    NSString *weekstr = @"假期";
+    NSInteger week = [self nowSemesterWeek];
+    if (week!=-1) weekstr = [NSString stringWithFormat:@"第%ld周",week];
     [_head drawHeadViewWithTtile:NSLocalizedString(@"课程表", "") buttonImage:@"more"
-                        subTitle:[NSString stringWithFormat:@"%@%@",self.Semester,NSLocalizedString(@"学期", "")]];
+                        subTitle:[NSString stringWithFormat:@"%@%@ %@",self.Semester,NSLocalizedString(@"学期", ""),weekstr]];
     //下面这个delegate一定要声明是谁执行方法，一般都是self，一定要写！
     _head.headButtonDelegate = self;
     //[self.navigationController.navigationBar addSubview:_head];
@@ -518,10 +536,16 @@
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
+-(void)selectWeek:(NSInteger)week{
+    WeekTool* wt = [self wt];
+    NSDate* d = [wt WeekDateAt:(int)week+1 On:1];
+    [self changeWeek:d];
+}
 -(void)changeWeek:(NSDate*)date{
     NSMutableArray *array = [[NSMutableArray alloc] init];
 
-
+    [self.classView removeAllSubviews];
+    [self.weeekTitle removeAllSubviews];
     for(MyClass *class in classArray){
         SchoolClassModel *schoolClass = [[SchoolClassModel alloc] init];
         [schoolClass setSchoolClassInfoData:class.class_Room class_Week:class.class_Week class_Number:class.class_Number class_StartTime:class.class_StartTime class_Name:class.class_Name class_StartMonth:class.class_StartMonth class_EndMonth:class.class_EndMonth class_EndTime:class.class_EndTime class_No:class.class_No class_Teacher:class.class_Teacher];
@@ -537,6 +561,8 @@
     for(SchoolClassModel *eachArray in array){
         ClassButton *button = [[ClassButton alloc] init];
         button.schoolClassClickDelegate= self;
+        if (_colorArray==nil)
+            _colorArray;
         NSUInteger len = arc4random()%[_colorArray count];
 
         [button drawClassButton:eachArray backGroudColor:
@@ -545,9 +571,15 @@
 
         [ButtonArr addObject:button];
     }
+    NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
+    [formatter1 setDateFormat:@"yyyy-MM-dd"];
+
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM-dd"];
-    [self.weeekTitle drawTitleWithDate:[formatter stringFromDate:date]];
+    [formatter setDateFormat:@"YYYYMMdd"];
+    [self.weeekTitle drawTitleWithDate:[formatter stringFromDate:
+                                        [formatter1 dateFromString:[formatter1 stringFromDate:date]]
+                                        ]
+                        ];
     [self.classView addClassesInScrollView:ButtonArr];
 }
 //传递数据
@@ -683,9 +715,7 @@
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:cdvc];
     [self presentViewController:nc animated:YES completion:^{
     }];
-   // [self.navigationController pushViewController:cdvc animated:YES];
-    //NSLog(@"%@",[[a getButtonSchoolClass] getClass_Week]);
-   // [self showDefaultCard:a];
+
 }
 
 //点击more按钮事件
@@ -719,7 +749,7 @@
     
 }
 -(void)ChangeAnotherWeek{
-    CZPickerView *picker = [[CZPickerView alloc] initWithHeaderTitle:@"选择周" cancelButtonTitle:@"Cancel" confirmButtonTitle:@"Confirm"];
+    CZPickerView *picker = [[CZPickerView alloc] initWithHeaderTitle:[NSString stringWithFormat:@"%@学期 - 选择周",self.Semester] cancelButtonTitle:@"Cancel" confirmButtonTitle:@"Confirm"];
     picker.headerTitleFont = [UIFont systemFontOfSize: 25];
     picker.delegate = self;
     picker.dataSource = self;
@@ -729,13 +759,11 @@
 #pragma mark datasource
 - (NSAttributedString *)czpickerView:(CZPickerView *)pickerView
                attributedTitleForRow:(NSInteger)row{
-    WeekTool * weektool = [[WeekTool alloc]init];
-    [weektool setStartDate:[self.sDate objectForKey:self.Semester]];
-    [weektool setEndDate:[self.eDate objectForKey:self.Semester]];
-    weektool.semester = self.Semester;
+
+    WeekTool * weektool = [self wt];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"MM/dd"];
-    NSString* str = [NSString stringWithFormat:@"第%d周(%@-%@)",
+    NSString* str = [NSString stringWithFormat:@"第%ld周(%@-%@)",
                      row+1,
                      [formatter stringFromDate:[weektool WeekDateAt:(int)row+1 On:1]],
                      [formatter stringFromDate:[weektool WeekDateAt:(int)row+1 On:7]]];
@@ -749,59 +777,33 @@
 
 - (NSString *)czpickerView:(CZPickerView *)pickerView
                titleForRow:(NSInteger)row{
-    WeekTool * weektool = [[WeekTool alloc]init];
-    [weektool setStartDate:[self.sDate objectForKey:self.Semester]];
-    [weektool setEndDate:[self.eDate objectForKey:self.Semester]];
-    weektool.semester = self.Semester;
 
-    NSString* str = [NSString stringWithFormat:@"第%d周(%@-%@)",row,[weektool WeekDateAt:(int)row On:1],[weektool WeekDateAt:(int)row On:7]];
-
+//    NSString* str = [NSString stringWithFormat:@"第%ld周(%@-%@)",(long)row,[weektool WeekDateAt:(int)row On:1],[weektool WeekDateAt:(int)row On:7]];
+//
 
     return @"str";
 }
 
 - (NSInteger)numberOfRowsInPickerView:(CZPickerView *)pickerView {
-    WeekTool * weektool = [[WeekTool alloc]init];
-    [weektool setStartDate:[self.sDate objectForKey:self.Semester]];
-    [weektool setEndDate:[self.eDate objectForKey:self.Semester]];
-    weektool.semester = self.Semester;
+    WeekTool * weektool = [self wt];
     return [weektool weeks];
 }
 
 
 - (void)czpickerView:(CZPickerView *)pickerView didConfirmWithItemAtRow:(NSInteger)row {
-    //NSLog(@"%@ is chosen!", self.fruits[row]);
     [self.navigationController setNavigationBarHidden:YES];
+    [self selectWeek:row];
 }
 
 - (void)czpickerView:(CZPickerView *)pickerView didConfirmWithItemsAtRows:(NSArray *)rows {
-    for (NSNumber *n in rows) {
-      //  NSInteger row = [n integerValue];
-      //  NSLog(@"%@ is chosen!", self.fruits[row]);
-    }
+
 }
 #pragma mark delegateCzpicker
 #pragma mark events
 
-- (void)showDefaultCard:(ClassButton *)a{
-    if (!openNotifyDownView) {
-        openNotifyDownView = [[YMSOpenNotifyDownView alloc] init];
-        openNotifyDownView.delegate = self;
-    }
-    [openNotifyDownView setSchoolClass:a.schoolClass];
-    [openNotifyDownView getClassInfo];
-    [openNotifyDownView show];
-}
-
 
 #pragma mark - 弹出视图消失或者选择了相应delegate
-//卡片视图消失时候的代理
--  (void)cardDownAnimationViewDidHide:(CardDownAnimationView *)cardDownView {
-    if (cardDownView==openNotifyDownView) {
-        [openNotifyDownView removeFromSuperview];
-        openNotifyDownView = nil;
-    }
-}
+
 
 
 #pragma mark - 拿到课程信息
@@ -842,7 +844,6 @@
         
         @try {
             id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSLog(@"%@",result);
             [self handleJson:json];
         }
         @catch (NSException *exception) {
@@ -897,12 +898,26 @@
     
     [self saveDataFromServer];
 }
-
+-(NSInteger)nowSemesterWeek{
+    WeekTool * weektool = [[WeekTool alloc]init];
+    [weektool setStartDate:[self.sDate objectForKey:self.Semester]];
+    [weektool setEndDate:[self.eDate objectForKey:self.Semester]];
+    weektool.semester = self.Semester;
+    NSInteger result = [weektool WeekForDate:[NSDate date]];
+    if ((result>0) && (result<=[weektool weeks])){
+        return result;
+    } else
+        return -1;
+}
 #pragma mark - 刷新课表
 -(void) refreshTimetable{
     classArray = [[NSMutableArray alloc] init];
     [schoolClassManager deleteData];
     [_scroll removeAllSubviews];
+    [_weeekTitle removeAllSubviews];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"YYYYMMdd"];
+    [_weeekTitle drawTitleWithDate:[formatter stringFromDate:[NSDate date]]];
     _scroll.week = [self getWeek];
     [_scroll addLine];
     [self getClassInfo];
