@@ -913,7 +913,7 @@
 -(void) refreshTimetable{
     classArray = [[NSMutableArray alloc] init];
     [schoolClassManager deleteData];
-    [classView removeAllSubviews];
+    [_classView removeAllSubviews];
     [_weeekTitle removeAllSubviews];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"YYYYMMdd"];
