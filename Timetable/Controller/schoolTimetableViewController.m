@@ -289,10 +289,10 @@
                         @"2015-05-17",@"1502",
                         @"2015-12-19",@"1509",
                         @"2016-05-15",@"1602",
-                        @"2016-09-05",@"1609",
-                        @"2017-02-06",@"1702",
-                        @"2017-09-04",@"1709",
-                        @"2018-01-15",@"1802", nil ];
+                        @"2016-12-17",@"1609",
+                        @"2017-05-20",@"1702",
+                        @"2017-12-17",@"1709",
+                        @"2018-05-20",@"1802", nil ];
     return dic;
 }
 -(NSString*)Semester{
@@ -300,6 +300,23 @@
 }
 -(void)alertView:(Alert *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self gotoUpdate];
+}
+-(NSArray*)colorArray{
+    return  [[NSArray alloc]initWithObjects:
+                              kColor(84,188,225),
+                              kColor(240,132,134),
+                              kColor(124,214,149),
+                              kColor(248,152,115),
+                              kColor(120,210,209),
+                              kColor(209,150,133),
+                              kColor(118,156,228),
+                              kColor(109,191,166),
+                              kColor(161,142,215),
+                              kColor(247,187,98),
+                              kColor(229,128,162),
+                              kColor(165,202,98),
+                              kColor(240,132,134),
+                              kColor(132,174,210), nil];
 }
 - (void)viewDidLoad {
 
@@ -317,7 +334,6 @@
             NSURL *url = [NSURL URLWithString:urls];
             semester = [[NSString alloc]initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
             if (semester == nil){
-// [NSException raise:@"下载失败" format:@"下载失败"];
             }
 
         } @catch (NSException *exception) {
@@ -331,18 +347,19 @@
     dispatch_queue_t queue1 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_queue_t queue2 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
-    dispatch_group_async(group, queue1, ^{
-        UserModel* currentUser = [[UserModel alloc]init];
-        currentUser.test = YES;
-        [currentUser getUserModel:[[Account shared]getStudentLongID]];
+//    dispatch_group_async(group, queue1, ^{
+//        UserModel* currentUser = [[UserModel alloc]init];
+//        currentUser.test = YES;
+//        [currentUser getUserModel:[[Account shared]getStudentLongID]];
 
-    });
+//    });
     self.nowSemester = [
                         [Semester alloc]initWithStartDate:
                         [self.sDate objectForKey:self.Semester]
                         andEndDate:
                         [self.eDate objectForKey:self.Semester]
                         andSemester:self.Semester];
+
     dispatch_group_async(group, queue2, ^{
         NSDictionary *o1 =@{@"ec":@"9992",
                             @"getBannedStatus": [[Account shared]getStudentLongID]};
@@ -406,10 +423,8 @@
         CirnoLog(@"JSON:%@",json);
         @try {
             float ver = [json[@"lastestversion"]floatValue];
-            if (ver<[[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue])
+            if (ver<[[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue]){
             if ([json[@"forceupdate"] isEqual:@"yes"]){
-                CirnoLog(@"强制更新");
-
                 Alert* alert = [[Alert alloc]initWithTitle:[NSString stringWithFormat:@"紧急版本更新 %@",json[@"lastestversion"]] message:json[@"updatelog"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即升级", nil];
                 [alert setClickBlock:^(Alert *alertView,NSInteger d) {
                     UIWindow *window = [UIApplication sharedApplication].delegate.window;
@@ -421,8 +436,10 @@
                     }];
                 }];
                 [alert show];
-
-
+            } else {
+                Alert* alert = [[Alert alloc]initWithTitle:[NSString stringWithFormat:@"紧急版本更新 %@",json[@"lastestversion"]] message:json[@"updatelog"] delegate:self cancelButtonTitle:NSLocalizedString(@"取消","") otherButtonTitles:@"立即升级", nil];
+                [alert show];
+            }
             }
         } @catch (NSException *exception) {
 
@@ -438,27 +455,14 @@
 //        }
 
     });
-    _colorArray = [[NSArray alloc]initWithObjects:kColor(84,188,225),
-                   kColor(240,132,134),
-                   kColor(124,214,149),
-                   kColor(248,152,115),
-                   kColor(120,210,209),
-                   kColor(209,150,133),
-                   kColor(118,156,228),
-                   kColor(109,191,166),
-                   kColor(161,142,215),
-                   kColor(247,187,98),
-                   kColor(229,128,162),
-                   kColor(165,202,98),
-                   kColor(240,132,134),
-                   kColor(132,174,210), nil];
+
     //初始化根控制器
     self.navigationItem.title = NSLocalizedString(@"课程表", "");
     self.tabBarItem.title = NSLocalizedString(@"课程表", "");
     self.title = NSLocalizedString(@"课程表", "");
     _head = [[SchoolTimeTableHeadView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, StatusBarAndNavigationBarHeight)];
     [_head drawHeadViewWithTtile:NSLocalizedString(@"课程表", "") buttonImage:@"more"
-                        subTitle:[NSString stringWithFormat:@"%@%@",@"1702",NSLocalizedString(@"学期", "")]];
+                        subTitle:[NSString stringWithFormat:@"%@%@",self.Semester,NSLocalizedString(@"学期", "")]];
     //下面这个delegate一定要声明是谁执行方法，一般都是self，一定要写！
     _head.headButtonDelegate = self;
     //[self.navigationController.navigationBar addSubview:_head];
@@ -716,7 +720,7 @@
 }
 -(void)ChangeAnotherWeek{
     CZPickerView *picker = [[CZPickerView alloc] initWithHeaderTitle:@"选择周" cancelButtonTitle:@"Cancel" confirmButtonTitle:@"Confirm"];
-    picker.headerTitleFont = [UIFont systemFontOfSize: 40];
+    picker.headerTitleFont = [UIFont systemFontOfSize: 25];
     picker.delegate = self;
     picker.dataSource = self;
     picker.needFooterView = NO;
@@ -725,9 +729,18 @@
 #pragma mark datasource
 - (NSAttributedString *)czpickerView:(CZPickerView *)pickerView
                attributedTitleForRow:(NSInteger)row{
-
+    WeekTool * weektool = [[WeekTool alloc]init];
+    [weektool setStartDate:[self.sDate objectForKey:self.Semester]];
+    [weektool setEndDate:[self.eDate objectForKey:self.Semester]];
+    weektool.semester = self.Semester;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"MM/dd"];
+    NSString* str = [NSString stringWithFormat:@"第%d周(%@-%@)",
+                     row+1,
+                     [formatter stringFromDate:[weektool WeekDateAt:(int)row+1 On:1]],
+                     [formatter stringFromDate:[weektool WeekDateAt:(int)row+1 On:7]]];
     NSAttributedString *att = [[NSAttributedString alloc]
-                               initWithString:self.nowSemester.semester
+                               initWithString:str
                                attributes:@{
                                             NSFontAttributeName:[UIFont fontWithName:@"Avenir-Light" size:18.0]
                                             }];
@@ -736,11 +749,23 @@
 
 - (NSString *)czpickerView:(CZPickerView *)pickerView
                titleForRow:(NSInteger)row{
-    return @"1702";
+    WeekTool * weektool = [[WeekTool alloc]init];
+    [weektool setStartDate:[self.sDate objectForKey:self.Semester]];
+    [weektool setEndDate:[self.eDate objectForKey:self.Semester]];
+    weektool.semester = self.Semester;
+
+    NSString* str = [NSString stringWithFormat:@"第%d周(%@-%@)",row,[weektool WeekDateAt:(int)row On:1],[weektool WeekDateAt:(int)row On:7]];
+
+
+    return @"str";
 }
 
 - (NSInteger)numberOfRowsInPickerView:(CZPickerView *)pickerView {
-    return 1;
+    WeekTool * weektool = [[WeekTool alloc]init];
+    [weektool setStartDate:[self.sDate objectForKey:self.Semester]];
+    [weektool setEndDate:[self.eDate objectForKey:self.Semester]];
+    weektool.semester = self.Semester;
+    return [weektool weeks];
 }
 
 
@@ -751,30 +776,9 @@
 
 - (void)czpickerView:(CZPickerView *)pickerView didConfirmWithItemsAtRows:(NSArray *)rows {
     for (NSNumber *n in rows) {
-        NSInteger row = [n integerValue];
+      //  NSInteger row = [n integerValue];
       //  NSLog(@"%@ is chosen!", self.fruits[row]);
     }
-}
-
-- (void)czpickerViewDidClickCancelButton:(CZPickerView *)pickerView {
-    [self.navigationController setNavigationBarHidden:YES];
-    NSLog(@"Canceled.");
-}
-
-- (void)czpickerViewWillDisplay:(CZPickerView *)pickerView {
-    NSLog(@"Picker will display.");
-}
-
-- (void)czpickerViewDidDisplay:(CZPickerView *)pickerView {
-    NSLog(@"Picker did display.");
-}
-
-- (void)czpickerViewWillDismiss:(CZPickerView *)pickerView {
-    NSLog(@"Picker will dismiss.");
-}
-
-- (void)czpickerViewDidDismiss:(CZPickerView *)pickerView {
-    NSLog(@"Picker did dismiss.");
 }
 #pragma mark delegateCzpicker
 #pragma mark events

@@ -31,20 +31,20 @@
     //    self.backgroundColor = [UIColor colorWithRed:95.0/255.0 green:167.0/255.0 blue:241.0/255.0 alpha:1];
     
     self.backgroundColor = [UIColor whiteColor];
-    face = [[UIButton alloc] initWithFrame:CGRectMake(15, StatusBarHeight, 40, 40)];
-    face.layer.cornerRadius = face.frame.size.width/2;
-    face.clipsToBounds = YES;
-    face.layer.borderWidth = 2;
-    face.layer.borderColor = [UIColor clearColor].CGColor;
-    
-    NSURL *url = [NSURL URLWithString:[[Account shared] getAvatar]];
-    [face sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"defaultFace.png"]];
-    
-    face.adjustsImageWhenHighlighted = NO;
-    [face addTarget:self action:@selector(ClickFace:) forControlEvents:UIControlEventTouchDown];
-    [self addSubview:face];
-    face.layer.borderWidth = 0.5f;
-    face.layer.borderColor = kColor(230, 230, 230).CGColor;
+//    face = [[UIButton alloc] initWithFrame:CGRectMake(15, StatusBarHeight, 40, 40)];
+//    face.layer.cornerRadius = face.frame.size.width/2;
+//    face.clipsToBounds = YES;
+//    face.layer.borderWidth = 2;
+//    face.layer.borderColor = [UIColor clearColor].CGColor;
+//    
+//    NSURL *url = [NSURL URLWithString:[[Account shared] getAvatar]];
+//    [face sd_setImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"defaultFace.png"]];
+//    
+//    face.adjustsImageWhenHighlighted = NO;
+//    [face addTarget:self action:@selector(ClickFace:) forControlEvents:UIControlEventTouchDown];
+//    [self addSubview:face];
+//    face.layer.borderWidth = 0.5f;
+//    face.layer.borderColor = kColor(230, 230, 230).CGColor;
 
     _title = [[UILabel alloc] initWithFrame:CGRectMake(0,StatusBarHeight-5,Width,NavigationBarHeight/4*3)];
     _title.text = titleString;

@@ -10,6 +10,7 @@
 @interface WeekTool : NSObject
 @property (nonatomic,strong) NSDate* startDate; //学期开始
 @property (nonatomic,strong) NSDate* endDate;   //学期结束
+@property (nonatomic,strong) NSString* semester;
 -(void)setStart:(NSString *)startDate;
 -(void)setEnd:(NSString *)endDate;
 -(NSInteger)weeks; //一共有几周

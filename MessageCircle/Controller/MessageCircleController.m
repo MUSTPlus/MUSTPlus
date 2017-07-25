@@ -283,7 +283,10 @@
     [manager POST:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
        // NSLog(@"这边有可能会崩溃%@",result);
-        if (result == nil) [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
+        if (result == nil) {
+            [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
+            return;
+        }
         NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
         @try {
 

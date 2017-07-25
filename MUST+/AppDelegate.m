@@ -121,7 +121,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:s forKey:@"deviceID"];
     }
     else{
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"deviceID"]);
+      //  NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"deviceID"]);
     }
     application.applicationIconBadgeNumber = 0;
     [JPUSHService setBadge:0];
@@ -275,7 +275,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 //    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"MUST_Plus" withExtension:@"momd"];
 //
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"MUST_Plus" withExtension:@"momd"];
-    NSLog(@"%@",modelURL);
+   // NSLog(@"%@",modelURL);
 
     
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
