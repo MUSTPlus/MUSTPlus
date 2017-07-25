@@ -26,7 +26,7 @@
 #import "CourseDetailViewController.h"
 #import "UserModel.h"
 #import "ClassTool.h"
-@interface schoolTimetableViewController ()<CardDownAnimationViewDelegate,WeakTtileButtonDelegate>;
+@interface schoolTimetableViewController ()<CardDownAnimationViewDelegate,WeakTtileButtonDelegate,AlertDelegate>;
 @property (strong,nonatomic) UIViewController * leftViewController;
 @property (strong,nonatomic) NSArray<UIColor*>* colorArray;
 //侧边栏
@@ -263,14 +263,44 @@
 }
 -(void) viewDidAppear:(BOOL)animated
 {
-    NSString* page = @"TimeTable";
-    [MTA trackPageViewBegin:page];
+//NSString* page = @"TimeTable";
+}
+-(void)gotoUpdate{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/must/id1216741750?l=en&mt=8"]];
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    NSString* page = @"TimeTable";
-    [MTA trackPageViewEnd:page];
+//NSString* page = @"TimeTable";
 }
-
+-(NSDictionary*)sDate{
+    NSDictionary*dic = [[NSDictionary alloc]initWithObjectsAndKeys:
+                        @"2014-09-08",@"1409",
+                        @"2015-01-12",@"1502",
+                        @"2015-09-07",@"1509",
+                        @"2016-01-11",@"1602",
+                        @"2016-09-05",@"1609",
+                        @"2017-02-06",@"1702",
+                        @"2017-09-04",@"1709",
+                        @"2018-01-15",@"1802", nil ];
+    return dic;
+}
+-(NSDictionary*)eDate{
+    NSDictionary*dic = [[NSDictionary alloc]initWithObjectsAndKeys:
+                        @"2014-12-19",@"1409",
+                        @"2015-05-17",@"1502",
+                        @"2015-12-19",@"1509",
+                        @"2016-05-15",@"1602",
+                        @"2016-09-05",@"1609",
+                        @"2017-02-06",@"1702",
+                        @"2017-09-04",@"1709",
+                        @"2018-01-15",@"1802", nil ];
+    return dic;
+}
+-(NSString*)Semester{
+    return @"1709";
+}
+-(void)alertView:(Alert *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [self gotoUpdate];
+}
 - (void)viewDidLoad {
 
     [super viewDidLoad];
@@ -307,24 +337,26 @@
         [currentUser getUserModel:[[Account shared]getStudentLongID]];
 
     });
-    self.nowSemester = [[Semester alloc]initWithStartDate:@"2017-02-06" andEndDate:@"2017-05-20" andSemester:@"1702"];
+    self.nowSemester = [
+                        [Semester alloc]initWithStartDate:
+                        [self.sDate objectForKey:self.Semester]
+                        andEndDate:
+                        [self.eDate objectForKey:self.Semester]
+                        andSemester:self.Semester];
     dispatch_group_async(group, queue2, ^{
         NSDictionary *o1 =@{@"ec":@"9992",
                             @"getBannedStatus": [[Account shared]getStudentLongID]};
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
-                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                           options:NSJSONWritingPrettyPrinted
                                                              error:&error];
         NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         NSString *secret = jsonString;
         NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
-        //POST数据
         NSDictionary *parameters = @{@"ec":data};
 
         NSURL *URL = [NSURL URLWithString:BaseURL];
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-
-        //转成最原始的data,一定要加
         manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
 
         [manager POST:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
@@ -371,7 +403,32 @@
         NSData *data = [decode dataUsingEncoding:NSUTF8StringEncoding];
         id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         //CirnoLog(@"接收到的学期为%@ %@ %@",json,data,decode);
-        CirnoLog(@"%@",json[@"forceupdate"]);
+        CirnoLog(@"JSON:%@",json);
+        @try {
+            float ver = [json[@"lastestversion"]floatValue];
+            if (ver<[[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue])
+            if ([json[@"forceupdate"] isEqual:@"yes"]){
+                CirnoLog(@"强制更新");
+
+                Alert* alert = [[Alert alloc]initWithTitle:[NSString stringWithFormat:@"紧急版本更新 %@",json[@"lastestversion"]] message:json[@"updatelog"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即升级", nil];
+                [alert setClickBlock:^(Alert *alertView,NSInteger d) {
+                    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+
+                    [UIView animateWithDuration:0.4f animations:^{
+                        window.alpha = 0;
+                    } completion:^(BOOL finished) {
+                        exit(0);
+                    }];
+                }];
+                [alert show];
+
+
+            }
+        } @catch (NSException *exception) {
+
+        } @finally {
+
+        }
         [_head changeFace];
 //        if (!(semester==nil)&&![semester isEqualToString:@"0"]){
 //            [[Account shared]setSemester:semester];
@@ -524,19 +581,7 @@
 }
 
 
--(void) setColorWithBackGroud{
-    [_weakTitle drawTitleWeekWithColor:[UIColor blackColor] TodayColor:[UIColor colorWithRed:102.0f/255.0f
-                                                                                       green:205.0f/255.0f
-                                                                                        blue:0.0f/255.0f
-                                                                                       alpha:1.0f]];
-    [_time drawLeftTimeViewWithColor:[UIColor colorWithRed:0.0f/255.0f
-                                                     green:0.0f/255.0f
-                                                      blue:0.0f/255.0f
-                                                     alpha:0.7f] lineColor:[UIColor colorWithRed:215.0f/255.0f
-                                                                                           green:222.0f/255.0f
-                                                                                            blue:222.0f/255.0f
-                                                                                           alpha:1.0f]];
-}
+
 //======背景方法=============
 
 

@@ -98,12 +98,6 @@
     _logoview.contentMode =  UIViewContentModeScaleAspectFill;
     self.view.backgroundColor=kColor(239, 239, 244);
     [_logoview sizeThatFits:CGSizeMake(100, 100)];
-//    [_backbutton setImage:[UIImage imageNamed:@"story_back" ]forState:UIControlStateNormal];
-//    [_backbutton setImage:[UIImage imageNamed:@"story_back_press"] forState:UIControlStateSelected];
-//    [_backbutton setTitle:NSLocalizedString(@"返回", "") forState:UIControlStateNormal];
-//    [_backbutton addTarget:self action:@selector(back1) forControlEvents:UIControlEventTouchDown];
-//
-//    [self.navigationController.navigationBar addSubview:_backbutton];
     _logoview.clipsToBounds =YES;
     _logoview.layer.cornerRadius = 3;
     _logoview.layer.masksToBounds =YES;
@@ -117,12 +111,6 @@
     _footerview = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, Width, 60)];
     _footerview.titleLabel.numberOfLines = 2;
     [_footerview setTitle:[NSString stringWithFormat:@"%@",NSLocalizedString(@"用户协议", "")] forState:UIControlStateNormal ];
- //   UILabel* buildversion = [[UILabel alloc]initWithFrame:CGRectMake(0, Height-40, Width, 30)];
-  //  buildversion.text = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleVersion"];
- //   buildversion.textColor = kColor(200, 200, 200);
- //   buildversion.contentMode=UIViewContentModeCenter;
-
-   // [_tableView addSubview:buildversion];
 
     _footerview.titleLabel.font = [UIFont boldSystemFontOfSize:13];
     _footerview.titleLabel.contentMode=UIViewContentModeCenter;

@@ -238,6 +238,7 @@
 }
 -(void)showCal{
     SchoolFileController *ctr = [[SchoolFileController alloc]init];
+    ctr.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ctr animated:YES];
 }
 -(void)authforgrade{

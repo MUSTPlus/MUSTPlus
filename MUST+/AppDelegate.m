@@ -138,6 +138,7 @@
 
     UINavigationController * navCtrl = [[UINavigationController alloc]initWithRootViewController:next];
     navCtrl.navigationBarHidden = YES;
+  //  navCtrl.hidesBottomBarWhenPushed=YES;
     [self.window setFrame:[UIScreen mainScreen].bounds];
 ////    CirnoSideBarViewController * sideBar = [[CirnoSideBarViewController alloc]init];
     self.window.rootViewController = navCtrl;
