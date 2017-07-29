@@ -9,6 +9,7 @@
 #import "SchoolCampusMainTableViewController.h"
 #import "GradeCoreDateManager.h"
 //#import "CirnoSideBarViewController.h"
+#import "SendMailTableViewController.h"
 #import "BasicHead.h"
 #import "ChangePinNumberView.h"
 #import "SchoolBorrowBooksTableViewController.h"
@@ -17,6 +18,9 @@
 #import "CourseViewController.h"
 #import "SchoolFileController.h"
 #import "UIImageView+WebCache.h"
+#import "CurrencyViewController.h"
+#import "SmartCampusViewController.h"
+#import "BusStationViewController.h"
 @interface SchoolCampusMainTableViewController ()<UIDocumentInteractionControllerDelegate>{
     ChangePinNumberView* cpnv;
 }
@@ -30,6 +34,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tabBarController.hidesBottomBarWhenPushed = YES;
 //  CirnoLog(@"%@",self.navigationController);
     self.navigationController.navigationBar.backgroundColor = navigationTabColor;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -42,13 +47,13 @@
     UIEdgeInsets adjustForTabbarInsets = UIEdgeInsetsMake(-20.f, 0, CGRectGetHeight(self.tabBarController.tabBar.frame)-20, 0);
     self.tableView.contentInset = adjustForTabbarInsets;
     self.tableView.scrollIndicatorInsets = adjustForTabbarInsets;
-    self.tableView.scrollEnabled =NO;
+    self.tableView.scrollEnabled =YES;
 //    
 //    _head = [[HeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, StatusBarAndNavigationBarHeight)];
 //    [_head drawHeadViewWithTtile:NSLocalizedString(@"校园", "") buttonImage:nil];
 //    self.tableView.tableHeaderView = _head;
 
-    self.tableView.bounces = false;
+    //self.tableView.bounces = false;
     
     //注册键盘出现的通
 }
@@ -75,17 +80,24 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (section==0) return 30;
     return 10;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section==0) return 20;
+    return 25;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(section==1){
         return 3;
     }
     else if(section == 2){
+        return 4;
+    }
+    else if (section == 3){
         return 3;
     }
     return 1;
@@ -97,7 +109,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"func" forIndexPath:indexPath];
 
     
-    cell.imageView.image = [UIImage imageNamed:@"Touch"];
+    cell.imageView.image = [UIImage imageNamed:@"akarin"];
     if (indexPath.section == 0){
         _headerview = [[UIImageView alloc]initWithFrame:CGRectMake(16, 6, 65, 65)];
         _headerview.layer.cornerRadius = _headerview.frame.size.width/2;
@@ -143,7 +155,20 @@
             cell.textLabel.text = NSLocalizedString(@"课程", "");
             cell.imageView.image =[UIImage imageNamed:@"course"];
         } else if (indexPath.row ==3){
-
+            cell.textLabel.text = NSLocalizedString(@"学生邮箱", "");
+            cell.imageView.image = [UIImage imageNamed:@"mail-1"];
+        }
+    }
+    if (indexPath.section == 3){
+        if (indexPath.row == 0){
+            cell.textLabel.text = NSLocalizedString(@"公交车", "");
+            cell.imageView.image =[UIImage imageNamed:@"bus"];
+        } else if (indexPath.row == 1){
+            cell.textLabel.text = NSLocalizedString(@"汇率", "");
+            cell.imageView.image =[UIImage imageNamed:@"currency-1"];
+        } else if (indexPath.row == 2){
+            cell.textLabel.text = NSLocalizedString(@"智慧校园", "");
+            cell.imageView.image =[UIImage imageNamed:@"connection"];
         }
     }
     CGSize itemSize = CGSizeMake(30, 30);
@@ -155,6 +180,7 @@
 
     return cell;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) return 80;
     return 44;
@@ -167,6 +193,8 @@
     }
     else if (section == 2)
         return NSLocalizedString(@"课业", "");
+    else if (section == 3)
+        return NSLocalizedString(@"生活", "");
     return nil;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -209,10 +237,24 @@
                     [self showCourse];
                     break;
                 case 3:
-
+                    [self jumpToMail];
                     break;
             }
             break;
+        case 3:
+            switch (row) {
+                case 0:
+                    [self jumpToBus];
+                    break;
+                case 1:
+                    [self jumpToCurrency];
+                    break;
+                case 2:
+                    [self jumpToSmartCampus];
+                    break;
+                default:
+                    break;
+            }
 
     }
 }
@@ -234,11 +276,34 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [JPUSHService stopLogPageView:@"校园页"];
+
 }
 -(void)showCal{
     SchoolFileController *ctr = [[SchoolFileController alloc]init];
     ctr.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:ctr animated:YES];
+}
+-(void)jumpToBus{
+    BusStationViewController *ctr = [[BusStationViewController alloc] init];
+  //  ctr.showDoneButton = 0;
+    ctr.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    UINavigationController *passcodeNavigationController = [[UINavigationController alloc] initWithRootViewController:ctr];
+    [self presentViewController:passcodeNavigationController animated:YES completion:nil];
+}
+-(void)jumpToMail{
+    SendMailTableViewController *ctr = [[SendMailTableViewController alloc] init];
+    ctr.dontShowDone = 1;
+    [self.navigationController pushViewController:ctr animated:YES];
+}
+-(void)jumpToSmartCampus{
+    SmartCampusViewController * ctr = [[SmartCampusViewController alloc]init];
+    [self.navigationController pushViewController:ctr animated:YES];
+
+}
+-(void)jumpToCurrency{
+    CurrencyViewController * ctr = [[CurrencyViewController alloc]init];
+    ctr.dontShowBack = 1;
+    
     [self.navigationController pushViewController:ctr animated:YES];
 }
 -(void)authforgrade{

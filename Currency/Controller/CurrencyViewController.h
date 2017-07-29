@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CurrencyViewController : UIViewController
-
+@property BOOL dontShowBack;
 @end

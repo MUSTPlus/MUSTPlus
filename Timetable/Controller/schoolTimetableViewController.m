@@ -561,8 +561,7 @@
     for(SchoolClassModel *eachArray in array){
         ClassButton *button = [[ClassButton alloc] init];
         button.schoolClassClickDelegate= self;
-        if (_colorArray==nil)
-            _colorArray;
+        
         NSUInteger len = arc4random()%[_colorArray count];
 
         [button drawClassButton:eachArray backGroudColor:

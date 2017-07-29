@@ -37,11 +37,11 @@
     if ([_db open]){
         FMResultSet * set = [_db executeQuery:query];
         while ([set next]){
-            NSString* title =[set objectForColumnName:@"CourseTitle"];
-            NSString *code =[set objectForColumnName:@"CourseCode"];
-            NSString*titleEn =[set objectForColumnName:@"CourseTitleEn"];
-            NSString*credit =[set objectForColumnName:@"Credit"];
-            NSString* faculty = NSLocalizedString([set objectForColumnName:@"Faculty"], "");
+            NSString* title =[set objectForColumn:@"CourseTitle"];
+            NSString *code =[set objectForColumn:@"CourseCode"];
+            NSString*titleEn =[set objectForColumn:@"CourseTitleEn"];
+            NSString*credit =[set objectForColumn:@"Credit"];
+            NSString* faculty = NSLocalizedString([set objectForColumn:@"Faculty"], "");
             Course* course = [[Course alloc]initWithCourseTitle:title
                                                         andCode:code
                                                      andTitleEn:titleEn
@@ -63,11 +63,11 @@
     if ([_db open]){
         FMResultSet * set = [_db executeQuery:query];
         while ([set next]){
-            NSString* title =[set objectForColumnName:@"CourseTitle"];
-            NSString *code =[set objectForColumnName:@"CourseCode"];
-            NSString*titleEn =[set objectForColumnName:@"CourseTitleEn"];
-            NSString*credit =[set objectForColumnName:@"Credit"];
-            NSString* faculty = NSLocalizedString([set objectForColumnName:@"Faculty"], "");
+            NSString* title =[set objectForColumn:@"CourseTitle"];
+            NSString *code =[set objectForColumn:@"CourseCode"];
+            NSString*titleEn =[set objectForColumn:@"CourseTitleEn"];
+            NSString*credit =[set objectForColumn:@"Credit"];
+            NSString* faculty = NSLocalizedString([set objectForColumn:@"Faculty"], "");
             Course* course = [[Course alloc]initWithCourseTitle:title
                                                         andCode:code
                                                      andTitleEn:titleEn
@@ -89,11 +89,11 @@
     if ([_db open]){
         FMResultSet * set = [_db executeQuery:query];
         while ([set next]){
-            NSString* title =[set objectForColumnName:@"CourseTitle"];
-            NSString *code =[set objectForColumnName:@"CourseCode"];
-            NSString*titleEn =[set objectForColumnName:@"CourseTitleEn"];
-            NSString*credit =[set objectForColumnName:@"Credit"];
-            NSString* faculty = NSLocalizedString([set objectForColumnName:@"Faculty"], "");
+            NSString* title =[set objectForColumn:@"CourseTitle"];
+            NSString *code =[set objectForColumn:@"CourseCode"];
+            NSString*titleEn =[set objectForColumn:@"CourseTitleEn"];
+            NSString*credit =[set objectForColumn:@"Credit"];
+            NSString* faculty = NSLocalizedString([set objectForColumn:@"Faculty"], "");
             Course* course = [[Course alloc]initWithCourseTitle:title
                                                         andCode:code
                                                      andTitleEn:titleEn

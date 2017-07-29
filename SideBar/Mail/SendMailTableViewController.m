@@ -26,6 +26,7 @@
     [super viewDidLoad];
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:95.0/255.0 green:167.0/255.0 blue:241.0/255.0 alpha:1]];
+    if (_dontShowDone==0){
     UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 45, 45)];
     [backBtn setTitle:UIKitLocalizedString(@"Done") forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(Click:) forControlEvents:UIControlEventTouchDown];
@@ -37,6 +38,7 @@
     UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:customView];
 
     self.navigationItem.leftBarButtonItem = backBarButtonItem;
+        }
     self.navigationItem.title = NSLocalizedString(@"学生邮箱", "");
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor]}];

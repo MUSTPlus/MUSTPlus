@@ -11,7 +11,7 @@
 #import "UIImage+CYButtonIcon.h"
 
 @interface SendMailTableViewController : UITableViewController
-
+@property BOOL dontShowDone;
 
 
 @end

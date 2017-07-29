@@ -17,21 +17,22 @@
 
 @implementation SmartCampusViewController
 
--(void)viewDidAppear:(BOOL)animated{
-    [MTA trackPageViewBegin:@"SmartCampus"];
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
 }
--(void)viewDidDisappear:(BOOL)animated{
-    [MTA trackPageViewEnd:@"SmartCampus"];
+-(void)viewWillDisappear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = NO;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     _backbutton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80, NavBarHeight-StatusBarHeight)];
   //  [_backbutton setImage:[UIImage imageNamed:@"story_back" ]forState:UIControlStateNormal];
  //   [_backbutton setImage:[UIImage imageNamed:@"story_back_pres"] forState:UIControlStateSelected];
-    [_backbutton setTitle:UIKitLocalizedString(@"Done") forState:UIControlStateNormal];
-    [_backbutton addTarget:self action:@selector(back1) forControlEvents:UIControlEventTouchDown];
-
-    [self.navigationController.navigationBar addSubview:_backbutton];
+//    [_backbutton setTitle:UIKitLocalizedString(@"Done") forState:UIControlStateNormal];
+//    [_backbutton addTarget:self action:@selector(back1) forControlEvents:UIControlEventTouchDown];
+//
+//    [self.navigationController.navigationBar addSubview:_backbutton];
     self.navigationController.navigationBar.backgroundColor = navigationTabColor;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.barTintColor=navigationTabColor;
@@ -91,9 +92,7 @@
     [self.navigationController pushViewController:scdv animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES]; 
 }
--(void)viewWillAppear:(BOOL)animated{
-        _backbutton.hidden = NO;
-}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44;
 }

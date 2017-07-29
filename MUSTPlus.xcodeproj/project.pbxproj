@@ -13,9 +13,6 @@
 		211462D31E9009D0001D2FFB /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211462D21E9009D0001D2FFB /* JavaScriptCore.framework */; };
 		211462DE1E900C94001D2FFB /* libmtasdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 211462D81E900C94001D2FFB /* libmtasdk.a */; };
 		211462DF1E900C94001D2FFB /* ReleaseNotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 211462DB1E900C94001D2FFB /* ReleaseNotes.txt */; };
-		211462E01E900CC0001D2FFB /* libmtasdk.a in Sources */ = {isa = PBXBuildFile; fileRef = 211462D81E900C94001D2FFB /* libmtasdk.a */; };
-		211462E11E900CC0001D2FFB /* MTA.h in Sources */ = {isa = PBXBuildFile; fileRef = 211462D91E900C94001D2FFB /* MTA.h */; };
-		211462E21E900CC0001D2FFB /* MTAConfig.h in Sources */ = {isa = PBXBuildFile; fileRef = 211462DA1E900C94001D2FFB /* MTAConfig.h */; };
 		211462E41E900CDD001D2FFB /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211462E31E900CDD001D2FFB /* AdSupport.framework */; };
 		21167A301EBB6091001D4A2C /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 21167A2F1EBB6091001D4A2C /* Attendance.m */; };
 		2119AAB91F0BEE7800F1E825 /* SchoolFileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2119AAB81F0BEE7800F1E825 /* SchoolFileController.m */; };
@@ -2825,9 +2822,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				211462E01E900CC0001D2FFB /* libmtasdk.a in Sources */,
-				211462E11E900CC0001D2FFB /* MTA.h in Sources */,
-				211462E21E900CC0001D2FFB /* MTAConfig.h in Sources */,
 				319AFEAD1E7C0F5D0050E10C /* MJPhotoBrowser.m in Sources */,
 				319AFEFD1E7C0F5E0050E10C /* WebViewController.m in Sources */,
 				319AFFED1E7C0F5E0050E10C /* WeekTitleScrollView.m in Sources */,

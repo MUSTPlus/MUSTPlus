@@ -34,6 +34,9 @@
 -(void)viewDidAppear:(BOOL)animated{
     [self.tabBarController.tabBar setHidden:YES];
 }
+- (NSArray<MoreItem *> *)chatKeyBoardMorePanelItems{
+    return nil;
+};
 - (void)viewDidLoad {
     [super viewDidLoad];
 

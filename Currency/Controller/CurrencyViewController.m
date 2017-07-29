@@ -57,34 +57,7 @@
     }
     return j;
 }
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    _selected = 0;
-    _backbutton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80, NavBarHeight-StatusBarHeight)];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePrice) name:@"DataDone" object:nil];
-    self.navigationController.navigationBar.backgroundColor = navigationTabColor;
-    self.navigationController.navigationBar.tintColor = navigationTabColor;
-    self.navigationController.navigationBar.barTintColor=navigationTabColor;
-    [self.navigationController.navigationBar setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.view.backgroundColor = [UIColor blackColor];
-//    [_backbutton setImage:[UIImage imageNamed:@"story_back" ]forState:UIControlStateNormal];
-//    [_backbutton setImage:[UIImage imageNamed:@"story_back_pres"] forState:UIControlStateSelected];
-    [_backbutton setTitle:UIKitLocalizedString(@"Done") forState:UIControlStateNormal];
-    [_backbutton addTarget:self action:@selector(back1) forControlEvents:UIControlEventTouchDown];
-
-    [self.navigationController.navigationBar addSubview:_backbutton];
-    self.navigationItem.title = NSLocalizedString(@"汇率", "");
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
-    [self.view addSubview:_tableView];
-    
-    
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    _tableView.tableFooterView = footerView;
-    
+-(void)downloadData{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
     NSURL *URL = [NSURL URLWithString:@"http://www.kuaiyilicai.com/uprate"];
@@ -94,34 +67,29 @@
         [
          [
           [self str:pageSource value1:@"<span style=\"font-size:26px;\">汇率:&nbsp;&nbsp;&nbsp;<span style=\"color:Red;\">" value2:@"</span></span>"]
-            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]
+          stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]
+          ]
+         floatValue
          ]
-            floatValue
-        ]
         ;
-
+        [self updateData];
+        _basePrice = 1 / _basePrice;
     } failure:^(NSURLSessionTask *operation, NSError *error) {
 
 
     }];
-    @try {
-        while (_basePrice==0){
-            NSLog(@"+1s");
-            [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01f]];
-        }
-    } @catch (NSException *exception) {
 
-    } @finally {
 
-    }
-    _basePrice = 1 / _basePrice;
+}
+-(void)updateData{
+
     CurrencyTableViewCell *cell1 =[[CurrencyTableViewCell alloc]initWithFrame:CGRectMake(0, 0, Width, 90)];
-                                cell1=[cell1 initWithStyle:UITableViewCellStyleDefault
-                                                            reuseIdentifier:@"cell"
-                                                                      price:1.0f
-                                                                       name:@"CNY"
-                                                                       desc:NSLocalizedString(@"人民币","")
-                                                                       icon:@"CNY"];
+    cell1=[cell1 initWithStyle:UITableViewCellStyleDefault
+               reuseIdentifier:@"cell"
+                         price:1.0f
+                          name:@"CNY"
+                          desc:NSLocalizedString(@"人民币","")
+                          icon:@"CNY"];
 
     CurrencyTableViewCell *cell2 =[[CurrencyTableViewCell alloc]initWithFrame:CGRectMake(0, 0, Width, 90)];
     cell2=[cell2 initWithStyle:UITableViewCellStyleDefault
@@ -140,13 +108,52 @@
     cell1.selectionStyle=UITableViewCellSelectionStyleNone;
     cell2.selectionStyle=UITableViewCellSelectionStyleNone;
     cell3.selectionStyle=UITableViewCellSelectionStyleNone;
-        [cell1.textField addTarget:self action:@selector(changed:) forControlEvents:UIControlEventEditingChanged];
+    [cell1.textField addTarget:self action:@selector(changed:) forControlEvents:UIControlEventEditingChanged];
     [cell2.textField addTarget:self action:@selector(changed:) forControlEvents:UIControlEventEditingChanged];
     [cell3.textField addTarget:self action:@selector(changed:) forControlEvents:UIControlEventEditingChanged];
-        _displayingArray = [[NSMutableArray
-                             alloc]initWithObjects:cell1,cell2,cell3, nil];
+    _displayingArray = [[NSMutableArray
+                         alloc]initWithObjects:cell1,cell2,cell3, nil];
+    [self.tableView reloadData];
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    _selected = 0;
+    _backbutton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80, NavBarHeight-StatusBarHeight)];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePrice) name:@"DataDone" object:nil];
+    self.navigationController.navigationBar.backgroundColor = navigationTabColor;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor=navigationTabColor;
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    self.view.backgroundColor = [UIColor blackColor];
+//    [_backbutton setImage:[UIImage imageNamed:@"story_back" ]forState:UIControlStateNormal];
+//    [_backbutton setImage:[UIImage imageNamed:@"story_back_pres"] forState:UIControlStateSelected];
+    [_backbutton setTitle:UIKitLocalizedString(@"Done") forState:UIControlStateNormal];
+    [_backbutton addTarget:self action:@selector(back1) forControlEvents:UIControlEventTouchDown];
+    if (_dontShowBack==0)
+    [self.navigationController.navigationBar addSubview:_backbutton];
+    self.navigationItem.title = NSLocalizedString(@"汇率", "");
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
+    [self.view addSubview:_tableView];
+    
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    _tableView.tableFooterView = footerView;
+    
+    _basePrice = 0.01f;
+    [self updateData];
+    [self downloadData];
 
 
+}
+-(void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = NO;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     CurrencyTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
