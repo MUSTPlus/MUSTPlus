@@ -15,5 +15,6 @@
 @property(nonatomic,strong) NSString* studID;
 @property (nonatomic,strong) UserModel * currentUser;
 @property (nonatomic,strong) UIImage* backgroundimage;
+@property BOOL naviGo;
 -(void)back1;
 @end

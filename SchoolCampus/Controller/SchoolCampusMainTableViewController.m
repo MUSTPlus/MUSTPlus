@@ -21,6 +21,8 @@
 #import "CurrencyViewController.h"
 #import "SmartCampusViewController.h"
 #import "BusStationViewController.h"
+#import "Account.h"
+#import "UserDetailsController.h"
 @interface SchoolCampusMainTableViewController ()<UIDocumentInteractionControllerDelegate>{
     ChangePinNumberView* cpnv;
 }
@@ -203,11 +205,16 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];    //取消选中
 
     switch (section){
+        case 0:
+        {
+            [self gotoSelf];
+            break;
+        }
         case 1:
             switch (row){
                 case 0:{
                     SchoolLibraryTableViewController  *next = [[SchoolLibraryTableViewController alloc] init];
-                    [self.navigationController pushViewController:next animated:NO];
+                    [self.navigationController pushViewController:next animated:YES];
 
                     }
                     break;
@@ -305,6 +312,13 @@
     ctr.dontShowBack = 1;
     
     [self.navigationController pushViewController:ctr animated:YES];
+}
+-(void)gotoSelf{
+    UserDetailsController* udc = [[UserDetailsController alloc]init];
+    udc.studID=[[Account shared]getStudentLongID];
+    udc.isSelf = YES;
+    udc.naviGo = YES;
+    [self.navigationController pushViewController:udc animated:YES];
 }
 -(void)authforgrade{
 

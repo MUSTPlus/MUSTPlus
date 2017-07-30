@@ -194,6 +194,7 @@ static CGRect oldframe;
     // _backbutton = [UIButton buttonWithType:UIButtonTypeCustom];
     _information = [[UILabel alloc]initWithFrame:CGRectMake(0, StatusBarHeight, Width, NavBarHeight-StatusBarHeight)];
     _information.text = _isSelf?NSLocalizedString(@"我的资料", ""):NSLocalizedString(@"资料", "");
+    self.navigationController.title= _isSelf?NSLocalizedString(@"我的资料", ""):NSLocalizedString(@"资料", "");
     _information.textAlignment = NSTextAlignmentCenter;
     _information.textColor = [UIColor whiteColor];
     [_navibar addSubview:_information];
@@ -208,7 +209,14 @@ static CGRect oldframe;
 //        [report1 addTarget:self action:@selector(report) forControlEvents:UIControlEventTouchDown];
 //        [_navibar addSubview:report1];
     }
+    if (!_naviGo){
     [_navibar addSubview:_backbutton];
+        [self.view addSubview:_navibar];
+        self.navigationController.navigationBarHidden=YES;
+    } else {
+        self.navigationController.navigationBarHidden=NO;
+    }
+
     _avatar = [[UIImageView alloc]initWithFrame:CGRectMake(Width/2-AvatarHeight/2, HeightofUserDeatils-AvatarHeight/2, 100, 100)];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionSheet)];
@@ -257,7 +265,7 @@ static CGRect oldframe;
     
     _tableview1 = [[UITableView alloc]initWithFrame:CGRectMake(0, NavBarHeight, Width, Height-20) style:UITableViewStylePlain];
     [self.view addSubview:_tableview1];
-    self.navigationController.navigationBarHidden=YES;
+  //  self.navigationController.navigationBarHidden=YES;
     // [self.view addSubview:headerView];
     
     [_headview addSubview:_nickname];
@@ -275,7 +283,7 @@ static CGRect oldframe;
     //[self.tableview1.tableHeaderView addSubview:_avatar];
     // [self.tableview1.tableHeaderView addSubview:_say];
     
-    [self.view addSubview:_navibar];
+
     if (_isSelf){
         _bottom = [[UIView alloc]initWithFrame:CGRectMake(0, Height-bottomHeight, Width, bottomHeight)];
         _bottom.backgroundColor = kColor(247, 247, 249);
@@ -303,6 +311,9 @@ static CGRect oldframe;
 }
 
 
+-(void)viewWillDisappear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden =NO;
+}
 
 -(void)changeQianming{
     self.navigationController.navigationBarHidden=NO;
@@ -354,7 +365,7 @@ static CGRect oldframe;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    self.tabBarController.tabBar.hidden =YES;
     _tableview1.tableHeaderView = _headview;
     _say.text = @"";
     _nickname.text = @"";
@@ -445,7 +456,7 @@ static CGRect oldframe;
     [self updateByUsrModel:_currentUser];
 }
 -(void)viewDidAppear:(BOOL)animated{
-    self.navigationController.navigationBarHidden=YES;
+  //  self.navigationController.navigationBarHidden=YES;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

@@ -445,7 +445,7 @@
         CirnoLog(@"JSON:%@",json);
         @try {
             float ver = [json[@"lastestversion"]floatValue];
-            if (ver<[[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue]){
+            if (ver>[[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue]){
             if ([json[@"forceupdate"] isEqual:@"yes"]){
                 Alert* alert = [[Alert alloc]initWithTitle:[NSString stringWithFormat:@"紧急版本更新 %@",json[@"lastestversion"]] message:json[@"updatelog"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即升级", nil];
                 [alert setClickBlock:^(Alert *alertView,NSInteger d) {
