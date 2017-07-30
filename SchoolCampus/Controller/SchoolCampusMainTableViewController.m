@@ -23,6 +23,7 @@
 #import "BusStationViewController.h"
 #import "Account.h"
 #import "UserDetailsController.h"
+#import "SettingViewController.h"
 @interface SchoolCampusMainTableViewController ()<UIDocumentInteractionControllerDelegate>{
     ChangePinNumberView* cpnv;
 }
@@ -50,14 +51,9 @@
     self.tableView.contentInset = adjustForTabbarInsets;
     self.tableView.scrollIndicatorInsets = adjustForTabbarInsets;
     self.tableView.scrollEnabled =YES;
-//    
-//    _head = [[HeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, StatusBarAndNavigationBarHeight)];
-//    [_head drawHeadViewWithTtile:NSLocalizedString(@"校园", "") buttonImage:nil];
-//    self.tableView.tableHeaderView = _head;
+    UIBarButtonItem *sett = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"sidebar_setting"] style:UIBarButtonItemStylePlain target:self action:@selector(gotoSetting)];
 
-    //self.tableView.bounces = false;
-    
-    //注册键盘出现的通
+    self.navigationItem.rightBarButtonItem = sett;
 }
 
 
@@ -319,6 +315,10 @@
     udc.isSelf = YES;
     udc.naviGo = YES;
     [self.navigationController pushViewController:udc animated:YES];
+}
+-(void)gotoSetting{
+    SettingViewController *ctr = [[SettingViewController alloc]init];
+    [self.navigationController pushViewController:ctr animated:YES];
 }
 -(void)authforgrade{
 

@@ -27,9 +27,6 @@
 @end
 
 @implementation SettingViewController
--(void)back1{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 - (void)viewDidLoad {
     self.navigationController.navigationBar.hidden =NO;
     [super viewDidLoad];
@@ -38,17 +35,9 @@
     self.navigationController.navigationBar.barTintColor=navigationTabColor;
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    _navibar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, NavBarHeight)];
-    _navibar.backgroundColor = sidebarBackGroundColor;
-    _backbutton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80, NavBarHeight-StatusBarHeight)];
     self.title =NSLocalizedString(@"设置", "");
   //  [_backbutton setImage:[UIImage imageNamed:@"story_back" ]forState:UIControlStateNormal];
   //  [_backbutton setImage:[UIImage imageNamed:@"story_back_pres"] forState:UIControlStateSelected];
-    [_backbutton setTitle:UIKitLocalizedString(@"Done") forState:UIControlStateNormal];
-    [_backbutton addTarget:self action:@selector(back1) forControlEvents:UIControlEventTouchDown];
-    [_navibar addSubview:_backbutton];
-    [self.navigationController.navigationBar addSubview:_backbutton];
-    [_navibar addSubview:_information];
     _tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height) style:UITableViewStyleGrouped];
     [self.view addSubview:_tableview];
 
@@ -56,25 +45,21 @@
     _tableview.dataSource = self;
    // [self.view addSubview:_navibar];
 }
--(void)viewDidAppear:(BOOL)animated{
-    _backbutton.hidden =NO;
+-(void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    _backbutton.hidden = YES;
+    self.tabBarController.tabBar.hidden = NO;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];    //取消选中
-    if  (section == 0){
+    if  (section == 1){
         if (row == 0){
             [self ClickAvatar];
         }
-        if (row ==1){
-            [self ClickAbout];
-        }
-
     } else {
         if (row == 0){
             [self ClickAbout];
@@ -90,7 +75,7 @@
 }
 -(void) ClickAbout{
     AboutViewController * avc = [[AboutViewController alloc]init];
-    [self.navigationController pushViewController:avc animated:NO];
+    [self.navigationController pushViewController:avc animated:YES];
 }
 -(void) ClickAvatar{
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"当前用户", "") message:[[Account shared]getStudentLongID] preferredStyle:UIAlertControllerStyleAlert];
@@ -120,15 +105,19 @@
 -(void)ClickNotificationStatus{
 
     NSInteger status = [[UIApplication sharedApplication] currentUserNotificationSettings].types;
-    if (status == 0){
-        NSString * mess = [[NSString alloc]initWithFormat:@"%@ %@",NSLocalizedString(@"推送状态", ""),NSLocalizedString(@"关闭", "")];
-        Alert * alert = [[Alert alloc]initWithTitle:NSLocalizedString(@"推送状态", "")
-                                            message:mess
-                                           delegate:nil
-                                  cancelButtonTitle:NSLocalizedString(@"好", "")
-                                  otherButtonTitles: nil ];
-        [alert show];
-        NSLocalizedString(@"推送状态", "");
+    NSLog(@"status = %d",status);
+    if (status >0){
+        NSString * identifier = [NSBundle mainBundle].bundleIdentifier;
+        NSString * str = [NSString stringWithFormat:@"App-Prefs:root=NOTIFICATIONS_ID&path=%@",identifier];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+//        NSString * mess = [[NSString alloc]initWithFormat:@"%@ %@",NSLocalizedString(@"推送状态", ""),NSLocalizedString(@"关闭", "")];
+//        Alert * alert = [[Alert alloc]initWithTitle:NSLocalizedString(@"推送状态", "")
+//                                            message:mess
+//                                           delegate:nil
+//                                  cancelButtonTitle:NSLocalizedString(@"好", "")
+//                                  otherButtonTitles: nil ];
+//        [alert show];
+//        NSLocalizedString(@"推送状态", "");
         return;
     }
     NSString *GradeType = [[[Account shared]getGradeType] stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
@@ -139,7 +128,7 @@
     NSString *alia =  [[Account shared] getStudentShortID] ;
 
     [JPUSHService setTags:tags alias:alia fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
-        NSString* vip = [NSString stringWithFormat:@"%@",[[Account shared]getVip]];;
+        NSString* vip = [NSString stringWithFormat:@"%@",[[Account shared]getVip]];
         if (![vip isEqualToString:@"1"]){
             NSString *mess =[[NSString alloc]initWithFormat:@"返回代码%d,tags%@,别名%@",iResCode,tags,iAlias];
             Alert * alert = [[Alert alloc]initWithTitle:NSLocalizedString(@"推送状态", "")
@@ -234,23 +223,15 @@
     if (cell == nil){
         cell = [[UserDetailCellTableViewCell alloc]init];
     }
+    if (indexPath.section == 1){
+        cell = [[UITableViewCell alloc]init];
+        cell.textLabel.text = @"退出当前账号";
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+
+    } else
     switch (row){
         case 0:
-            if (indexPath.section == 0 ){
-                _headerview = [[UIImageView alloc]initWithFrame:CGRectMake(16, 6, 65, 65)];
-                _headerview.layer.cornerRadius = _headerview.frame.size.width/2;
-                _headerview.clipsToBounds = YES;
-                _headerview.layer.borderWidth = 2;
-                _headerview.layer.borderColor = [UIColor clearColor].CGColor;
-                NSURL *url = [NSURL URLWithString:[[Account shared]getAvatar]];
-                UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(100, 0, Width-80, 80)];
-                label.text =[[Account shared]getNickname];
-                label.font = [UIFont systemFontOfSize:18];
-                label.textColor = [UIColor blackColor];
-                [_headerview sd_setImageWithURL:url];
-                [cell addSubview:_headerview];
-                [cell addSubview:label];
-            } else {
+            {
                 cell = [[UserDetailCellTableViewCell alloc]initWithFrame:CGRectMake(0, 0, Width, 50) andIcon:[UIImage imageNamed:@"ClassIcon"]];
                 cell.textLabel.text=NSLocalizedString(@"关于", "");
 
@@ -287,20 +268,19 @@
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) return 80;
     return 50;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
 -(NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
-    if (section ==1){
+    if (section ==0){
         return NSLocalizedString(@"找回我的学生卡说明", "");
     }
     return nil;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0)
+    if (section == 1)
         return 1;
     else return 4;
 }

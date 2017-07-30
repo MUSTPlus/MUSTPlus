@@ -73,6 +73,7 @@
     }
 }
 -(void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBar.hidden =NO;
     self.navigationController.navigationBarHidden=NO;
 }
@@ -179,6 +180,9 @@
     T_RexRunner* run = [[T_RexRunner alloc]init];
 
     [self.navigationController pushViewController:run animated:YES];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = NO;
 }
 - (void)POPNumberAnimation:(POPNumberAnimation *)numberAnimation currentValue:(CGFloat)currentValue {
 
