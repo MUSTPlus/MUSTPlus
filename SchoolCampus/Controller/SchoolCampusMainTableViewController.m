@@ -24,6 +24,7 @@
 #import "Account.h"
 #import "UserDetailsController.h"
 #import "SettingViewController.h"
+#import "GradeController.h"
 @interface SchoolCampusMainTableViewController ()<UIDocumentInteractionControllerDelegate>{
     ChangePinNumberView* cpnv;
 }
@@ -404,7 +405,7 @@
         }
 }
 -(void)gotogradevc{
-    SearchGradeTableViewController *next = [[SearchGradeTableViewController alloc] init];
+    GradeController *next = [[GradeController alloc] init];
     [self.navigationController pushViewController:next animated:YES];
 }
 -(void)EnterStuPassWord{

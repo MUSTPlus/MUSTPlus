@@ -330,6 +330,7 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+
     _colorArray =[[NSArray alloc]initWithObjects:
                   kColor(84,188,225),
                   kColor(240,132,134),

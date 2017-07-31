@@ -30,6 +30,7 @@
 		215CB1311EB04676004179BC /* Semester.m in Sources */ = {isa = PBXBuildFile; fileRef = 215CB1301EB04676004179BC /* Semester.m */; };
 		215DDD3B1EAB2C9C005C3227 /* MyLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 215DDD3A1EAB2C9C005C3227 /* MyLibraryViewController.m */; };
 		21668EEA1EB5160500F4D16D /* CZPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21668EE91EB5160500F4D16D /* CZPickerView.m */; };
+		21A1FE591F2F6AE80078AC94 /* GradeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A1FE581F2F6AE80078AC94 /* GradeController.m */; };
 		21BDF2EF1E97D44600992CF7 /* food.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EA1E97D44600992CF7 /* food.plist */; };
 		21BDF2F01E97D44600992CF7 /* gesture.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EB1E97D44600992CF7 /* gesture.plist */; };
 		21BDF2F11E97D44600992CF7 /* realnature.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EC1E97D44600992CF7 /* realnature.plist */; };
@@ -413,6 +414,8 @@
 		21668EE71EB5160500F4D16D /* CZPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZPicker.h; sourceTree = "<group>"; };
 		21668EE81EB5160500F4D16D /* CZPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZPickerView.h; sourceTree = "<group>"; };
 		21668EE91EB5160500F4D16D /* CZPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZPickerView.m; sourceTree = "<group>"; };
+		21A1FE571F2F6AE80078AC94 /* GradeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeController.h; sourceTree = "<group>"; };
+		21A1FE581F2F6AE80078AC94 /* GradeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeController.m; sourceTree = "<group>"; };
 		21BDF2EA1E97D44600992CF7 /* food.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = food.plist; sourceTree = "<group>"; };
 		21BDF2EB1E97D44600992CF7 /* gesture.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gesture.plist; sourceTree = "<group>"; };
 		21BDF2EC1E97D44600992CF7 /* realnature.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = realnature.plist; sourceTree = "<group>"; };
@@ -2136,6 +2139,8 @@
 		319AFDD81E7C0F5D0050E10C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				21A1FE571F2F6AE80078AC94 /* GradeController.h */,
+				21A1FE581F2F6AE80078AC94 /* GradeController.m */,
 				2119AAB71F0BEE7800F1E825 /* SchoolFileController.h */,
 				2119AAB81F0BEE7800F1E825 /* SchoolFileController.m */,
 				215DDD391EAB2C9C005C3227 /* MyLibraryViewController.h */,
@@ -2848,6 +2853,7 @@
 				319AFED41E7C0F5E0050E10C /* MASConstraint.m in Sources */,
 				319AFFCB1E7C0F5E0050E10C /* LeftViewController.m in Sources */,
 				319AFFA81E7C0F5E0050E10C /* BCBookLibrary.m in Sources */,
+				21A1FE591F2F6AE80078AC94 /* GradeController.m in Sources */,
 				319AFFF21E7C0F5E0050E10C /* ZoomHeaderView.m in Sources */,
 				319AFF2E1E7C0F5E0050E10C /* MessageCircleController.m in Sources */,
 				319AFF0F1E7C0F5E0050E10C /* Teacher.m in Sources */,
