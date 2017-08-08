@@ -18,4 +18,6 @@ pod 'Bugly'
 pod 'FMDB'
 pod 'JPFPSStatus', '~> 0.0.2'
 pod 'tingyunApp'
+pod 'RongCloudIM/IMLib', '~> 2.8.9'
+pod 'RongCloudIM/IMKit', '~> 2.8.9' 
 end

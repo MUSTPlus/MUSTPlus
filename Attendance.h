@@ -11,4 +11,6 @@
 @interface Attendance : NSObject
 @property (nonatomic,strong) NSString* time;
 @property (nonatomic,strong) NSString* label;
+-(instancetype)initWithLabel:(NSString*)label
+                     andTime:(NSString*)time;
 @end

@@ -10,4 +10,13 @@
 
 @implementation Attendance
 
+-(instancetype)initWithLabel:(NSString*)label
+                     andTime:(NSString*)time{
+    self = [super init];
+    if (self){
+        self.label = label;
+        self.time = time;
+    }
+    return self;
+}
 @end

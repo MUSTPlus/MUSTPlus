@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -28,6 +28,7 @@
                                     <tabBarItem title="" image="tabbar-class" selectedImage="tabbar-class" id="FFO-vL-Gg9"/>
                                     <tabBarItem title="" image="tabbar-oa" selectedImage="tabbar-oa" id="Jjg-2F-17V"/>
                                     <tabBarItem title="" image="tabbar-message" selectedImage="tabbar-message" id="bde-8B-Krd"/>
+                                    <tabBarItem title="" image="sidebar-mail" id="mGg-DK-RRo"/>
                                     <tabBarItem title="" image="tarbar-map" id="5b8-Yp-PLl"/>
                                 </items>
                             </tabBar>
@@ -85,6 +86,7 @@
     </scenes>
     <resources>
         <image name="more" width="200" height="200"/>
+        <image name="sidebar-mail" width="19" height="19"/>
         <image name="tabbar-class" width="16" height="16"/>
         <image name="tabbar-message" width="16" height="16"/>
         <image name="tabbar-oa" width="16" height="16"/>

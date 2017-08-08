@@ -30,6 +30,7 @@
 		215CB1311EB04676004179BC /* Semester.m in Sources */ = {isa = PBXBuildFile; fileRef = 215CB1301EB04676004179BC /* Semester.m */; };
 		215DDD3B1EAB2C9C005C3227 /* MyLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 215DDD3A1EAB2C9C005C3227 /* MyLibraryViewController.m */; };
 		21668EEA1EB5160500F4D16D /* CZPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21668EE91EB5160500F4D16D /* CZPickerView.m */; };
+		2195C16E1F3713510046B689 /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2195C16D1F3713510046B689 /* MessageController.m */; };
 		21A1FE591F2F6AE80078AC94 /* GradeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A1FE581F2F6AE80078AC94 /* GradeController.m */; };
 		21BDF2EF1E97D44600992CF7 /* food.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EA1E97D44600992CF7 /* food.plist */; };
 		21BDF2F01E97D44600992CF7 /* gesture.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EB1E97D44600992CF7 /* gesture.plist */; };
@@ -356,6 +357,7 @@
 		319AFFFB1E7C10810050E10C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 319AFFF91E7C10810050E10C /* Main.storyboard */; };
 		319AFFFD1E7C11BD0050E10C /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 319AFFFC1E7C11BD0050E10C /* libsqlite3.tbd */; };
 		319AFFFF1E7C11C80050E10C /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 319AFFFE1E7C11C80050E10C /* libiconv.tbd */; };
+		5A48B69EF8FE18A6902C9F07 /* AttendanceCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A48B8CEE6DF5C930C902424 /* AttendanceCourse.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -414,6 +416,8 @@
 		21668EE71EB5160500F4D16D /* CZPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZPicker.h; sourceTree = "<group>"; };
 		21668EE81EB5160500F4D16D /* CZPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZPickerView.h; sourceTree = "<group>"; };
 		21668EE91EB5160500F4D16D /* CZPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZPickerView.m; sourceTree = "<group>"; };
+		2195C16C1F3713510046B689 /* MessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageController.h; sourceTree = "<group>"; };
+		2195C16D1F3713510046B689 /* MessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageController.m; sourceTree = "<group>"; };
 		21A1FE571F2F6AE80078AC94 /* GradeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeController.h; sourceTree = "<group>"; };
 		21A1FE581F2F6AE80078AC94 /* GradeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeController.m; sourceTree = "<group>"; };
 		21BDF2EA1E97D44600992CF7 /* food.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = food.plist; sourceTree = "<group>"; };
@@ -969,7 +973,6 @@
 		319AFE6E1E7C0F5D0050E10C /* SchoolClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolClassModel.m; sourceTree = "<group>"; };
 		319AFE6F1E7C0F5D0050E10C /* TimetableLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimetableLogic.h; sourceTree = "<group>"; };
 		319AFE701E7C0F5D0050E10C /* TimetableLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimetableLogic.m; sourceTree = "<group>"; };
-		319AFE721E7C0F5D0050E10C /* BasicHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicHead.h; sourceTree = "<group>"; };
 		319AFE731E7C0F5D0050E10C /* ClassButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassButton.h; sourceTree = "<group>"; };
 		319AFE741E7C0F5D0050E10C /* ClassButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassButton.m; sourceTree = "<group>"; };
 		319AFE751E7C0F5D0050E10C /* CutSchoolClassScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CutSchoolClassScrollView.h; sourceTree = "<group>"; };
@@ -1005,6 +1008,9 @@
 		319AFFFC1E7C11BD0050E10C /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		319AFFFE1E7C11C80050E10C /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		3E6AB6CD787BCDB7B332C858 /* libPods-MUSTPlus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MUSTPlus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A48B645EC44E3AB51EF0C9D /* BasicHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicHead.h; sourceTree = "<group>"; };
+		5A48B8A9DDC737160071108A /* AttendanceCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceCourse.h; sourceTree = "<group>"; };
+		5A48B8CEE6DF5C930C902424 /* AttendanceCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceCourse.m; sourceTree = "<group>"; };
 		657AC9D96253EC0006495A95 /* Pods-MUST+.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MUST+.release.xcconfig"; path = "Pods/Target Support Files/Pods-MUST+/Pods-MUST+.release.xcconfig"; sourceTree = "<group>"; };
 		86590A9C87F60D1AF3C6803A /* Pods-MUSTPlus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MUSTPlus.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MUSTPlus/Pods-MUSTPlus.debug.xcconfig"; sourceTree = "<group>"; };
 		E4CCC52342FA9E21863788C9 /* Pods-MUST+.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MUST+.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MUST+/Pods-MUST+.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1114,6 +1120,8 @@
 			children = (
 				21167A2E1EBB6091001D4A2C /* Attendance.h */,
 				21167A2F1EBB6091001D4A2C /* Attendance.m */,
+				5A48B8CEE6DF5C930C902424 /* AttendanceCourse.m */,
+				5A48B8A9DDC737160071108A /* AttendanceCourse.h */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1128,11 +1136,20 @@
 			path = CZPicker;
 			sourceTree = "<group>";
 		};
+		2195C1701F3713790046B689 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				2195C16C1F3713510046B689 /* MessageController.h */,
+				2195C16D1F3713510046B689 /* MessageController.m */,
+			);
+			name = Message;
+			sourceTree = "<group>";
+		};
 		319AF7301E7BFFB90050E10C = {
 			isa = PBXGroup;
 			children = (
-				211462D41E900C94001D2FFB /* TencentSDK */,
 				319AF73B1E7BFFB90050E10C /* MUST+ */,
+				211462D41E900C94001D2FFB /* TencentSDK */,
 				319AF7581E7BFFB90050E10C /* MUST+Tests */,
 				319AF7631E7BFFB90050E10C /* MUST+UITests */,
 				319AF73A1E7BFFB90050E10C /* Products */,
@@ -1154,6 +1171,7 @@
 		319AF73B1E7BFFB90050E10C /* MUST+ */ = {
 			isa = PBXGroup;
 			children = (
+				2195C1701F3713790046B689 /* Message */,
 				2158BFC01EB5C2920002CD19 /* Attendance */,
 				319A00741E7C286D0050E10C /* MUST+.entitlements */,
 				319AFBC51E7C0F5D0050E10C /* Common */,
@@ -1230,6 +1248,7 @@
 				319AFC7C1E7C0F5D0050E10C /* Tools */,
 				319AFC9F1E7C0F5D0050E10C /* View */,
 				319AFCA21E7C0F5D0050E10C /* ZLCamera */,
+				5A48B645EC44E3AB51EF0C9D /* BasicHead.h */,
 			);
 			path = Common;
 			sourceTree = SOURCE_ROOT;
@@ -2439,7 +2458,6 @@
 		319AFE711E7C0F5D0050E10C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				319AFE721E7C0F5D0050E10C /* BasicHead.h */,
 				319AFE731E7C0F5D0050E10C /* ClassButton.h */,
 				319AFE741E7C0F5D0050E10C /* ClassButton.m */,
 				319AFE751E7C0F5D0050E10C /* CutSchoolClassScrollView.h */,
@@ -3058,6 +3076,7 @@
 				319AFEEB1E7C0F5E0050E10C /* UIView+QHUIViewCtg.m in Sources */,
 				319AFEEF1E7C0F5E0050E10C /* YMSOpenNotifyDownView.m in Sources */,
 				319AFEED1E7C0F5E0050E10C /* QHUtilAss.m in Sources */,
+				2195C16E1F3713510046B689 /* MessageController.m in Sources */,
 				319AFFEE1E7C0F5E0050E10C /* UserChangeDetailsController.m in Sources */,
 				319AFF5E1E7C0F5E0050E10C /* MLSelectPhotoNavigationViewController.m in Sources */,
 				319AFFB11E7C0F5E0050E10C /* SchoolViewsTableViewController.m in Sources */,
@@ -3080,6 +3099,7 @@
 				319AFEEC1E7C0F5E0050E10C /* QHUtil.m in Sources */,
 				319AFF881E7C0F5E0050E10C /* FacePanel.m in Sources */,
 				319AFFCD1E7C0F5E0050E10C /* mailCoreDataManagement.m in Sources */,
+				5A48B69EF8FE18A6902C9F07 /* AttendanceCourse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

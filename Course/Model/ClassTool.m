@@ -11,7 +11,6 @@
 @implementation ClassTool
 -(void)openDB{
     NSString * path =[[NSBundle mainBundle] pathForResource:@"class" ofType:@"db"];
-    NSLog(@"path%@",path);
     _db = [FMDatabase databaseWithPath:path];
     assert([_db open]);
 

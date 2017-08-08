@@ -430,7 +430,7 @@
             }
             else{
 
-                
+
             }
         } failure:^(NSURLSessionTask *operation, NSError *error) {
 
@@ -446,23 +446,26 @@
         CirnoLog(@"JSON:%@",json);
         @try {
             float ver = [json[@"lastestversion"]floatValue];
-            if (ver>[[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] floatValue]){
-            if ([json[@"forceupdate"] isEqual:@"yes"]){
-                Alert* alert = [[Alert alloc]initWithTitle:[NSString stringWithFormat:@"紧急版本更新 %@",json[@"lastestversion"]] message:json[@"updatelog"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即升级", nil];
-                [alert setClickBlock:^(Alert *alertView,NSInteger d) {
-                    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+            id type = [NSBundle.mainBundle infoDictionary][@"CFBundleShortVersionString"];
+            if ([type respondsToSelector:@selector(floatValue)]) {
+                if (ver > [type floatValue]){
+                    if ([json[@"forceupdate"] isEqual:@"yes"]){
+                        Alert* alert = [[Alert alloc]initWithTitle:[NSString stringWithFormat:@"紧急版本更新 %@",json[@"lastestversion"]] message:json[@"updatelog"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"立即升级", nil];
+                        [alert setClickBlock:^(Alert *alertView,NSInteger d) {
+                            UIWindow *window = [UIApplication sharedApplication].delegate.window;
 
-                    [UIView animateWithDuration:0.4f animations:^{
-                        window.alpha = 0;
-                    } completion:^(BOOL finished) {
-                        exit(0);
-                    }];
-                }];
-                [alert show];
-            } else {
-                Alert* alert = [[Alert alloc]initWithTitle:[NSString stringWithFormat:@"紧急版本更新 %@",json[@"lastestversion"]] message:json[@"updatelog"] delegate:self cancelButtonTitle:NSLocalizedString(@"取消","") otherButtonTitles:@"立即升级", nil];
-                [alert show];
-            }
+                            [UIView animateWithDuration:0.4f animations:^{
+                                window.alpha = 0;
+                            } completion:^(BOOL finished) {
+                                exit(0);
+                            }];
+                        }];
+                        [alert show];
+                    } else {
+                        Alert* alert = [[Alert alloc]initWithTitle:[NSString stringWithFormat:@"紧急版本更新 %@",json[@"lastestversion"]] message:json[@"updatelog"] delegate:self cancelButtonTitle:NSLocalizedString(@"取消","") otherButtonTitles:@"立即升级", nil];
+                        [alert show];
+                    }
+                }
             }
         } @catch (NSException *exception) {
 
@@ -482,7 +485,7 @@
     if (week!=-1) weekstr = [NSString stringWithFormat:@"第%ld周",week];
     [_head drawHeadViewWithTtile:NSLocalizedString(@"课程表", "") buttonImage:@"more"
                         subTitle:[NSString stringWithFormat:@"%@%@ %@",self.Semester,NSLocalizedString(@"学期", ""),weekstr]];
-    //下面这个delegate一定要声明是谁执行方法，一般都是self，一定要写！
+    //下面这个delegate一定要声明是谁        执行方法，一般都是self，一定要写！
     _head.headButtonDelegate = self;
     //[self.navigationController.navigationBar addSubview:_head];
     [self.view addSubview:_head];
@@ -525,7 +528,8 @@
     [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:NSLocalizedString(@"课程表", @"")];
     [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:NSLocalizedString(@"资讯", @"")];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"校友圈", @"")];
-    [[self.tabBarController.tabBar.items objectAtIndex:3] setTitle:NSLocalizedString(@"校园", @"")];
+    [[self.tabBarController.tabBar.items objectAtIndex:3] setTitle:NSLocalizedString(@"小纸条", @"")];
+    [[self.tabBarController.tabBar.items objectAtIndex:4] setTitle:NSLocalizedString(@"校园", @"")];
 
 }
 

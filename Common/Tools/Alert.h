@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, AlertStyle) {
 typedef void (^CancelAlertBlock)(Alert *alertView) ;
 typedef void (^ClicksAlertBlock)(Alert *alertView, NSInteger buttonIndex);
 @property (nonatomic, copy, readonly) CancelAlertBlock cancelBlock;
-@property (nonatomic, copy, readonly) ClicksAlertBlock clickBlock;
+@property (nonatomic, copy) ClicksAlertBlock clickBlock;
 - (void)setCancelBlock:(CancelAlertBlock)cancelBlock;
 - (void)setClickBlock:(ClicksAlertBlock)clickBlock;
 

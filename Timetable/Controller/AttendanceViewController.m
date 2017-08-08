@@ -9,57 +9,321 @@
 #import "AttendanceViewController.h"
 #import "HeiHei.h"
 #import "NSString+AES.h"
-@import CoreLocation;
+#import "WSGetWifi.h"
+#ifdef DEBUG
+#define NSLog(FORMAT, ...) fprintf(stderr,"\n %s:%d   %s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],__LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#else
+#define NSLog(...)
+#endif
+
 
 @interface AttendanceViewController ()<CLLocationManagerDelegate>
 @property (strong, nonatomic)   CLLocationManager *locationManager;
 @property (nonatomic)               CLBeaconRegion      *beaconRegion;
 @end
 
-@implementation AttendanceViewController
+@implementation AttendanceViewController{
+    BOOL flag;
+}
+
+-(NSString*)today{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:MM:ss"];
+    NSString *dateTime = [formatter stringFromDate:[NSDate date]];
+    return dateTime;
+}
+- (void)viewWillAppear:(BOOL)animated{
+    flag = false;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _server = @"未连接";
+    self.navigationController.navigationBar.backgroundColor = navigationTabColor;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor=navigationTabColor;
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    [self startMonitoring];
-    
+    //[self startMonitoring];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height-250) style:UITableViewStyleGrouped];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [self.view addSubview:self.tableView];
+    self.attendance = [[UIButton alloc]initWithFrame:CGRectMake((Width-100)/2, Height-250, 100, 100)];
+    [self.attendance setTitle:@"开始签到" forState:UIControlStateNormal];
+    [self.attendance setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.attendance addTarget:self action:@selector(attendanceSuccessClick) forControlEvents:UIControlEventTouchDown];
+    self.attendance.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.attendance.backgroundColor=navigationTabColor;
+    self.status = [[UILabel alloc]initWithFrame:CGRectMake(0, Height-150, Width, 100)];
+    self.status.textAlignment = NSTextAlignmentCenter;
+    self.status.numberOfLines = 0;
+
+    [self.attendance.layer setMasksToBounds: YES];
+    [self.attendance.layer setCornerRadius:50.0f];
+    [self.view addSubview:self.attendance];
     self.title = NSLocalizedString(@"签到", "");
     UIBarButtonItem * doneButton = [[UIBarButtonItem alloc]
                                     initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                     target:self
                                     action:@selector(dismiss)];
     self.navigationItem.leftBarButtonItem = doneButton;
-    NSArray *nibContents = [[NSBundle mainBundle] loadNibNamed:@"AttendanceHeaderView" owner:nil options:nil];
 
-    self.headerView = [nibContents lastObject];
-    self.headerView.frame = CGRectMake(0,StatusBarAndNavigationBarHeight, Width, 200);
-    self.view.backgroundColor = kColor(242, 242, 242);
-    self.courseCode = @"暂无课程";
-    [self.headerView initWithDate:@"" andCourse:@"" andStatus:@""];
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 200, Width, Height-200) style:UITableViewStylePlain];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView registerNib:[UINib nibWithNibName:@"AttendanceTableViewCell" bundle:nil] forCellReuseIdentifier:@"attendanceTableViewCell"];
-    self.tableView.backgroundColor = kColor(242, 242, 242);
-    [self.view addSubview:self.headerView];
-    [self.view addSubview:self.tableView];
-    self.headerView.delegate = self;
-    self.studentID = [[Account shared] getStudentLongID];
-    NSTimer * timer =  [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(getStatus) userInfo:nil repeats:YES];
-    self.ibeaconStatus = [[UILabel alloc]initWithFrame:CGRectMake(0, (Height-300)/2, Width, 50)];
-    self.ibeaconStatus.textAlignment=NSTextAlignmentCenter;
-    self.ibeaconStatus.font = [UIFont systemFontOfSize:25 weight:UIFontWeightUltraLight];
-    self.ibeaconStatus.textColor = navigationTabColor;
-    self.ibeaconStatus.alpha = 0.3f;
-    self.ibeaconStatus.hidden = YES;
-    [self.tableView addSubview:self.ibeaconStatus];
-    [self setButtonOff];
-    // [timer setFireDate:[NSDate date]];
+
+
+    self.attendanceHistory = [[NSMutableArray alloc]initWithObjects:[[Attendance alloc]init], nil];
+
+    NSTimer * timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(refreshStatus) userInfo:nil repeats:YES];
+
     [timer fire];
-    //每1秒运行一次function方法。
+    [self.view addSubview:self.status];
+
+
+
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"签到历史" style:UIBarButtonItemStylePlain target:self action:@selector(gotoHistory)];
+    [self.navigationItem setRightBarButtonItem:rightItem];
+    self.centralManager= [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+
 }
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central{
+    switch (central.state) {
+        case CBCentralManagerStatePoweredOff:{
+            Alert* alert = [[Alert alloc]initWithTitle:@"提示" message:@"请打开蓝牙以签到" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alert show];
+            self.found = NO;
+            [self refreshStatus];
+        }
+            break;
+        case CBCentralManagerStatePoweredOn:
+
+            break;
+        case CBCentralManagerStateResetting:
+            break;
+        case CBCentralManagerStateUnauthorized:
+            break;
+        case CBCentralManagerStateUnknown:
+            break;
+        case CBCentralManagerStateUnsupported:
+            break;
+        default:
+            break;
+    }
+
+}
+-(NSString*)WiFi{
+    NSString* wifi = [WSGetWifi getSSIDInfo][@"SSID"];
+    if (wifi)
+        return wifi;
+    else
+        return @"未连接Wi-Fi";
+}
+
+-(NSString*)Bluetooth{
+    if (self.found)
+        return @"已找到";
+    return @"未找到";
+
+}
+
+-(void)gotoHistory{
+
+}
+
+
+-(NSArray<NSString*>*)TrustedWiFi{
+    return @[@"MUST-DOT1X", @"MUST-STUDENT-S", @"eduoram",@"ABCDEFG"];
+}
+-(NSArray<NSString*>*)attendanceStatus{
+    return [[NSArray alloc]initWithObjects:@"未签到",@"已签到",@"已签到-迟到",@"补签",@"缺勤",@"请假", nil];
+
+}
+
+-(void)checkServer{
+    NSDictionary *o1 =@{@"stuid": @"1599999-9999-9999"};
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@nowSchedule",AttendanceURL]];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
+    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject){
+         id json = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        @try {
+            if ([[json[@"status"]stringValue] isEqual:@"0"]){
+                id result = json[@"result"];
+                id course = result[@"course"];
+                if (course!= NULL){
+                    if (!_nowcourse)
+                            self.nowcourse = [[AttendanceCourse alloc]init];
+                NSString* cid = [course[@"id"] stringValue];
+                NSString* coursecode =course[@"coursecode"];
+                NSString* cls = course[@"class"];
+                NSString* semester= [course[@"semester"]stringValue];
+                NSString* starttime= [result[@"start_time"]stringValue];
+                NSString* endtime = [result[@"end_time"]stringValue];
+                NSString* sid = [result[@"id"]stringValue];
+                [self.nowcourse initWithCid:cid
+                                                        andCourseCode:coursecode
+                                                               andCls:cls
+                                                          andSemester:semester
+                                                         andStartTime:starttime
+                                                           andEndTime:endtime
+                                                               andSid:sid
+                                                andAid:result[@"lastaid"]
+                                  ];
+                id leapbox = result[@"leapBox"];
+                self.leapboxid = leapbox[@"id"];
+                self.macaddress = leapbox[@"macaddress"];
+                self.major = leapbox[@"major"];
+                self.minor = leapbox[@"minor"];
+                self.ssid = leapbox[@"ssid"];
+                self.uuid = leapbox[@"uuid"];
+                self.lastaid = result[@"lastaid"];
+                self.signstatus = [
+                                   self.attendanceStatus objectAtIndex:[result[@"status"] intValue]
+                                   ];
+                id teacher = result[@"teacher"];
+                self.teacher = teacher[@"chn_name"];
+                self.teacherEn = teacher[@"eng_name"];
+
+                [self startMonitoring];
+
+                }
+            }
+        } @catch (NSException *exception) {
+            _server = @"未连接";
+        } @finally {
+            [self.tableView reloadData];
+        }
+        _server = @"已连接";
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        _server = error.localizedDescription;
+    }];
+    [self checkHistory];
+}
+
+-(void)checkHistory{
+    if (!self.nowcourse) return;
+    NSDictionary *o1 =@{@"stuid": @"1599999-9999-9999",
+                        @"sid":     self.nowcourse.sid};
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@signHistory",AttendanceURL]];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
+    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject){
+        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        @try {
+            if ([json[@"status"] isEqual:@"0"]){
+                id result = json[@"result"];
+                self.attendanceHistory = [[NSMutableArray alloc]init];
+                for (id attendance in result){
+                    [self.attendanceHistory addObject:[[Attendance alloc]initWithLabel:
+                                                      [self.attendanceStatus objectAtIndex:[attendance[@"status"]intValue]
+                                                       ]
+                                                                              andTime:[attendance[@"signtime"]stringValue]]];
+
+                }
+            }
+        } @catch (NSException *exception) {
+
+        } @finally {
+            [self.tableView reloadData];
+        }
+        _server = @"已连接";
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        _server = error.localizedDescription;
+    }];
+
+}
+-(void)checkStatus{
+    if (!_nowcourse) return;
+    NSDictionary *o1 =@{@"stuid": @"1599999-9999-9999",
+                        @"aid":     self.nowcourse.aid};
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@signStatus",AttendanceURL]];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
+    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject){
+        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        @try {
+            if ([json[@"status"] isEqual:@"0"]){
+                id result = json[@"result"];
+                self.attendanceHistory = [[NSMutableArray alloc]init];
+                for (id attendance in result){
+                    [self.attendanceHistory addObject:[[Attendance alloc]initWithLabel:
+                                                       [self.attendanceStatus objectAtIndex:[attendance[@"status"]intValue]
+                                                        ]
+                                                                               andTime:[attendance[@"signtime"]stringValue]]];
+
+                }
+            }
+        } @catch (NSException *exception) {
+
+        } @finally {
+            [self.tableView reloadData];
+        }
+        _server = @"已连接";
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        _server = error.localizedDescription;
+    }];
+
+}
+-(NSString*)unixToNSDate:(NSString*)unix{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+
+    return [formatter stringFromDate:
+            [
+             [NSDate alloc]initWithTimeIntervalSince1970:
+             [unix doubleValue]
+             ]
+            ];
+}
+
+-(void)refreshStatus{
+    [self checkServer];
+    BOOL enabled = TRUE;
+
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc]initWithString:
+    [NSString stringWithFormat:@"当前Wi-Fi:%@ \n当前Leapbox状态:%@ \n当前服务器状态:%@",[self WiFi],[self Bluetooth],self.server]];
+    [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12.0f] range:NSMakeRange(0, [str length])];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(8, [[self WiFi] length])];
+    enabled = NO;
+    for (NSString* s in [self TrustedWiFi])
+        if ([[self WiFi] isEqualToString:s]){
+            [str addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(8, [[self WiFi] length])];
+            enabled = YES;
+        }
+
+
+
+
+    if ([[self Bluetooth] isEqualToString:@"未找到"]){
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange([[str string]rangeOfString:@"当前Leapbox状态:"].location+[@"当前Leapbox状态:" length], 3)];
+        enabled = NO;
+    }
+    else
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange([[str string]rangeOfString:@"当前Leapbox状态:"].location+[@"当前Leapbox状态:" length], 3)];
+    if ([self.server isEqualToString:@"已连接"])
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange([[str string]rangeOfString:@"当前服务器状态:"].location+[@"当前服务器状态:" length], 3)];
+    else{
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange([[str string]rangeOfString:@"当前服务器状态:"].location+[@"当前服务器状态:" length], [self.server length])];
+        enabled = NO;
+    }
+
+
+    self.status.attributedText = str;
+    [self.attendance setTitle:self.signstatus forState:UIControlStateNormal];
+
+    if ([self.signstatus isEqualToString:self.attendanceStatus[0]]&&enabled){
+        self.attendance.backgroundColor = navigationTabColor;
+        self.attendance.enabled = YES;
+    } else {
+        self.attendance.backgroundColor = kColor(166, 166, 166);
+        self.attendance.enabled = NO;
+    }
+
+    
+}
+
 - (void)dismiss {
     [self.presentingViewController dismissViewControllerAnimated:YES
                                                       completion:nil];
@@ -68,11 +332,20 @@
 
 - (void)startMonitoring
 {
+    if(flag)
+        return;
+    flag = true;
     //uuid、major、minor跟iBeacon的参数对应。
-    _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:@"FDA50693-A4E2-4FB1-AFCF-C6EB07647825"]
-                                                            major:1001
-                                                            minor:1000
-                                                       identifier:@"test"];
+    _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:self.uuid]
+                                                            major:[self.major intValue]
+                                                            minor:[self.minor intValue]
+                                                       identifier:@"C301"];
+
+//  //  _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:@"FDA50693-A4E2-4FB1-AFCF-C6EB07647825"]
+//                                                            major:1000
+//                                                            minor:1001
+//                                                       identifier:@"C301"];
+
     [self.locationManager startMonitoringForRegion:_beaconRegion];
     [self.locationManager startRangingBeaconsInRegion:_beaconRegion];
 }
@@ -83,31 +356,59 @@
 -(void)viewDidDisappear:(BOOL)animated{
     [self endMonitoring];
 }
--(void)didClickSign{
-    [self signIn:self.studentID and:self.courseCode];
-    [self attendanceCenterClick];
-}
 #pragma mark -UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.attendanceArrays.count;
+    if (section == 1)
+        return [_attendanceHistory count];
+    if (self.nowcourse)
+        return 2;
+    else
+        return 0;
 }
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
+}
+
+
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (section==0)
+        return @"当前进行的课程";
+    if (section==1)
+        return @"本节课签到历史";
+
+    return nil;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AttendanceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"attendanceTableViewCell"];
-    cell.timeLabel.text = _attendanceArrays[indexPath.row].time;
-    cell.addressLabel.text = _attendanceArrays[indexPath.row].label;
-    cell.backgroundColor = kColor(242, 242, 242);
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (cell.tag == 11) {
-        cell.tag = 0;
-        [cell setNeedsDisplay];
+    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    cell.detailTextLabel.alpha = 0.5;
+    switch (indexPath.section) {
+        case 0:
+            if (indexPath.row ==0){
+                cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",self.nowcourse.coursecode,self.nowcourse.coursename];
+                
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ ~ %@",
+                                             [self unixToNSDate:self.nowcourse.startTime],[self unixToNSDate:self.nowcourse.endTime]];
+            }
+            else {
+                cell.textLabel.text = self.teacher;
+                cell.detailTextLabel.text = self.teacherEn;
+            }
+            break;
+        case 1:
+            cell.textLabel.text = _attendanceHistory[indexPath.row].label;
+            cell.detailTextLabel.text = [self unixToNSDate:_attendanceHistory[indexPath.row].time];
+            break;
+        default:
+            break;
     }
-    if (indexPath.row == self.attendanceArrays.count-1) {
-        cell.tag = 11;
-        [cell setNeedsDisplay];
-    }
+
+    //if (indexPath.section == 0)
+        cell.userInteractionEnabled = NO;
     return cell;
 }
 
@@ -115,307 +416,41 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kCellHeight;
-}
-
--(void)ibeaconFind{
-
-   // self.ibeaconStatus.hidden = NO;
-    self.headerView.bluetooth.text = @"蓝牙状态 ⭕️";
-    if ([self.status isEqualToString:@"已签到"]||[self.courseCode isEqualToString:@"暂无课程"]){
-        [self setButtonOff];
-    }else
-    [self setButtonOn];
-}
--(void)ibeaconNotFound{
-
-  //  self.ibeaconStatus.hidden = NO;
-    self.headerView.bluetooth.text =@"蓝牙状态 ❌";
-    if ([self.status isEqualToString:@"已签到"]||[self.courseCode isEqualToString:@"暂无课程"]){
-        [self setButtonOff];
-    }else
-    [self setButtonOff];
+    return 44;
 }
 
 
--(void)signIn:(NSString*)studID
-          and:(NSString*)courseCode{
-    NSString * udid = [[NSUserDefaults standardUserDefaults]valueForKey:@"deviceID"];
-    NSDictionary *o1 =@{@"studentID":self.studentID,
-                        @"UDID":udid,
-                        @"courseid":courseCode};
-    
-    NSURL *URL = [NSURL URLWithString:@"http://www.ohurray.com/api/sign"];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-
-    //转成最原始的data,一定要加
-    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
-
-    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-
-       
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"result=%@",error);
-    }];
-
-}
--(void)getStatus{
-    NSDictionary *o1 =@{@"studentID":self.studentID};
-    NSURL *URL = [NSURL URLWithString:@"http://www.ohurray.com/getUserInfo"];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
-
-    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-        self.attendanceArrays = [[NSMutableArray alloc]init];
-        //NSLog(@"result=%@",json);
-        if([json count] > 0){
-            id h= json[0];
-            NSString *teacherName = h[@"teacherName"];
-            NSString *email       = h[@"email"];
-            NSString *courseCode  = h[@"courseCode"];
-            NSArray* history = h[@"signHistory"];
-            for (id test in history){
-                Attendance * t = [[Attendance alloc]init];
-                t.time = test[@"time"];
-                t.label = test[@"classRoom"];
-                [self.attendanceArrays addObject:t];
-            }
-            self.email = email;
-            self.teacherName = teacherName;
-            self.courseCode = courseCode;
-            
-            if([h[@"isSigned"] isEqualToString:@"0"]){
-                self.status = @"已签到";
-            }
-            
-            if ([h[@"isSigned"] isEqualToString:@"1"])
-                self.status = @"未签到";
-            if ([self.attendanceArrays count]==0){
-                self.status = @"暂未开启签到";
-            }
-        }
-        else{
-    
-        }
-        [self reloadView];
-        [self.tableView reloadData];
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"%@",error);
-
-    }];
-
-}
--(void)reloadView{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"YYYY-MM-dd"];
-    self.headerView.Date.text = [formatter stringFromDate:[NSDate date]];
-    self.headerView.Course.text= self.courseCode;
-    self.headerView.Status.text = self.status;
-    if ([self.status isEqualToString:@"已签到"]){
-        [self setButtonOff];
-    }
-}
-#pragma mark -Button attendanceCenter click event
--(void)setButtonOn{
-    NSLog(@"on");
-    self.headerView.Attendance.backgroundColor = navigationTabColor;
-    self.headerView.Attendance.userInteractionEnabled = YES;
-}
--(void)setButtonOff{
-    NSLog(@"off");
-    self.headerView.Attendance.backgroundColor = [UIColor grayColor];
-    self.headerView.Attendance.userInteractionEnabled = NO;
-}
-- (IBAction)attendanceCenterClick {
-    if (self.isAnimating) {
-        NSLog(@"正在动画...");
-        return;
-    }
-    [self setButtonOff];
-    NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
-   // [self.tableView scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:YES];
-    self.coverView.hidden = NO;
-    NSDateFormatter * formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    Attendance* t = [[Attendance alloc]init];
-    t.label = @"C302";
-    t.time=[formatter stringFromDate:[NSDate date]];
-    [self.attendanceArrays insertObject:t atIndex:0];
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView endUpdates];
-
-    AttendanceTableViewCell *cell = [self.tableView cellForRowAtIndexPath:path];
-    UIView *newCell = [cell snapshotViewAfterScreenUpdates:YES];
-    newCell.frame = CGRectMake(0, -kCellHeight, cell.frame.size.width, kCellHeight);
-    [self.coverView insertSubview:newCell aboveSubview:self.timeLineView];
-    [self markerImageViewBeginAnimation];
-    [self cellAnimation];
-}
 
 #pragma mark -Button attendanceSuccess click event
 
-- (IBAction)attendanceSuccessClick
+- (void)attendanceSuccessClick
 {
-//    CALayer *layer = self.markerImageView.layer;
-//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-//    animation.toValue = [NSValue valueWithCGPoint:CGPointMake(layer.position.x, layer.position.y-15)];
-//    animation.autoreverses = YES;
-//    animation.duration = kAnimationDuration;
-//    animation.repeatCount = 2;
-//    animation.removedOnCompletion = NO;
-//    [layer addAnimation:animation forKey:nil];
+    NSLog(@"YES");
 }
 
-#pragma mark -Cell animation
-
-- (void)cellAnimation
+- (void)locationManager:(CLLocationManager *)manager
+      didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
 {
-    NSInteger tableViewH = [UIScreen mainScreen].bounds.size.height -100 -64 -100;
-    NSInteger cellCount = 2 + tableViewH / kCellHeight;
-    self.isAnimating = YES;
-    NSInteger index = 0;
-    NSInteger count = self.coverView.subviews.count -1;
-    if (count > cellCount) {
-        count = cellCount;
-    }
-    self.timeLineView.frame = CGRectMake(1, 0, 40, (count-1) *kCellHeight);
-    for (NSInteger i=count; i>=0; i--) {
-        if (i == 0) {
-            return;
-        }
-        UIView *subview = self.coverView.subviews[i];
-        if ([subview isKindOfClass:[TimeLineView class]]) {
-            continue;
-        }
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-        animation.toValue = [NSValue valueWithCGPoint:CGPointMake(subview.layer.position.x, subview.layer.position.y+kCellHeight)];
-        animation.duration = kAnimationDuration -0.1;
-        animation.removedOnCompletion = NO;
-        if (i == 1) {
-            animation.delegate = self;
-        }
-        animation.fillMode = kCAFillModeForwards;
-        animation.beginTime = CACurrentMediaTime()+kDelayFactor*index +kAnimationDuration;
-        [subview.layer addAnimation:animation forKey:nil];
-        index++;
-    }
+    NSLog(@"!!!");
 }
 
-#pragma mark -CAAnimationDelegate
-
-- (void)animationDidStop:(CABasicAnimation *)anim finished:(BOOL)flag
+- (void)locationManager:(CLLocationManager *)manager
+         didEnterRegion:(CLRegion *)region
 {
-    self.coverView.hidden = YES;
-    self.isAnimating = NO;
-    for (UIView *subview in self.coverView.subviews) {
-        if ([subview isKindOfClass:[TimeLineView class]]) {
-            continue;
-        }
-        [subview.layer removeAllAnimations];
-        subview.frame = CGRectOffset(subview.frame, 0, kCellHeight);
-    }
+    NSLog(@"didEnterRegion");
+
 }
-
-#pragma mark -MarkerImageView animation
-
-- (void)markerImageViewBeginAnimation
-{
-//    CALayer *layer = self.markerImageView.layer;
-//    CABasicAnimation *animTranslate = [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
-//    animTranslate.toValue = @(-46-15);
-//    CABasicAnimation *animScale = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-//    animScale.toValue = @(1.5);
-//
-//    CAAnimationGroup *group = [CAAnimationGroup animation];
-//    group.animations = @[animTranslate];
-//    group.duration = kAnimationDuration;
-//    group.autoreverses = YES;
-//    [layer addAnimation:group forKey:nil];
-}
-
-
-#pragma mark -lazy coverView
-
-- (UIView *)coverView
-{
-    if (!_coverView) {
-        _coverView = [[UIView alloc] initWithFrame:self.tableView.frame];
-//        _coverView.backgroundColor = [UIColor whiteColor];
-        _coverView.backgroundColor = kColor(242, 242, 242);
-        self.tableView.backgroundColor = kColor(242, 242, 242);
-//        self.tableView.backgroundColor = [UIColor whiteColor];
-        TimeLineView *timeLineView = [[TimeLineView alloc] initWithFrame:CGRectMake(1, 0, 40, _coverView.frame.size.height -35)];
-        self.timeLineView = timeLineView;
-    //    timeLineView.backgroundColor = [UIColor whiteColor];
-        timeLineView.backgroundColor = kColor(242, 242, 242);
-        [_coverView addSubview:timeLineView];
-        NSArray *visibleCells = [self.tableView visibleCells];
-        for (AttendanceTableViewCell *cell in visibleCells) {
-            UIView *copyCell = [cell snapshotViewAfterScreenUpdates:YES];
-            copyCell.frame = cell.frame;
-            [_coverView addSubview:copyCell];
-        }
-
-    }
-    [self.view bringSubviewToFront:self.headerView];
-    return _coverView;
-}
-
-#pragma mark -lazy attendanceArrays
-
-- (NSMutableArray *)attendanceArrays
-{
-    if (!_attendanceArrays) {
-        _attendanceArrays = [NSMutableArray array];
-     //   [_attendanceArrays addObject:@"1"];
-    //    [_attendanceArrays addObject:@"1"];
-    }
-    return _attendanceArrays;
-}
-
-#pragma mark -TableView timeLine
-
-- (TimeLineView *)tableLine
-{
-    if (!_tableLine) {
-        _tableLine = [[TimeLineView alloc] init];
-        _tableLine.backgroundColor = self.tableView.backgroundColor;
-        [self.tableView addSubview:_tableLine];
-    }
-    return _tableLine;
-}
-
-#pragma  mark -UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (scrollView.contentOffset.y < 0) {
-        self.tableLine.frame = CGRectMake(1, scrollView.contentOffset.y, 40, -scrollView.contentOffset.y);
-    }
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    if (self.isAnimating) {
-        return;
-    }
-    [self markerImageViewBeginAnimation];
-  //  [self earthImageViewBeginAnimation];
-}
-
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
     BOOL find = NO;
     for (CLBeacon *beacon in beacons) {
-        NSLog(@"find");
-        [self ibeaconFind];
         find = YES;
+     //   NSLog(@"find");
     }
-    if (!find)
-        [self ibeaconNotFound];
+    self.found = find;
+
+
 }
 
 @end

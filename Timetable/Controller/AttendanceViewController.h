@@ -12,24 +12,30 @@
 #import "Account.h"
 #import "AttendanceHeaderView.h"
 #import "AttendanceTableViewCell.h"
-#import "TimeLineView.h"
 #import "Attendance.h"
-#define kCellHeight             90
-#define kDelayFactor            0.3
-#define kAnimationDuration      0.6
-@interface AttendanceViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate,AttendanceDelegate>
-@property (nonatomic,strong) AttendanceHeaderView* headerView;
+#import "AttendanceCourse.h"
+#import <CoreLocation/CoreLocation.h>
+#import <CoreBluetooth/CoreBluetooth.h>
+@interface AttendanceViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate>
 @property (nonatomic,strong) UITableView* tableView;
-@property (nonatomic, assign) BOOL isAnimating;
-@property (nonatomic,strong) UILabel* ibeaconStatus;
-@property (nonatomic, strong) UIView *coverView;
-@property (nonatomic, weak) TimeLineView *timeLineView;
-@property (nonatomic, strong) TimeLineView *tableLine;
-@property (nonatomic,strong) NSString* str;
-@property (nonatomic,strong) NSString* studentID;
-@property (nonatomic,strong) NSString* courseCode;
-@property (nonatomic,strong) NSString* teacherName;
-@property (nonatomic,strong) NSString* status;
-@property (nonatomic,strong) NSString* email;
-@property (nonatomic, strong) NSMutableArray<Attendance*> *attendanceArrays;
+@property (nonatomic,strong) UIButton* attendance;
+@property (nonatomic,strong) UILabel* status;
+@property  (nonatomic,strong) NSString* server;
+@property BOOL found;
+@property (nonatomic,strong) AttendanceCourse* nowcourse;
+
+@property (nonatomic,strong) NSString* major;
+@property (nonatomic,strong) NSString* minor;
+@property (nonatomic,strong) NSString* ssid;
+@property (nonatomic,strong) NSString* uuid;
+@property (nonatomic,strong) NSString* macaddress;
+@property (nonatomic,strong) NSString* leapboxid;
+@property (nonatomic,strong) NSString* lastaid;
+@property (nonatomic) CBCentralManager* centralManager;
+
+@property (nonatomic,strong) NSString * teacher;
+@property (nonatomic,strong) NSString* teacherEn;
+@property (nonatomic,strong) NSString* signstatus;
+@property (nonatomic,strong) NSMutableArray<Attendance*>*attendanceHistory;
+
 @end

@@ -30,6 +30,9 @@ PODS:
   - mailcore2-ios (0.6.4)
   - MJRefresh (3.1.12)
   - pop (1.0.10)
+  - RongCloudIM/IMKit (2.8.14):
+    - RongCloudIM/IMLib
+  - RongCloudIM/IMLib (2.8.14)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -53,6 +56,8 @@ DEPENDENCIES:
   - mailcore2-ios
   - MJRefresh
   - pop
+  - RongCloudIM/IMKit (~> 2.8.9)
+  - RongCloudIM/IMLib (~> 2.8.9)
   - SDWebImage (~> 3.8)
   - tingyunApp
 
@@ -71,10 +76,11 @@ SPEC CHECKSUMS:
   mailcore2-ios: 3ff0be2fa553d4da9c11d39c11d51863c768f24f
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
+  RongCloudIM: 04334f9285db8bc5e2f69bda0e3ce5431a6bec72
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   tingyunApp: 9213e4e826a618ffda4619618e805bc7392f98b7
   ZXingObjC: bbf7b8f0cf8933fdd33eb4f9f46e22308552869b
 
-PODFILE CHECKSUM: a7aab07cf1dbc1d279ee1e6e9ca374e2e5ded8d6
+PODFILE CHECKSUM: c52085e46615a01fe0d05d041b29bf56bd003a6e
 
 COCOAPODS: 1.1.1

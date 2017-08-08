@@ -235,6 +235,7 @@
                         <segue destination="j1w-EA-vIc" kind="relationship" relationship="viewControllers" id="qOt-xQ-s9b"/>
                         <segue destination="cYC-NW-JL1" kind="relationship" relationship="viewControllers" id="mB6-gT-oQT"/>
                         <segue destination="ZiW-dd-hx8" kind="relationship" relationship="viewControllers" id="6tY-He-cwG"/>
+                        <segue destination="ypZ-hm-mgr" kind="relationship" relationship="viewControllers" id="3fv-05-adZ"/>
                         <segue destination="nZ4-aI-NJm" kind="relationship" relationship="viewControllers" id="HRh-Lx-306"/>
                     </connections>
                 </tabBarController>
@@ -353,8 +354,55 @@
             </objects>
             <point key="canvasLocation" x="2869.5999999999999" y="998.95052473763121"/>
         </scene>
+        <!--Root View Controller-->
+        <scene sceneID="ToF-qN-QDi">
+            <objects>
+                <tableViewController id="dJ6-VL-MFv" customClass="MessageController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Oii-uK-sAp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="4SY-cx-GFs">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4SY-cx-GFs" id="5FU-3E-Jpn">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="dJ6-VL-MFv" id="uNi-Ua-AvN"/>
+                            <outlet property="delegate" destination="dJ6-VL-MFv" id="tzg-Ff-Zvz"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="bNv-08-5bU"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BBf-wp-xdG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2963" y="1696"/>
+        </scene>
+        <!--小纸条-->
+        <scene sceneID="VlY-6d-ZqD">
+            <objects>
+                <navigationController id="ypZ-hm-mgr" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="小纸条" image="sidebar-mail" id="ZkR-pX-cUK"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Q4n-AK-0BQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="dJ6-VL-MFv" kind="relationship" relationship="rootViewController" id="Br0-HQ-zZB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S9H-1O-bja" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2012" y="1696"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="sidebar-mail" width="19" height="19"/>
         <image name="tabbar-class" width="30" height="30"/>
         <image name="tabbar-message" width="16" height="16"/>
         <image name="tabbar-oa" width="16" height="16"/>

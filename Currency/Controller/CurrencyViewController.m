@@ -72,8 +72,9 @@
          floatValue
          ]
         ;
-        [self updateData];
         _basePrice = 1 / _basePrice;
+        [self updateData];
+        //_basePrice = 1 / _basePrice;
     } failure:^(NSURLSessionTask *operation, NSError *error) {
 
 
