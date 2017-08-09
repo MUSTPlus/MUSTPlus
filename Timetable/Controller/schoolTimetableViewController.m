@@ -18,6 +18,8 @@
 #import <JGProgressHUD/JGProgressHUD.h>
 #import "HeiHei.h"
 #import "NSString+AES.h"
+#import <UserNotifications/UserNotifications.h>
+
 #import "TimetableLogic.h"//判断课程逻辑
 #import "SchoolClassCoreDataManager.h" //课程表数据库
 //#import "FLEXManager.h"
@@ -269,7 +271,19 @@
 }
 -(void) viewDidAppear:(BOOL)animated
 {
-//NSString* page = @"TimeTable";
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
+        JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+        entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+        AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication]delegate];
+        [JPUSHService registerForRemoteNotificationConfig:entity delegate:delegate];
+    }
+    else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                          UIUserNotificationTypeSound |
+                                                          UIUserNotificationTypeAlert)
+                                              categories:nil];
+    } //NSString* page = @"TimeTable";
 }
 -(void)gotoUpdate{
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/must/id1216741750?l=en&mt=8"]];

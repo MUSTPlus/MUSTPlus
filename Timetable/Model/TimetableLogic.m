@@ -20,6 +20,7 @@
     for(SchoolClassModel *class in schoolClasses){
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         NSString* nowYear = [[[[Account shared]getSemester]stringByReplacingOccurrencesOfString:@"09" withString:@""]stringByReplacingOccurrencesOfString:@"02" withString:@""];
+        if (!nowYear) nowYear = @"17";
         [formatter setDateFormat:@"yyMdd"];
         NSString*startDate = [NSString stringWithFormat:@"%@%d%@",nowYear,[self month:[class.class_StartMonth substringToIndex:3]],[class.class_StartMonth substringFromIndex:2]];
         NSString*endDate = [NSString stringWithFormat:@"%@%d%@",nowYear,[self month:[class.class_EndMonth substringToIndex:3]],[class.class_EndMonth substringFromIndex:2]];

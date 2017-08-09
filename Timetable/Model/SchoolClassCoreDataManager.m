@@ -31,7 +31,9 @@
         classInfo.class_StartTime = [info objectForKey:@"class_StartTime"];
         classInfo.class_Name  = [info objectForKey:@"class_Name"];
         classInfo.class_StartMonth  = [info objectForKey:@"class_StartMonth"];
+
         classInfo.class_EndMonth  = [info objectForKey:@"class_EndMonth"];
+        
         classInfo.class_No  = [info objectForKey:@"class_No"];
         classInfo.class_Teacher  = [info objectForKey:@"class_Teacher"];
         classInfo.class_EndTime = [info objectForKey:@"class_EndTime"];

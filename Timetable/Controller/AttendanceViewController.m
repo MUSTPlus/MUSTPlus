@@ -55,7 +55,7 @@
     self.attendance = [[UIButton alloc]initWithFrame:CGRectMake((Width-100)/2, Height-250, 100, 100)];
     [self.attendance setTitle:@"开始签到" forState:UIControlStateNormal];
     [self.attendance setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.attendance addTarget:self action:@selector(attendanceSuccessClick) forControlEvents:UIControlEventTouchDown];
+    [self.attendance addTarget:self action:@selector(startSign) forControlEvents:UIControlEventTouchDown];
     self.attendance.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.attendance.backgroundColor=navigationTabColor;
     self.status = [[UILabel alloc]initWithFrame:CGRectMake(0, Height-150, Width, 100)];
@@ -74,7 +74,7 @@
 
 
 
-    self.attendanceHistory = [[NSMutableArray alloc]initWithObjects:[[Attendance alloc]init], nil];
+    self.attendanceHistory = [[NSMutableArray alloc]init];
 
     NSTimer * timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(refreshStatus) userInfo:nil repeats:YES];
 
@@ -189,7 +189,7 @@
                 [self startMonitoring];
 
                 }
-            }
+            } else self.signstatus = @"未开启签到";
         } @catch (NSException *exception) {
             _server = @"未连接";
         } @finally {
@@ -204,7 +204,7 @@
 
 -(void)checkHistory{
     if (!self.nowcourse) return;
-    NSDictionary *o1 =@{@"stuid": @"1599999-9999-9999",
+    NSDictionary *o1 =@{@"stuid": [[Account shared]getStudentLongID],
                         @"sid":     self.nowcourse.sid};
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@signHistory",AttendanceURL]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -236,7 +236,7 @@
 }
 -(void)checkStatus{
     if (!_nowcourse) return;
-    NSDictionary *o1 =@{@"stuid": @"1599999-9999-9999",
+    NSDictionary *o1 =@{@"stuid": [[Account shared]getStudentLongID],
                         @"aid":     self.nowcourse.aid};
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@signStatus",AttendanceURL]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -400,6 +400,7 @@
             }
             break;
         case 1:
+
             cell.textLabel.text = _attendanceHistory[indexPath.row].label;
             cell.detailTextLabel.text = [self unixToNSDate:_attendanceHistory[indexPath.row].time];
             break;
@@ -423,9 +424,37 @@
 
 #pragma mark -Button attendanceSuccess click event
 
-- (void)attendanceSuccessClick
+- (void)startSign
 {
-    NSLog(@"YES");
+    if (!_nowcourse) return;
+    NSDictionary *o1 =@{@"stuid": [[Account shared]getStudentLongID],
+                        @"sid":     self.nowcourse.sid,
+                        @"token":   [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"],
+                        @"aid":     self.nowcourse.aid,
+                        @"source":@"1"};
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@startSign",AttendanceURL]];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
+    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject){
+        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        @try {
+            id result = json[@"msg"];
+            Alert* alert = [[Alert alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        } @catch (NSException *exception) {
+
+        } @finally {
+            self.attendance.backgroundColor = kColor(166, 166, 166);
+            self.attendance.enabled = NO;
+            [self.tableView reloadData];
+
+        }
+
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        Alert* alert = [[Alert alloc]initWithTitle:@"提示" message:error.localizedDescription delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }];
+
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -443,12 +472,8 @@
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
-    BOOL find = NO;
-    for (CLBeacon *beacon in beacons) {
-        find = YES;
-     //   NSLog(@"find");
-    }
-    self.found = find;
+
+    self.found = [beacons count]==0 ;
 
 
 }

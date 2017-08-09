@@ -16,7 +16,7 @@
 #import "AttendanceCourse.h"
 #import <CoreLocation/CoreLocation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-@interface AttendanceViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate>
+@interface AttendanceViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate,CBCentralManagerDelegate>
 @property (nonatomic,strong) UITableView* tableView;
 @property (nonatomic,strong) UIButton* attendance;
 @property (nonatomic,strong) UILabel* status;

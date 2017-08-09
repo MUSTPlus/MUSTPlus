@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "BasicHead.h"
-@interface MessageController : UITableViewController<UITableViewDelegate,UITableViewDataSource>
-
+#import <RongIMKit/RongIMKit.h>
+@interface MessageController : RCConversationListViewController
 @end

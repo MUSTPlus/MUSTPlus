@@ -105,7 +105,7 @@
 -(void)ClickNotificationStatus{
 
     NSInteger status = [[UIApplication sharedApplication] currentUserNotificationSettings].types;
-    NSLog(@"status = %d",status);
+    NSLog(@"status = %ld",(long)status);
     if (status >0){
         NSString * identifier = [NSBundle mainBundle].bundleIdentifier;
         NSString * str = [NSString stringWithFormat:@"App-Prefs:root=NOTIFICATIONS_ID&path=%@",identifier];
