@@ -10,5 +10,5 @@
 #import "Account.h"
 @interface GradeController : UIViewController
 @property (nonatomic,strong)  UIWebView* webView;
-
+@property (nonatomic,strong) UIActivityViewController* av;
 @end

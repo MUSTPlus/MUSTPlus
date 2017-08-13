@@ -142,7 +142,7 @@
 }
 
 -(void)checkServer{
-    NSDictionary *o1 =@{@"stuid": @"1599999-9999-9999"};
+    NSDictionary *o1 =@{@"stuid": [[Account shared]getStudentLongID]};
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@nowSchedule",AttendanceURL]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
@@ -179,7 +179,10 @@
                 self.ssid = leapbox[@"ssid"];
                 self.uuid = leapbox[@"uuid"];
                 self.lastaid = result[@"lastaid"];
-                self.signstatus = [
+                if ([result[@"status"] intValue] == -1)
+                    self.signstatus = @"未开启签到";
+                else
+                    self.signstatus = [
                                    self.attendanceStatus objectAtIndex:[result[@"status"] intValue]
                                    ];
                 id teacher = result[@"teacher"];
@@ -441,6 +444,7 @@
             id result = json[@"msg"];
             Alert* alert = [[Alert alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
+            self.attendance.enabled = NO;
         } @catch (NSException *exception) {
 
         } @finally {
@@ -472,8 +476,8 @@
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
-
-    self.found = [beacons count]==0 ;
+    CirnoLog(@"%@",beacons);
+    self.found = [beacons count]!=0 ;
 
 
 }

@@ -37,6 +37,7 @@
 		21BDF2F11E97D44600992CF7 /* realnature.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EC1E97D44600992CF7 /* realnature.plist */; };
 		21BDF2F21E97D44600992CF7 /* sport.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2ED1E97D44600992CF7 /* sport.plist */; };
 		21BDF2F31E97D44600992CF7 /* symbol.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EE1E97D44600992CF7 /* symbol.plist */; };
+		21C5D04E1F404C2E005E682A /* GradeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C5D04D1F404C2E005E682A /* GradeActivity.m */; };
 		21FEE33B1EAE7036006C5538 /* WeekTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FEE33A1EAE7036006C5538 /* WeekTool.m */; };
 		319A00011E7C11D00050E10C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 319A00001E7C11D00050E10C /* libz.tbd */; };
 		319A00031E7C11D60050E10C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 319A00021E7C11D60050E10C /* libc++.tbd */; };
@@ -425,6 +426,8 @@
 		21BDF2EC1E97D44600992CF7 /* realnature.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = realnature.plist; sourceTree = "<group>"; };
 		21BDF2ED1E97D44600992CF7 /* sport.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sport.plist; sourceTree = "<group>"; };
 		21BDF2EE1E97D44600992CF7 /* symbol.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = symbol.plist; sourceTree = "<group>"; };
+		21C5D04C1F404C2E005E682A /* GradeActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeActivity.h; sourceTree = "<group>"; };
+		21C5D04D1F404C2E005E682A /* GradeActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeActivity.m; sourceTree = "<group>"; };
 		21FEE3391EAE7036006C5538 /* WeekTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekTool.h; sourceTree = "<group>"; };
 		21FEE33A1EAE7036006C5538 /* WeekTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekTool.m; sourceTree = "<group>"; };
 		319A00001E7C11D00050E10C /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -2188,6 +2191,8 @@
 		319AFDE81E7C0F5D0050E10C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				21C5D04C1F404C2E005E682A /* GradeActivity.h */,
+				21C5D04D1F404C2E005E682A /* GradeActivity.m */,
 				319AFDE91E7C0F5D0050E10C /* BCBookLibrary.h */,
 				319AFDEA1E7C0F5D0050E10C /* BCBookLibrary.m */,
 				319AFDEB1E7C0F5D0050E10C /* BCGrade.xcdatamodeld */,
@@ -3063,6 +3068,7 @@
 				319AFEE41E7C0F5E0050E10C /* CardDownAnimationView.m in Sources */,
 				319AFEF51E7C0F5E0050E10C /* MacauHoliday.m in Sources */,
 				319AFEC01E7C0F5D0050E10C /* JJMainScrollView.m in Sources */,
+				21C5D04E1F404C2E005E682A /* GradeActivity.m in Sources */,
 				319AFFE51E7C0F5E0050E10C /* CutWeekTitleScrollView.m in Sources */,
 				319AFF891E7C0F5E0050E10C /* FaceThemeView.m in Sources */,
 				21FEE33B1EAE7036006C5538 /* WeekTool.m in Sources */,
