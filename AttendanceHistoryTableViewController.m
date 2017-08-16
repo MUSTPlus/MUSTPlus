@@ -102,7 +102,7 @@
                                  [self unixToNSDate:self.history[indexPath.row].signTime] ,
                                   self.history[indexPath.row].source,self.history[indexPath.row].status ];
     cell.detailTextLabel.alpha = 0.5f;
-
+    cell.userInteractionEnabled = NO;
 
     return cell;
 }

@@ -478,6 +478,8 @@
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
+    CirnoLog(@"%@",beacons);
+    self.found = [beacons count]!=0 ;
 
     for (CLBeacon* beacon in beacons){
     //    CirnoLog(@"%@",beacons);

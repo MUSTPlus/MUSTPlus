@@ -37,6 +37,7 @@
 		21BDF2F11E97D44600992CF7 /* realnature.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EC1E97D44600992CF7 /* realnature.plist */; };
 		21BDF2F21E97D44600992CF7 /* sport.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2ED1E97D44600992CF7 /* sport.plist */; };
 		21BDF2F31E97D44600992CF7 /* symbol.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EE1E97D44600992CF7 /* symbol.plist */; };
+		21C5D04E1F404C2E005E682A /* GradeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C5D04D1F404C2E005E682A /* GradeActivity.m */; };
 		21F87BDF1F4442E4004E45DA /* AttendanceHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F87BDE1F4442E4004E45DA /* AttendanceHistoryTableViewController.m */; };
 		21F87BE21F44462F004E45DA /* AttendanceHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F87BE11F44462F004E45DA /* AttendanceHistory.m */; };
 		21FEE33B1EAE7036006C5538 /* WeekTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FEE33A1EAE7036006C5538 /* WeekTool.m */; };
