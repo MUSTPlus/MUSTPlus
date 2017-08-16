@@ -7,6 +7,7 @@
 //
 
 #import "AttendanceViewController.h"
+#import "AttendanceHistoryTableViewController.h"
 #import "HeiHei.h"
 #import "NSString+AES.h"
 #import "WSGetWifi.h"
@@ -123,13 +124,14 @@
 
 -(NSString*)Bluetooth{
     if (self.found)
-        return @"已找到";
+        return self.leapboxstatus;
     return @"未找到";
 
 }
 
 -(void)gotoHistory{
-
+    AttendanceHistoryTableViewController* ctr = [[AttendanceHistoryTableViewController alloc]init];
+    [self.navigationController pushViewController:ctr animated:YES];
 }
 
 
@@ -142,7 +144,7 @@
 }
 
 -(void)checkServer{
-    NSDictionary *o1 =@{@"stuid": @"1599999-9999-9999"};
+    NSDictionary *o1 =@{@"stuid": [[Account shared]getStudentLongID]};
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@nowSchedule",AttendanceURL]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
@@ -179,7 +181,10 @@
                 self.ssid = leapbox[@"ssid"];
                 self.uuid = leapbox[@"uuid"];
                 self.lastaid = result[@"lastaid"];
-                self.signstatus = [
+                if ([result[@"status"] intValue] == -1)
+                    self.signstatus = @"未开启签到";
+                else
+                    self.signstatus = [
                                    self.attendanceStatus objectAtIndex:[result[@"status"] intValue]
                                    ];
                 id teacher = result[@"teacher"];
@@ -301,7 +306,7 @@
         enabled = NO;
     }
     else
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange([[str string]rangeOfString:@"当前Leapbox状态:"].location+[@"当前Leapbox状态:" length], 3)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange([[str string]rangeOfString:@"当前Leapbox状态:"].location+[@"当前Leapbox状态:" length], [self.leapboxstatus length])];
     if ([self.server isEqualToString:@"已连接"])
         [str addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange([[str string]rangeOfString:@"当前服务器状态:"].location+[@"当前服务器状态:" length], 3)];
     else{
@@ -441,6 +446,7 @@
             id result = json[@"msg"];
             Alert* alert = [[Alert alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
+            self.attendance.enabled = NO;
         } @catch (NSException *exception) {
 
         } @finally {
@@ -473,8 +479,14 @@
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
 
-    self.found = [beacons count]==0 ;
+    for (CLBeacon* beacon in beacons){
+    //    CirnoLog(@"%@",beacons);
+     //    CirnoLog(@"强度为:%ld",(long)beacon.rssi);
+        self.leapboxstatus = [NSString stringWithFormat:@"信号强度:%ld",(long)beacon.rssi];
 
+    }
+    self.found = [beacons count]!=0 ;
+    //CirnoLog(@"%lu,%d",(unsigned long)[beacons count],[beacons count]!=0);
 
 }
 

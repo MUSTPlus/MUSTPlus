@@ -36,6 +36,7 @@
 @property (nonatomic,strong) NSString * teacher;
 @property (nonatomic,strong) NSString* teacherEn;
 @property (nonatomic,strong) NSString* signstatus;
+@property (nonatomic,strong) NSString* leapboxstatus;
 @property (nonatomic,strong) NSMutableArray<Attendance*>*attendanceHistory;
 
 @end

@@ -37,6 +37,8 @@
 		21BDF2F11E97D44600992CF7 /* realnature.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EC1E97D44600992CF7 /* realnature.plist */; };
 		21BDF2F21E97D44600992CF7 /* sport.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2ED1E97D44600992CF7 /* sport.plist */; };
 		21BDF2F31E97D44600992CF7 /* symbol.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EE1E97D44600992CF7 /* symbol.plist */; };
+		21F87BDF1F4442E4004E45DA /* AttendanceHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F87BDE1F4442E4004E45DA /* AttendanceHistoryTableViewController.m */; };
+		21F87BE21F44462F004E45DA /* AttendanceHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F87BE11F44462F004E45DA /* AttendanceHistory.m */; };
 		21FEE33B1EAE7036006C5538 /* WeekTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FEE33A1EAE7036006C5538 /* WeekTool.m */; };
 		319A00011E7C11D00050E10C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 319A00001E7C11D00050E10C /* libz.tbd */; };
 		319A00031E7C11D60050E10C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 319A00021E7C11D60050E10C /* libc++.tbd */; };
@@ -425,6 +427,10 @@
 		21BDF2EC1E97D44600992CF7 /* realnature.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = realnature.plist; sourceTree = "<group>"; };
 		21BDF2ED1E97D44600992CF7 /* sport.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sport.plist; sourceTree = "<group>"; };
 		21BDF2EE1E97D44600992CF7 /* symbol.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = symbol.plist; sourceTree = "<group>"; };
+		21F87BDD1F4442E4004E45DA /* AttendanceHistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceHistoryTableViewController.h; sourceTree = "<group>"; };
+		21F87BDE1F4442E4004E45DA /* AttendanceHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceHistoryTableViewController.m; sourceTree = "<group>"; };
+		21F87BE01F44462F004E45DA /* AttendanceHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceHistory.h; sourceTree = "<group>"; };
+		21F87BE11F44462F004E45DA /* AttendanceHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceHistory.m; sourceTree = "<group>"; };
 		21FEE3391EAE7036006C5538 /* WeekTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekTool.h; sourceTree = "<group>"; };
 		21FEE33A1EAE7036006C5538 /* WeekTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekTool.m; sourceTree = "<group>"; };
 		319A00001E7C11D00050E10C /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1094,6 +1100,8 @@
 		2158BFC11EB5C2A60002CD19 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				21F87BDD1F4442E4004E45DA /* AttendanceHistoryTableViewController.h */,
+				21F87BDE1F4442E4004E45DA /* AttendanceHistoryTableViewController.m */,
 				2158BFBD1EB5BCE10002CD19 /* AttendanceViewController.h */,
 				2158BFBE1EB5BCE10002CD19 /* AttendanceViewController.m */,
 			);
@@ -1118,6 +1126,8 @@
 		2158BFC31EB5C2BA0002CD19 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				21F87BE01F44462F004E45DA /* AttendanceHistory.h */,
+				21F87BE11F44462F004E45DA /* AttendanceHistory.m */,
 				21167A2E1EBB6091001D4A2C /* Attendance.h */,
 				21167A2F1EBB6091001D4A2C /* Attendance.m */,
 				5A48B8CEE6DF5C930C902424 /* AttendanceCourse.m */,
@@ -2935,6 +2945,7 @@
 				319AFEC61E7C0F5D0050E10C /* MGroupCell.m in Sources */,
 				319AFED31E7C0F5E0050E10C /* MASCompositeConstraint.m in Sources */,
 				319AFF8D1E7C0F5E0050E10C /* OfficialAccountToolbar.m in Sources */,
+				21F87BE21F44462F004E45DA /* AttendanceHistory.m in Sources */,
 				319AFEC51E7C0F5D0050E10C /* LQImgPickerActionSheet.m in Sources */,
 				319AFECF1E7C0F5E0050E10C /* SDDemoItemView.m in Sources */,
 				319AFEE01E7C0F5E0050E10C /* REMenu.m in Sources */,
@@ -2990,6 +3001,7 @@
 				319AFF7B1E7C0F5E0050E10C /* CTextView.m in Sources */,
 				319AFEE51E7C0F5E0050E10C /* AlertViewWithBlockOrSEL.m in Sources */,
 				319AFF701E7C0F5E0050E10C /* YYPhotosView.m in Sources */,
+				21F87BDF1F4442E4004E45DA /* AttendanceHistoryTableViewController.m in Sources */,
 				319AFFD81E7C0F5E0050E10C /* SmartCampusViewController.m in Sources */,
 				319AFF3B1E7C0F5E0050E10C /* BaseStatusCellFrame.m in Sources */,
 				319AFF821E7C0F5E0050E10C /* MoreItem.m in Sources */,
