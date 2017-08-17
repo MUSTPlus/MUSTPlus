@@ -25,6 +25,7 @@
 #import "UserDetailsController.h"
 #import "SettingViewController.h"
 #import "GradeController.h"
+#import "MessageController.h"
 @interface SchoolCampusMainTableViewController ()<UIDocumentInteractionControllerDelegate>{
     ChangePinNumberView* cpnv;
 }
@@ -283,7 +284,8 @@
 
 }
 -(void)showCal{
-    SchoolFileController *ctr = [[SchoolFileController alloc]init];
+    MessageController* ctr = [[MessageController alloc]init];
+   // SchoolFileController *ctr = [[SchoolFileController alloc]init];
     ctr.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ctr animated:YES];
 }

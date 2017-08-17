@@ -14,6 +14,7 @@
 #import "AttendanceTableViewCell.h"
 #import "Attendance.h"
 #import "AttendanceCourse.h"
+#import "MessageController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 @interface AttendanceViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate,CBCentralManagerDelegate>
