@@ -12,7 +12,8 @@
 #import "JPUSHService.h"
 #import "Alert.h"
 #import "MTA.h"
-
+#import "HeiHei.h"
+#import "NSString+AES.h"
 #define APP_KEY_WEIXIN            @"wx0185f297e144f34a"
 
 #define APP_KEY_QQ                @"222222"

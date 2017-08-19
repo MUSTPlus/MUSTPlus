@@ -21,4 +21,5 @@ pod 'tingyunApp'
 pod 'RongCloudIM/IMLib', '~> 2.8.9'
 pod 'RongCloudIM/IMKit', '~> 2.8.9' 
 pod 'Google/Analytics'
+pod 'RongCloudIM/Sticker'
 end

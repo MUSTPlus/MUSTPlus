@@ -224,7 +224,7 @@
         cell = [[UserDetailCellTableViewCell alloc]init];
     }
     if (indexPath.section == 1){
-        cell = [[UITableViewCell alloc]init];
+        UITableViewCell*cell = [[UITableViewCell alloc]init];
         cell.textLabel.text = @"退出当前账号";
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
 

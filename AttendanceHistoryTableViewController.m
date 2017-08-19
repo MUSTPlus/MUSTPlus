@@ -21,7 +21,6 @@
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height) style:UITableViewStyleGrouped];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    AttendanceHistory* h = [[AttendanceHistory alloc]init];
     self.history = [[NSMutableArray alloc]init];
 
       self.title = @"签到历史";

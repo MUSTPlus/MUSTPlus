@@ -290,6 +290,8 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
 //NSString* page = @"TimeTable";
+    NSString* page = @"TimeTable";
+    [MTA trackPageViewEnd:page];
 }
 -(NSDictionary*)sDate{
     NSDictionary*dic = [[NSDictionary alloc]initWithObjectsAndKeys:
@@ -344,7 +346,7 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
-
+    [self getRongCloudToken];
     _colorArray =[[NSArray alloc]initWithObjects:
                   kColor(84,188,225),
                   kColor(240,132,134),
@@ -384,12 +386,6 @@
     });
     dispatch_queue_t queue2 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
-//    dispatch_group_async(group, queue1, ^{
-//        UserModel* currentUser = [[UserModel alloc]init];
-//        currentUser.test = YES;
-//        [currentUser getUserModel:[[Account shared]getStudentLongID]];
-
-//    });
     self.nowSemester = [
                         [Semester alloc]initWithStartDate:
                         [self.sDate objectForKey:self.Semester]
@@ -553,6 +549,8 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    NSString* page = @"TimeTable";
+    [MTA trackPageViewBegin:page];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 -(void)selectWeek:(NSInteger)week{
@@ -965,6 +963,51 @@
     }
     return weekday;
 }
+
+
+-(void)RongCloudLogin:(NSString*)token{
+    [[RCIM sharedRCIM] initWithAppKey:@"lmxuhwaglz8gd"];
+    [[RCIM sharedRCIM] connectWithToken:token
+                                success:^(NSString *userId) {
+
+                                } error:^(RCConnectErrorCode status) {
+                                    [CirnoError ShowErrorWithText:[NSString stringWithFormat:@"小纸条登录失败！错误码为:%ld",(long)status]];
+                                } tokenIncorrect:^{
+                                    
+                                    [CirnoError ShowErrorWithText:@"小纸条登录失败！Token错误"];
+                                    
+                                }];
+    [[RCIM sharedRCIM]setUserInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
+    [RCIM sharedRCIM].enablePersistentUserInfoCache=YES;
+    [RCIM sharedRCIM].enableTypingStatus = YES;
+}
+
+-(void)getRongCloudToken{
+    NSDictionary *o1 =@{@"ec":@"9987",
+                        @"studentID": [[Account shared]getStudentLongID]};
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    NSDictionary *parameters = @{@"ec":data};
+
+    NSURL *URL = [NSURL URLWithString:BaseURL];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
+
+    [manager POST:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+        result = [result stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        [self RongCloudLogin:result];
+
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        [CirnoError ShowErrorWithText:error.localizedDescription];
+    }];
+}
+
 
 @end
 

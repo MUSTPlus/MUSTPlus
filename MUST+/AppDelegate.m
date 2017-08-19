@@ -89,9 +89,6 @@
 }
 
 
-
-
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     [Bugly startWithAppId:@"62d853eb65"];
@@ -323,8 +320,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         dict[NSLocalizedFailureReasonErrorKey] = failureReason;
         dict[NSUnderlyingErrorKey] = error;
         error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
-        // Replace this with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
@@ -334,7 +329,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 
 - (NSManagedObjectContext *)managedObjectContext {
-    // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
+
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
@@ -350,6 +345,71 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 
 
+#pragma mark -融云
+-(void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
+    if ([userId hasPrefix:@"ADMIN"]){
+        RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:userId
+                                                            name:@"系统消息"
+                                                        portrait:@"https://must.plus/logo.jpg"];
+        return completion(userinfo);
+    }
+    NSDictionary *o1 =@{@"ec":@"1032",
+                        @"studentID":userId};
+
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    NSDictionary *parameters = @{@"ec":data};
+
+    NSURL *URL = [NSURL URLWithString:BaseURL];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+
+    //转成最原始的data,一定要加
+    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
+
+    [manager POST:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if([json[@"state"] isEqualToString:@"1"]){
+            @try {
+                NSDictionary *newjson = json[@"info"];
+                RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:[newjson objectForKey:@"studentID"]
+            name:[newjson objectForKey:@"nickName"]
+                                                                portrait:[newjson objectForKey:@"face"]];
+
+                return completion(userinfo);
+
+            } @catch (NSException *exception) {
+                [CirnoError ShowErrorWithText:exception.description];
+            }
+            @finally{
+            }
+        }
+        else{
+            [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
+        }
+
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        [CirnoError ShowErrorWithText:[error localizedDescription]];
+
+    }];
+    return completion(nil);
+
+
+}
+
+
+
+
+#pragma mark -融云End
+
+
 #pragma mark - Core Data Saving support
 
 - (void)saveContext {
@@ -357,8 +417,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     if (managedObjectContext != nil) {
         NSError *error = nil;
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }

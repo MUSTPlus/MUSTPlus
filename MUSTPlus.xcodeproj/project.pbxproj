@@ -1155,12 +1155,36 @@
 		2195C1701F3713790046B689 /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				21C4D7A61F488F8000FD6A4D /* View */,
+				21C4D7A51F488F7B00FD6A4D /* Model */,
+				21C4D7A41F488F7000FD6A4D /* Controller */,
+			);
+			name = Message;
+			sourceTree = "<group>";
+		};
+		21C4D7A41F488F7000FD6A4D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
 				21968FCD1F4580D800381A03 /* RCSDKConversationViewController.h */,
 				21968FCE1F4580D800381A03 /* RCSDKConversationViewController.m */,
 				2195C16C1F3713510046B689 /* MessageController.h */,
 				2195C16D1F3713510046B689 /* MessageController.m */,
 			);
-			name = Message;
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		21C4D7A51F488F7B00FD6A4D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		21C4D7A61F488F8000FD6A4D /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		319AF7301E7BFFB90050E10C = {
@@ -3289,7 +3313,7 @@
 				CODE_SIGN_ENTITLEMENTS = "MUST+/MUST+.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = B357BR4TJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3319,6 +3343,7 @@
 				CODE_SIGN_ENTITLEMENTS = "MUST+/MUST+.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = B357BR4TJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
