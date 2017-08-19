@@ -9,6 +9,7 @@
 #import "SchoolCampusMainTableViewController.h"
 #import "GradeCoreDateManager.h"
 //#import "CirnoSideBarViewController.h"
+#import <SafariServices/SafariServices.h>
 #import "SendMailTableViewController.h"
 #import "BasicHead.h"
 #import "ChangePinNumberView.h"
@@ -39,6 +40,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.hidesBottomBarWhenPushed =YES;
+    self.navigationController.hidesBottomBarWhenPushed = YES;
     self.tabBarController.hidesBottomBarWhenPushed = YES;
 //  CirnoLog(@"%@",self.navigationController);
     self.navigationController.navigationBar.backgroundColor = navigationTabColor;
@@ -63,17 +66,21 @@
     [super viewWillAppear:animated];
     //开启滑动
     self.tabBarItem.title=NSLocalizedString(@"校园", "");
-    self.navigationController.navigationBar.hidden =NO;
-    self.navigationController.navigationBarHidden=NO;
-     [self.tabBarController.tabBar setHidden:NO];
+//    self.navigationController.navigationBar.hidden =NO;
+//    self.navigationController.navigationBarHidden=NO;
+    [self.tabBarController.tabBar setHidden:NO];
+
    // self.navigationController.navigationBarHidden=YES;
 //    CirnoSideBarViewController * sideBar = [CirnoSideBarViewController share];
 //    sideBar.diabled = true;
   //  [_head changeFace];
 }
-
+-(void)viewWillDisappear:(BOOL)animated{
+   //  [self.tabBarController.tabBar setHidden:YES];
+}
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [self.tabBarController.tabBar setHidden:NO];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
@@ -92,7 +99,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(section==1){
-        return 3;
+        return 2;
     }
     else if(section == 2){
         return 4;
@@ -211,21 +218,26 @@
         case 1:
             switch (row){
                 case 0:{
-                    SchoolLibraryTableViewController  *next = [[SchoolLibraryTableViewController alloc] init];
-                    [self.navigationController pushViewController:next animated:YES];
+                    NSString* str = @"http://lib.must.edu.mo/m/index.html#mylibrarylogin";
+                    SFSafariViewController* sf = [[SFSafariViewController alloc]initWithURL:[NSURL URLWithString:str]];
+                    [self.tabBarController.tabBar setHidden:YES];
+                    [self.navigationController pushViewController:sf animated:YES];
 
                     }
                     break;
                 case 1:{
-                    SchoolBorrowBooksTableViewController *next = [[SchoolBorrowBooksTableViewController alloc] init];
-                    [self.navigationController pushViewController:next animated:YES];
+                    NSString* str = @"http://search.ebscohost.com/login.aspx?direct=true&site=eds-live&scope=site&type=0&custid=ns002233&groupid=main&profid=edsopac&mode=and&authtype=ip,guest&lang=zh-tw";
+                    [self.tabBarController.tabBar setHidden:YES];
+                    SFSafariViewController * sf = [[SFSafariViewController alloc]initWithURL:[NSURL URLWithString:str]];
+
+                    [self.navigationController pushViewController:sf animated:YES];
                     }
                     break;
-                case 2:{
-                    cpnv=[[ChangePinNumberView alloc] init];
-                    [cpnv show];
-                    break;
-                }
+//                case 2:{
+//                    cpnv=[[ChangePinNumberView alloc] init];
+//                    [cpnv show];
+//                    break;
+//                }
             }
             break;
         case 2:
@@ -278,11 +290,7 @@
     [documentController presentPreviewAnimated:YES];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
 
-}
 -(void)showCal{
     MessageController* ctr = [[MessageController alloc]init];
    // SchoolFileController *ctr = [[SchoolFileController alloc]init];

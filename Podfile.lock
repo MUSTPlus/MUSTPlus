@@ -18,9 +18,26 @@ PODS:
   - Bugly (2.4.8)
   - CNPPopupController (0.3.3)
   - CYWebviewController (1.1.1)
+  - FirebaseAnalytics (3.9.0):
+    - FirebaseCore (~> 3.6)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseCore (3.6.0):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (1.0.10):
+    - FirebaseCore (~> 3.6)
   - FMDB (2.7.2):
     - FMDB/standard (= 2.7.2)
   - FMDB/standard (2.7.2)
+  - Google/Analytics (3.1.0):
+    - Google/Core
+    - GoogleAnalytics (~> 3.12)
+  - Google/Core (3.1.0):
+    - FirebaseAnalytics (~> 3.2)
+  - GoogleAnalytics (3.17.0)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - GPUImage (0.1.7)
   - JDStatusBarNotification (1.5.5)
   - JGProgressHUD (1.4)
@@ -48,6 +65,7 @@ DEPENDENCIES:
   - CNPPopupController
   - CYWebviewController
   - FMDB
+  - Google/Analytics
   - GPUImage
   - JDStatusBarNotification
   - JGProgressHUD
@@ -67,7 +85,13 @@ SPEC CHECKSUMS:
   Bugly: da3c02408c14838d498429320545a8e439392978
   CNPPopupController: 59b06290762f68beab5fb0bbfa87eb4dcbefb7de
   CYWebviewController: 0787d55dddbfd8aa0588521d4480218ffdb4e5d3
+  FirebaseAnalytics: e5fe8486efc01bec33f6bf82e2fa9fce4b124052
+  FirebaseCore: 9691ee2ade70c098d7cf92440f4303f16d83ca75
+  FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
   FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
+  Google: 98da4b1a60ed0beb80a290387a28333406a1eb90
+  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   JDStatusBarNotification: 2b4f29bd68a60d7aa2f190b5265f1ce59c18aaf8
   JGProgressHUD: 1617b0940cf80bb53e8f7d6f0fd69252ea45d6d4
@@ -81,6 +105,6 @@ SPEC CHECKSUMS:
   tingyunApp: 9213e4e826a618ffda4619618e805bc7392f98b7
   ZXingObjC: bbf7b8f0cf8933fdd33eb4f9f46e22308552869b
 
-PODFILE CHECKSUM: c52085e46615a01fe0d05d041b29bf56bd003a6e
+PODFILE CHECKSUM: daad1d4508699e1b71d7ecab524f369378774e6c
 
 COCOAPODS: 1.1.1

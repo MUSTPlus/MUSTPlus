@@ -1,13 +1,13 @@
+////
+////  UIButton+Extension.h
+////  PublishMoments-demo
+////
+////  Created by Arvin on 16/9/7.
+////  Copyright © 2016年 Arvin. All rights reserved.
+////
 //
-//  UIButton+Extension.h
-//  PublishMoments-demo
+//#import <UIKit/UIKit.h>
 //
-//  Created by Arvin on 16/9/7.
-//  Copyright © 2016年 Arvin. All rights reserved.
+//@interface UIButton (Extension)
 //
-
-#import <UIKit/UIKit.h>
-
-@interface UIButton (Extension)
-
-@end
+//@end

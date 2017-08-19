@@ -18,7 +18,6 @@
 #import "SchoolClassScrollView.h"
 #import "ClassButton.h"
 #import "NirKxMenu.h"
-#import <GPUImage/GPUImage.h>
 #import "SubLBXScanViewController.h"
 #import <EventKit/EventKit.h>
 #import "CZPicker.h"

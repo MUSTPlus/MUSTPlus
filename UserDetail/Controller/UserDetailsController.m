@@ -201,13 +201,7 @@ static CGRect oldframe;
     [_backbutton setTitle:UIKitLocalizedString(@"Done") forState:UIControlStateNormal];
     [_backbutton addTarget:self action:@selector(back1) forControlEvents:UIControlEventTouchDown];
     if (!_isSelf){
-//        UIButton* report1 = [[UIButton alloc]initWithFrame:CGRectMake(Width-40, StatusBarHeight+7.5, 25, 25)];
-//        NSLog(@"%@",report1);
-//        report1.contentMode=UIViewContentModeScaleAspectFit;
-//      //  report1.backgroundColor=[UIColor redColor];
-//        [report1 setImage:[UIImage imageNamed:@"report"] forState:UIControlStateNormal];
-//        [report1 addTarget:self action:@selector(report) forControlEvents:UIControlEventTouchDown];
-//        [_navibar addSubview:report1];
+
     }
     if (!_naviGo){
     [_navibar addSubview:_backbutton];
@@ -310,9 +304,15 @@ static CGRect oldframe;
 
 }
 
+-(void) viewDidAppear:(BOOL)animated {
+    [MTA trackPageViewBegin:@"UserDetail"];
+    [super viewDidAppear:animated];
+}
 
--(void)viewWillDisappear:(BOOL)animated{
-    self.tabBarController.tabBar.hidden =NO;
+- (void)viewWillDisappear:(BOOL)animated {
+    [MTA trackPageViewEnd:@"UserDetail"];
+    [super viewWillDisappear:animated];
+     self.tabBarController.tabBar.hidden =NO;
 }
 
 -(void)changeQianming{
@@ -455,9 +455,7 @@ static CGRect oldframe;
     if (_currentUser == nil) return;
     [self updateByUsrModel:_currentUser];
 }
--(void)viewDidAppear:(BOOL)animated{
-  //  self.navigationController.navigationBarHidden=YES;
-}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;

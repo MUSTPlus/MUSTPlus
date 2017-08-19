@@ -19,13 +19,13 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"成绩";
-    self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height)];
+    self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, Width, Height-NavigationBarHeight-StatusBarHeight)];
     [self.view addSubview:self.webView];
     NSError *error;
     NSDictionary *o1 =@{@"ec":@"9988",
                         @"studentID": [[Account shared]getStudentLongID],
                         @"password":[[Account shared]getPassword],
-                        @"semester":@"1702"};
+                        @"semester":@"0000"};
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:&error];

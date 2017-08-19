@@ -59,11 +59,26 @@
          conversationModel:(RCConversationModel *)model
                atIndexPath:(NSIndexPath *)indexPath {
 
-    RCSDKConversationViewController *conversationVC = [[RCSDKConversationViewController alloc]initWithConversationType:model.conversationType targetId:model.targetId];
-    conversationVC.hidesBottomBarWhenPushed = YES;
-    NSLog(@"%@",conversationVC);
-    conversationVC.title = @"想显示的会话标题";
-    [self.navigationController pushViewController:conversationVC animated:YES];
+    RCSDKConversationViewController *conversation;
+
+    conversation = [[RCSDKConversationViewController alloc]init];
+
+    conversation.conversationType = model.conversationType;
+
+    conversation.targetId = model.targetId;
+
+    conversation.title = model.targetId;
+
+    conversation.hidesBottomBarWhenPushed = YES;
+    @try {
+        [self.navigationController pushViewController:conversation animated:YES];
+    } @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    } @finally {
+        
+    }
+
+
 }
 
 

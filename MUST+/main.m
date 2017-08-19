@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import <tingyunApp/NBSAppAgent.h>
-#import <RongIMKit/RongIMKit.h>
 int main(int argc, char * argv[]) {
     @autoreleasepool {
         //[NBSAppAgent startWithAppID:@"b05bbe7e0c274cb3a6963d43f7f78b59"];

@@ -81,14 +81,13 @@
 - (NSArray<ChatToolBarItem *> *)chatKeyBoardToolbarItems
 {
     ChatToolBarItem *item1 = [ChatToolBarItem barItemWithKind:kBarItemFace normal:@"face" high:@"face_HL" select:@"keyboard"];
-//    ChatToolBarItem *item4 = [ChatToolBarItem barItemWithKind:kBarItemSwitchBar normal:@"switchDown" high:@"switchDown" select:@"switchDown"];
-//
     NSLog(@"return");
     return @[item1];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [MTA trackPageViewBegin:@"MessageDetail"];
     self.navigationController.navigationBarHidden=NO;
     self.navigationController.navigationBar.backgroundColor = navigationTabColor;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -104,7 +103,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [JPUSHService stopLogPageView:@"消息圈详细页"];
+    [MTA trackPageViewEnd:@"MessageDetail"];
    // self.navigationController.navigationBarHidden =YES;
 }
 

@@ -9,6 +9,7 @@
 #import "SmartCampusDeatilViewController.h"
 #import "WebViewController.h"
 #import "MTA.h"
+#import <SafariServices/SafariServices.h>
 @interface SmartCampusDeatilViewController ()
 @property (nonatomic) NSInteger height;
 
@@ -46,7 +47,6 @@
     NSInteger section = indexPath.section;
     if (section == 1){
         if (row == 1){
-            NSLog(@"a");
             if (self.places.Url!=nil)
                 [self gotoWeb];
             else if (self.places.tel!=nil)
@@ -249,9 +249,16 @@
 
     return cell;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
 -(void)gotoWeb{
-    WebViewController * wvc = [[WebViewController alloc]initWithURLString:self.places.Url];
-    [self.navigationController pushViewController:wvc animated:YES];
+    SFSafariViewController *new = [[SFSafariViewController alloc]initWithURL:[NSURL URLWithString:self.places.Url]];
+    new.view.tintColor = navigationTabColor;
+    [self.navigationController pushViewController:new animated:YES];
 }
 -(void)phoneNumberLabelTap
 {

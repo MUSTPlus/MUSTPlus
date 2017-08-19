@@ -38,6 +38,7 @@
 		21BDF2F11E97D44600992CF7 /* realnature.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EC1E97D44600992CF7 /* realnature.plist */; };
 		21BDF2F21E97D44600992CF7 /* sport.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2ED1E97D44600992CF7 /* sport.plist */; };
 		21BDF2F31E97D44600992CF7 /* symbol.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EE1E97D44600992CF7 /* symbol.plist */; };
+		21C4D7A31F48201200FD6A4D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21C4D7A21F48201200FD6A4D /* GoogleService-Info.plist */; };
 		21C5D04E1F404C2E005E682A /* (null) in Sources */ = {isa = PBXBuildFile; };
 		21F87BDF1F4442E4004E45DA /* AttendanceHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F87BDE1F4442E4004E45DA /* AttendanceHistoryTableViewController.m */; };
 		21F87BE21F44462F004E45DA /* AttendanceHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F87BE11F44462F004E45DA /* AttendanceHistory.m */; };
@@ -431,6 +432,7 @@
 		21BDF2EC1E97D44600992CF7 /* realnature.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = realnature.plist; sourceTree = "<group>"; };
 		21BDF2ED1E97D44600992CF7 /* sport.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sport.plist; sourceTree = "<group>"; };
 		21BDF2EE1E97D44600992CF7 /* symbol.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = symbol.plist; sourceTree = "<group>"; };
+		21C4D7A21F48201200FD6A4D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		21F87BDD1F4442E4004E45DA /* AttendanceHistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceHistoryTableViewController.h; sourceTree = "<group>"; };
 		21F87BDE1F4442E4004E45DA /* AttendanceHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceHistoryTableViewController.m; sourceTree = "<group>"; };
 		21F87BE01F44462F004E45DA /* AttendanceHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceHistory.h; sourceTree = "<group>"; };
@@ -1218,6 +1220,7 @@
 		319AF73C1E7BFFB90050E10C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				21C4D7A21F48201200FD6A4D /* GoogleService-Info.plist */,
 				215B4C801E97D5E600CC35E0 /* systemEmoji.plist */,
 				21BDF2EA1E97D44600992CF7 /* food.plist */,
 				21BDF2EB1E97D44600992CF7 /* gesture.plist */,
@@ -2733,6 +2736,7 @@
 				319AFEBC1E7C0F5D0050E10C /* plus@3x.png in Resources */,
 				319AFF1C1E7C0F5E0050E10C /* AlbumDetailsPgeLike@3x.png in Resources */,
 				319AF74C1E7BFFB90050E10C /* Assets.xcassets in Resources */,
+				21C4D7A31F48201200FD6A4D /* GoogleService-Info.plist in Resources */,
 				319AFF4D1E7C0F5E0050E10C /* icon_pic_break@2x.png in Resources */,
 				319AFF4E1E7C0F5E0050E10C /* lock@2x.png in Resources */,
 				319AFF121E7C0F5E0050E10C /* CourseDetailCell.xib in Resources */,

@@ -11,6 +11,8 @@
 #define UIKitLocalizedString(key) [[NSBundle bundleWithIdentifier:@"com.apple.UIKit"] localizedStringForKey:key value:@"" table:nil]
 #import "JPUSHService.h"
 #import "Alert.h"
+#import "MTA.h"
+
 #define APP_KEY_WEIXIN            @"wx0185f297e144f34a"
 
 #define APP_KEY_QQ                @"222222"

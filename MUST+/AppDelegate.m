@@ -25,6 +25,12 @@
 #import "BasicHead.h"
 #import <Bugly/Bugly.h>
 #import <JSPatchPlatform/JSPatch.h>
+#import "MessageController.h"
+
+
+#import <Google/Analytics.h>
+
+
 @import CoreLocation;
 
 @interface AppDelegate ()<JPUSHRegisterDelegate,CLLocationManagerDelegate>
@@ -114,8 +120,25 @@
     else{
       //  NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"deviceID"]);
     }
+
+    // Google Start ...
+    // Configure tracker from GoogleService-Info.plist.
+    NSError *configureError;
+    [[GGLContext sharedInstance] configureWithError:&configureError];
+
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+
+    // Optional: configure GAI options.
+    GAI *gai = [GAI sharedInstance];
+    [[GAI sharedInstance] trackerWithTrackingId:@"UA-104938440-1"];
+    gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
+    gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
+
+    // Google End ...
+
     application.applicationIconBadgeNumber = 0;
     [JPUSHService setBadge:0];
+   // MessageController* next = [[MessageController alloc]init];
     UIViewController *next  = [[UIViewController alloc] init];
 
     if([[Account shared]getPassword] != nil && [[Account shared]getStudentLongID] != nil){
@@ -131,15 +154,21 @@
     navCtrl.navigationBarHidden = YES;
   //  navCtrl.hidesBottomBarWhenPushed=YES;
     [self.window setFrame:[UIScreen mainScreen].bounds];
-////    CirnoSideBarViewController * sideBar = [[CirnoSideBarViewController alloc]init];
+
     self.window.rootViewController = navCtrl;
- //   self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
 
 
     return YES;
 }
 
+- (void)applicationDidBecomeActive:(UIApplication *)application{
+    [MTA trackActiveBegin];
+};
+- (void)applicationWillResignActive:(UIApplication *)application{
+    [MTA trackActiveEnd];
+
+};
 -(void)actionWithShortcutItem:(UIApplicationShortcutItem *)item
 {
   //  [CirnoError ShowErrorWithText:item.type];
@@ -211,9 +240,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [[RCIMClient sharedRCIMClient] setDeviceToken:token];
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
 
-}
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -229,9 +256,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [JPUSHService setBadge:0];
 }
 
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-}
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -283,7 +307,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"MUST_Plus.sqlite"];
     
-    NSLog(@"%@",storeURL);
 
     
     NSError *error = nil;
