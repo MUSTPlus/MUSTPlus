@@ -362,6 +362,8 @@
 		319AFFFB1E7C10810050E10C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 319AFFF91E7C10810050E10C /* Main.storyboard */; };
 		319AFFFD1E7C11BD0050E10C /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 319AFFFC1E7C11BD0050E10C /* libsqlite3.tbd */; };
 		319AFFFF1E7C11C80050E10C /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 319AFFFE1E7C11C80050E10C /* libiconv.tbd */; };
+		31D984541F4934050044AF7C /* sectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D984531F4934050044AF7C /* sectionHeaderView.m */; };
+		31D984571F4974D70044AF7C /* MessageLikeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D984561F4974D70044AF7C /* MessageLikeModel.m */; };
 		5A48B69EF8FE18A6902C9F07 /* AttendanceCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A48B8CEE6DF5C930C902424 /* AttendanceCourse.m */; };
 /* End PBXBuildFile section */
 
@@ -1019,6 +1021,10 @@
 		319AFFFA1E7C10810050E10C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		319AFFFC1E7C11BD0050E10C /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		319AFFFE1E7C11C80050E10C /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		31D984521F4934050044AF7C /* sectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sectionHeaderView.h; sourceTree = "<group>"; };
+		31D984531F4934050044AF7C /* sectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sectionHeaderView.m; sourceTree = "<group>"; };
+		31D984551F4974D70044AF7C /* MessageLikeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageLikeModel.h; sourceTree = "<group>"; };
+		31D984561F4974D70044AF7C /* MessageLikeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageLikeModel.m; sourceTree = "<group>"; };
 		3E6AB6CD787BCDB7B332C858 /* libPods-MUSTPlus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MUSTPlus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A48B645EC44E3AB51EF0C9D /* BasicHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicHead.h; sourceTree = "<group>"; };
 		5A48B8A9DDC737160071108A /* AttendanceCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceCourse.h; sourceTree = "<group>"; };
@@ -1845,6 +1851,8 @@
 			children = (
 				319AFCF91E7C0F5D0050E10C /* MessageDetailCellFrame.h */,
 				319AFCFA1E7C0F5D0050E10C /* MessageDetailCellFrame.m */,
+				31D984551F4974D70044AF7C /* MessageLikeModel.h */,
+				31D984561F4974D70044AF7C /* MessageLikeModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1856,6 +1864,8 @@
 				319AFCFD1E7C0F5D0050E10C /* messageDetailHeaderView.m */,
 				319AFCFE1E7C0F5D0050E10C /* messageDetailTableViewCell.h */,
 				319AFCFF1E7C0F5D0050E10C /* messageDetailTableViewCell.m */,
+				31D984521F4934050044AF7C /* sectionHeaderView.h */,
+				31D984531F4934050044AF7C /* sectionHeaderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3048,6 +3058,7 @@
 				319AFFDC1E7C0F5E0050E10C /* schoolTimetableViewController.m in Sources */,
 				319AFF461E7C0F5E0050E10C /* UIImage+Extension.m in Sources */,
 				319A00221E7C14690050E10C /* SDWebImageManager+MJ.m in Sources */,
+				31D984541F4934050044AF7C /* sectionHeaderView.m in Sources */,
 				319AFF8C1E7C0F5E0050E10C /* ChatToolBar.m in Sources */,
 				319AFEDB1E7C0F5E0050E10C /* View+MASAdditions.m in Sources */,
 				319AFF6C1E7C0F5E0050E10C /* SDPhotoBrowser.m in Sources */,
@@ -3119,6 +3130,7 @@
 				319AFFCA1E7C0F5E0050E10C /* CirnoSideBarViewController.m in Sources */,
 				319AFEFF1E7C0F5E0050E10C /* WSGetWifi.m in Sources */,
 				319AFFBD1E7C0F5E0050E10C /* MyMessageCircleViewController.m in Sources */,
+				31D984571F4974D70044AF7C /* MessageLikeModel.m in Sources */,
 				319AFFA21E7C0F5E0050E10C /* SchoolBorrowBooksTableViewController.m in Sources */,
 				319AFF861E7C0F5E0050E10C /* FaceButton.m in Sources */,
 				319AFEEB1E7C0F5E0050E10C /* UIView+QHUIViewCtg.m in Sources */,
