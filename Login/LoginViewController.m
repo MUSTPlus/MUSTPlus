@@ -22,6 +22,7 @@
 #import "CirnoSideBarViewController.h"
 #import "JPUSHService.h"
 #import "UserModel.h"
+#import <SafariServices/SafariServices.h>
 @interface LoginViewController ()<UITextFieldDelegate>{
     UIView* _logoView;
     UIView* _midView;
@@ -166,9 +167,8 @@
 
 }
 -(void)showUserLicense{
-    Alert *alert = [[Alert alloc] initWithTitle:NSLocalizedString(@"用户协议", @"") message:NSLocalizedString(@"协议", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", @"") otherButtonTitles: nil];
-    alert.contentAlignment =NSTextAlignmentLeft;
-    [alert show];
+    SFSafariViewController* sf = [[SFSafariViewController alloc]initWithURL:[NSURL URLWithString:@"https://must.plus/Privacy/privacy.html"]];
+    [self presentViewController:sf animated:YES completion:nil];
 }
 -(void)showHelp{
     Alert *alert = [[Alert alloc] initWithTitle:NSLocalizedString(@"账号问题", @"") message:NSLocalizedString(@"账号问题详细", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", @"") otherButtonTitles: nil];

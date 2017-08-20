@@ -268,6 +268,7 @@
 }
 
 -(void)showUserLicense{
+
     Alert *alert = [[Alert alloc] initWithTitle:NSLocalizedString(@"用户协议", @"") message:NSLocalizedString(@"协议", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", @"") otherButtonTitles: nil];
     alert.contentAlignment =NSTextAlignmentLeft;
     [alert show];

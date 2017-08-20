@@ -24,6 +24,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)didTapCellPortrait:(NSString *)userId{
+    
+}
 /*
 #pragma mark - Navigation
 

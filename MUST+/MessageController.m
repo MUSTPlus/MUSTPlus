@@ -48,7 +48,6 @@
                atIndexPath:(NSIndexPath *)indexPath {
 
     RCSDKConversationViewController *conversation;
-
     conversation = [[RCSDKConversationViewController alloc]init];
 
     conversation.conversationType = model.conversationType;
@@ -58,7 +57,7 @@
     conversation.title = model.conversationTitle;
 
     conversation.hidesBottomBarWhenPushed = YES;
-
+    
         [self.navigationController pushViewController:conversation animated:YES];
 
 
