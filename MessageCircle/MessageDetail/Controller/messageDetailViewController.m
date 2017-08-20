@@ -7,7 +7,9 @@
 //
 
 #import "messageDetailViewController.h"
-
+#import "sectionHeaderView.h"
+#import "MessageLikeModel.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 @interface messageDetailViewController ()<DockDelegate,ChatKeyBoardDelegate,UserDetailsDelegate,DeleteDelegate>
 @property (nonatomic, strong) ChatKeyBoard *chatKeyBoard;
 @property(nonatomic) long long tmpID;
@@ -17,8 +19,11 @@
     NSMutableArray<CommentDetails *> *sortArray;
     BOOL isSelf;
     BOOL isComment;
+    BOOL isLike;
+    sectionHeaderView *headerView;
     NSString *ReplyNickName;
     NSString *ReplyCommentID;
+    NSMutableArray<MessageLikeModel *> *lieksArray;
 }
 -(void)ClickAvatar:(id)button{
     UIButton * k = button;
@@ -53,6 +58,7 @@
    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
    self.tableView.tableFooterView =footerView;
     [self.tabBarController.tabBar setHidden:YES];
+
     //评论条
     self.chatKeyBoard = [ChatKeyBoard keyBoard];
     self.chatKeyBoard.delegate = self;
@@ -67,11 +73,41 @@
 
     self.chatKeyBoard.backgroundColor  = kColor(250, 250, 250);
     
+    isLike = false;
     
     //点击方法
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnTableView:)];
     [self.tableView addGestureRecognizer:tap];
+    
+    
+    //拿到点赞的人
+    headerView  = [[sectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, Width, 50)];
+    [headerView.commentButton addTarget:self action:@selector(changeCommentToLike:) forControlEvents:UIControlEventTouchDown];
+    [headerView.commentButton setTag:2001];
+    [headerView.likeButton addTarget:self action:@selector(changeCommentToLike:) forControlEvents:UIControlEventTouchDown];
+    [headerView.likeButton setTag:2002];
+    
+    lieksArray = [[NSMutableArray alloc] init];
+    [self getLikeInfo];
 }
+
+
+
+-(void)changeCommentToLike:(UIButton *)bt{
+    if(bt.tag == 2001){
+        isLike = false;
+        [headerView addLine:1];
+        [_tableView reloadData];
+    }
+    else{
+        isLike = true;
+        [headerView addLine:2];
+        [_tableView reloadData];
+    }
+}
+
+
+
 - (NSArray<FaceThemeModel *> *)chatKeyBoardFacePanelSubjectItems
 {
     NSLog(@"success2");
@@ -110,18 +146,38 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_mainBody.comments.comments count] +1;
+    if(section == 0){
+        return 1;
+    }
+    if (!isLike)
+        return [_mainBody.comments.comments count];
+    return [lieksArray count];
+}
+
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if(section == 1){
+        return headerView;
+    }
+    return nil;
+}
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if(section == 0){
+        return 0;
+    }
+    return 40;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if(indexPath.row == 0){
+    if(indexPath.section == 0){
     //这个方法比初始化cell先执行所以得先设置frame
     BaseStatusCellFrame *frame = [[BaseStatusCellFrame alloc]init];
  //   CirnoLog(@"row:%ld,section:%ld",(long)indexPath.row,(long)indexPath.section);
@@ -129,29 +185,31 @@
     return [frame cellHeight];
     }
     
-    
-    MessageDetailCellFrame *frame1 = [[MessageDetailCellFrame alloc] init];
-    [frame1 setStatus:_mainBody.comments.comments[indexPath.row-1]];
-   // NSLog(@"%@: %d",_mainBody.comments.comments[indexPath.row-1].context,(int)indexPath.row-1);
-    return [frame1 cellHeight];
+    if(!isLike){
+        MessageDetailCellFrame *frame1 = [[MessageDetailCellFrame alloc] init];
+        [frame1 setStatus:_mainBody.comments.comments[indexPath.row]];
+        // NSLog(@"%@: %d",_mainBody.comments.comments[indexPath.row-1].context,(int)indexPath.row-1);
+        return [frame1 cellHeight];
+    }
+    return 50;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"cell";
     static NSString *cellIdentifier1 = @"cell1";
+    static NSString *cellIdentifier2 = @"cell2";
 
     [self sortByCommentID];
 
     _tcell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     messageDetailTableViewCell *cell;
-    if(indexPath.row == 0){
+    UITableViewCell *lcell;
+    if(indexPath.section == 0){
         _tcell.avatarDelegate = self;
     if (_tcell == nil) {
         _tcell = [[StatusCell alloc]init];
         BaseStatusCellFrame *frame = [[BaseStatusCellFrame alloc]init];
-        
-        
         if (isSelf)
             [_tcell.dock selfDockStyle];
         else
@@ -169,32 +227,53 @@
     else return _tcell;
     }
     else{
-    if(cell == nil){
-    cell = [[messageDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier1];
-    MessageDetailCellFrame *frame1 = [[MessageDetailCellFrame alloc] init];
-    [frame1 setStatus:sortArray[indexPath.row-1]];
-    [cell setCellFrame:frame1];
-    }
-        cell.deleteDelegate = self;
-        cell.avatarDelegate = self;
-        return cell;
+        if(!isLike){
+            if(cell == nil){
+                cell = [[messageDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier1];
+                MessageDetailCellFrame *frame1 = [[MessageDetailCellFrame alloc] init];
+                [frame1 setStatus:sortArray[indexPath.row]];
+                [cell setCellFrame:frame1];
+            }
+                cell.deleteDelegate = self;
+                cell.avatarDelegate = self;
+                return cell;
+        }
+        else{
+            if(lcell == nil){
+                lcell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2];
+                [lcell.imageView sd_setImageWithURL:[NSURL URLWithString:lieksArray[indexPath.row].avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+                [lcell.imageView.layer setMasksToBounds:YES];
+                lcell.imageView.layer.cornerRadius = 25;
+                lcell.textLabel.text = lieksArray[indexPath.row].nickname;
+            }
+            return lcell;
+        }
     }
     //cell.userInteractionEnabled = NO;
-
-
 //    _tcell.dock.delegate = self;
     return cell;
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     //JSPatch version 15
+    if(!isLike){
     if ([sortArray count]==0) return;
     //Fix : Umi
-    CommentDetails *CD = sortArray[(int)indexPath.row - 1];
-    ReplyNickName = CD.nickname;
-    isComment = true;
-    ReplyCommentID = CD.commentID;
-    [self comment:[CD.commentID longLongValue]];
+        CommentDetails *CD = sortArray[(int)indexPath.row];
+        ReplyNickName = CD.nickname;
+        isComment = true;
+        ReplyCommentID = CD.commentID;
+        [self comment:[CD.commentID longLongValue]];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        return;
+    }
+    
+    
+    UserDetailsController* udc = [[UserDetailsController alloc]init];
+    udc.isSelf = NO;
+    udc.studID = lieksArray[(int)indexPath.row].studentID;
+    //udc.currentUser = [[UserModel alloc]getUserModel:zxczxc];
+    [self.navigationController pushViewController:udc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -277,6 +356,8 @@
         // [alert show];
     }];
 }
+
+
 
 #pragma mark - 删除评论
 -(void)Clickdelete:(NSString *)ID{
@@ -554,7 +635,6 @@
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         [CirnoError ShowErrorWithText:[error localizedDescription]];
         // [alert show];
-        
     }];
 }
 
@@ -646,6 +726,63 @@ messageContext:(NSString *)context
 //    _mainBody = [receivceMessageLogic getMainBodyByMessageID:_mainBody.ID][0];
 //    [self.tableView reloadData];
 //}
+
+
+
+-(void) getLikeInfo{
+    //数据流加密
+    NSDictionary *o1 =@{@"ec":@"1039",
+                        @"messageid":[NSString stringWithFormat:@"%lld",_mainBody.ID]};
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    
+    NSLog(@"%@",[data AES256_Decrypt:[HeiHei toeknNew_key]]);
+    NSLog(@"%@",data);
+    
+    
+    //POST数据
+    NSDictionary *parameters = @{@"ec":data};
+    
+    NSURL *URL = [NSURL URLWithString:BaseURL];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    //转成最原始的data,一定要加
+    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
+    
+    [manager POST:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        //处理json
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+        if (result == nil)
+            [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        NSLog(@"%@",json);
+        NSArray *likes = json;
+        for(int i=0;i<[likes count];i++){
+            MessageLikeModel *mlike = [[MessageLikeModel alloc] init];
+            mlike.avatar = likes[i][@"avatar"];
+            mlike.nickname = likes[i][@"nickname"];
+            mlike.studentID = likes[i][@"studentID"];
+            [lieksArray addObject:mlike];
+        }
+        
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        [CirnoError ShowErrorWithText:[error localizedDescription]];
+        // [alert show];
+    }];
+}
+
+
+
+
+
+
 
 //冒泡排序
 -(void)sortByCommentID{
