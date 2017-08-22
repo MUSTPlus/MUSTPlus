@@ -25,7 +25,12 @@
 }
 
 -(void)didTapCellPortrait:(NSString *)userId{
-    
+    [super didTapCellPortrait:userId];
+    UserDetailsController* udc = [[UserDetailsController alloc]init];
+    udc.isSelf = NO;
+    udc.studID = userId;
+    udc.naviGo = YES;
+    [self.navigationController pushViewController:udc animated:YES];
 }
 /*
 #pragma mark - Navigation

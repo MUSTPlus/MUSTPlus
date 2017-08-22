@@ -49,7 +49,21 @@
     NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
     NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
     NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
+    [[RCIMClient sharedRCIMClient] recordRemoteNotificationEvent:userInfo];
 
+    /**
+     * 获取融云推送服务扩展字段
+     * nil 表示该启动事件不包含来自融云的推送服务
+     */
+    NSDictionary *pushServiceData = [[RCIMClient sharedRCIMClient] getPushExtraFromRemoteNotification:userInfo];
+    if (pushServiceData) {
+        NSLog(@"该远程推送包含来自融云的推送服务");
+        for (id key in [pushServiceData allKeys]) {
+            NSLog(@"key = %@, value = %@", key, pushServiceData[key]);
+        }
+    } else {
+        NSLog(@"该远程推送不包含来自融云的推送服务");
+    }
     // 取得Extras字段内容
     NSString *customizeField1 = [userInfo valueForKey:@"customizeExtras"]; //服务端中Extras字段，key是自己定义的
     NSLog(@"content =[%@], badge=[%ld], sound=[%@], customize field  =[%@]",content,(long)badge,sound,customizeField1);
@@ -67,8 +81,18 @@
 
 //iOS 7 Remote Notification
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:  (NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    NSLog(@"userinfo=%@",userInfo);
+    [[RCIMClient sharedRCIMClient] recordRemoteNotificationEvent:userInfo];
+    NSDictionary *pushServiceData = [[RCIMClient sharedRCIMClient] getPushExtraFromRemoteNotification:userInfo];
+    if (pushServiceData) {
+        NSLog(@"该远程推送包含来自融云的推送服务");
+        for (id key in [pushServiceData allKeys]) {
+            NSLog(@"key = %@, value = %@", key, pushServiceData[key]);
+        }
+    } else {
+        NSLog(@"该远程推送不包含来自融云的推送服务");
+    }
 
-    NSLog(@"this is iOS7 Remote Notification");
     NSDictionary *aps = [userInfo valueForKey:@"aps"];
     NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
 //    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
@@ -386,17 +410,26 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
                 return completion(userinfo);
 
             } @catch (NSException *exception) {
-                [CirnoError ShowErrorWithText:exception.description];
+                RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:userId
+                                                                    name:@"未知用户"
+                                                                portrait:@"https://must.plus/logo.jpg"];
+                return completion(userinfo);
             }
             @finally{
             }
         }
         else{
-            [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
+            RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:userId
+                                                                name:@"未知用户"
+                                                            portrait:@"https://must.plus/logo.jpg"];
+            return completion(userinfo);
         }
 
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        [CirnoError ShowErrorWithText:[error localizedDescription]];
+        RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:userId
+                                                            name:@"未知用户"
+                                                        portrait:@"https://must.plus/logo.jpg"];
+        return completion(userinfo);
 
     }];
     return completion(nil);

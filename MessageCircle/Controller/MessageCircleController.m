@@ -39,6 +39,7 @@
     #pragma clang diagnostic pop
     UserDetailsController* udc = [[UserDetailsController alloc]init];
     udc.isSelf = NO;
+    udc.naviGo =YES;
      udc.studID = zxczxc;
     //udc.currentUser = [[UserModel alloc]getUserModel:zxczxc];
     [self.navigationController pushViewController:udc animated:YES];
@@ -48,19 +49,21 @@
     UserDetailsController* udc = [[UserDetailsController alloc]init];
     udc.studID=[[Account shared]getStudentLongID];
     udc.isSelf = YES;
-    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:udc];
-
-    // navi.navigationBarHidden = YES;
-    UIBarButtonItem *backbutton = [[UIBarButtonItem alloc]init];
-    backbutton.title = NSLocalizedString(@"完成", "");
-    navi.navigationItem.backBarButtonItem=backbutton;
-    //[self pushViewController:udc animated:YES];
-    UINavigationBar *bar = [UINavigationBar appearance];
-    bar.barTintColor = sidebarBackGroundColor;
-    bar.tintColor = [UIColor whiteColor];
-    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-
-    [self presentViewController:navi animated:YES completion:nil];
+    udc.naviGo = YES;
+    
+//    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:udc];
+//
+//    // navi.navigationBarHidden = YES;
+//    UIBarButtonItem *backbutton = [[UIBarButtonItem alloc]init];
+//    backbutton.title = NSLocalizedString(@"完成", "");
+//    navi.navigationItem.backBarButtonItem=backbutton;
+//    //[self pushViewController:udc animated:YES];
+//    UINavigationBar *bar = [UINavigationBar appearance];
+//    bar.barTintColor = sidebarBackGroundColor;
+//    bar.tintColor = [UIColor whiteColor];
+//    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+//
+//    [self presentViewController:navi animated:YES completion:nil];
 }
 -(void)ClickAdd:(id)button{
     MessageSendViewController *controller = [[MessageSendViewController alloc] init];

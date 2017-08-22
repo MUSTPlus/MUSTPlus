@@ -9,6 +9,7 @@
 #import "messageDetailViewController.h"
 #import "sectionHeaderView.h"
 #import "MessageLikeModel.h"
+#import "BasicHead.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 @interface messageDetailViewController ()<DockDelegate,ChatKeyBoardDelegate,UserDetailsDelegate,DeleteDelegate>
 @property (nonatomic, strong) ChatKeyBoard *chatKeyBoard;
@@ -36,9 +37,7 @@
     udc.studID = zxczxc;
     [self.navigationController pushViewController:udc animated:YES];
 }
--(void)viewDidAppear:(BOOL)animated{
-    [self.tabBarController.tabBar setHidden:YES];
-}
+
 - (NSArray<MoreItem *> *)chatKeyBoardMorePanelItems{
     return nil;
 };
@@ -51,6 +50,8 @@
     sortArray = [[NSMutableArray alloc] init];
     _tableView.userInteractionEnabled = NO;
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height)];
+    _tableView.backgroundColor = kColor(233, 233, 233);
+
     _tableView.delegate = self;
     _tableView.dataSource=self;
     //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -124,6 +125,7 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [MTA trackPageViewBegin:@"MessageDetail"];
+    [self.tabBarController.tabBar setHidden:YES];
     self.navigationController.navigationBarHidden=NO;
     self.navigationController.navigationBar.backgroundColor = navigationTabColor;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -159,12 +161,31 @@
 }
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section == 0){
+        UIView * view =[[ UIView alloc]initWithFrame:CGRectMake(0, 0, Width, 100)];
+        view.backgroundColor = kColor(233, 233, 233) ;
+        return view;
+    }
     if(section == 1){
         return headerView;
     }
     return nil;
 }
+- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if(section == 0){
+        UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Width, 20)];
+        view.backgroundColor = kColor(233, 233, 233);
+        return view;
+    }
+    return nil;
+}
 
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if(section == 0){
+        return 20;
+    }
+    return 0;
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if(section == 0){
@@ -191,7 +212,7 @@
         // NSLog(@"%@: %d",_mainBody.comments.comments[indexPath.row-1].context,(int)indexPath.row-1);
         return [frame1 cellHeight];
     }
-    return 50;
+    return 60;
 }
 
 
@@ -240,11 +261,16 @@
         }
         else{
             if(lcell == nil){
+                UIImageView* view = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 40, 40)];
+
                 lcell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier2];
-                [lcell.imageView sd_setImageWithURL:[NSURL URLWithString:lieksArray[indexPath.row].avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-                [lcell.imageView.layer setMasksToBounds:YES];
-                lcell.imageView.layer.cornerRadius = 25;
-                lcell.textLabel.text = lieksArray[indexPath.row].nickname;
+                [lcell addSubview:view];
+                [view sd_setImageWithURL:[NSURL URLWithString:lieksArray[indexPath.row].avatar] placeholderImage:[UIImage imageNamed:@"avatar_default"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL){
+                    view.layer.cornerRadius = 20;
+                    view.layer.masksToBounds =YES;
+                }];
+
+                lcell.textLabel.text = [NSString stringWithFormat:@"            %@",lieksArray[indexPath.row].nickname];
             }
             return lcell;
         }
@@ -271,6 +297,7 @@
     
     UserDetailsController* udc = [[UserDetailsController alloc]init];
     udc.isSelf = NO;
+    udc.naviGo = YES;
     udc.studID = lieksArray[(int)indexPath.row].studentID;
     //udc.currentUser = [[UserModel alloc]getUserModel:zxczxc];
     [self.navigationController pushViewController:udc animated:YES];
@@ -333,10 +360,6 @@
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     NSString *secret = jsonString;
     NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
-    
-    NSLog(@"%@",[data AES256_Decrypt:[HeiHei toeknNew_key]]);
-    NSLog(@"%@",data);
-    
     
     //POST数据
     NSDictionary *parameters = @{@"ec":data};

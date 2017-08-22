@@ -271,6 +271,7 @@
 }
 -(void) viewDidAppear:(BOOL)animated
 {
+    [self chekcNotification];
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
         JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
         entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
@@ -980,7 +981,66 @@
     [[RCIM sharedRCIM]setUserInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
     [RCIM sharedRCIM].enablePersistentUserInfoCache=YES;
     [RCIM sharedRCIM].enableTypingStatus = YES;
+    [[RCIM sharedRCIM] setGroupInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
 }
+-(void)chekcNotification{
+    NSInteger status = [[UIApplication sharedApplication] currentUserNotificationSettings].types;
+    if (status == 0){
+        NSInteger a = arc4random()%100;
+        if (a>30){
+            Alert * alert = [[Alert alloc]initWithTitle:@"提示" message:@"推送未开启，请开启推送以获取最新消息。"
+                                               delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert setCancelBlock:^(Alert* alert){
+                NSString * identifier = [NSBundle mainBundle].bundleIdentifier;
+                NSString * str = [NSString stringWithFormat:@"App-Prefs:root=NOTIFICATIONS_ID&path=%@",identifier];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+            }];
+            [alert show];
+        }
+    } else {
+        NSString *GradeType = [[[Account shared]getGradeType] stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+        NSString *MajorType = [[Account shared]getMajorType];
+        NSString *vip = [NSString stringWithFormat:@"vip%@",[[Account shared]getVip]];
+        NSSet* tags = [NSSet alloc];
+        tags = [NSSet setWithObjects:GradeType,MajorType,vip,nil];
+        NSString *alia =  [[Account shared] getStudentShortID] ;
+
+        [JPUSHService setTags:tags alias:alia fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+            NSString* vip = [NSString stringWithFormat:@"%@",[[Account shared]getVip]];
+            if (![vip isEqualToString:@"1"]){
+                NSString *mess =[[NSString alloc]initWithFormat:@"返回代码%d,tags%@,别名%@",iResCode,tags,iAlias];
+                Alert * alert = [[Alert alloc]initWithTitle:NSLocalizedString(@"推送状态", "")
+                                                    message:mess
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"好", "")
+                                          otherButtonTitles: nil ];
+                [alert show];
+            } else {
+                if (iResCode==0){
+
+                    NSString *mess =[[NSString alloc]initWithFormat:NSLocalizedString(@"注册成功", "")];
+                    Alert * alert = [[Alert alloc]initWithTitle:NSLocalizedString(@"推送状态", "")
+                                                        message:mess
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"好", "")
+                                              otherButtonTitles: nil ];
+                    [alert show];
+                } else {
+                    NSString *mess =[[NSString alloc]initWithFormat:@"%@%d",NSLocalizedString(@"注册失败", ""),iResCode];
+                    Alert * alert = [[Alert alloc]initWithTitle:NSLocalizedString(@"推送状态", "")
+                                                        message:mess
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"好", "")
+                                              otherButtonTitles: nil ];
+                    [alert show];
+                }
+                
+            }
+        }];
+
+    }
+}
+
 
 -(void)getRongCloudToken{
     NSDictionary *o1 =@{@"ec":@"9987",

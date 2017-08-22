@@ -23,9 +23,6 @@
                                             @(ConversationType_GROUP),
                                             @(ConversationType_APPSERVICE),
                                             @(ConversationType_SYSTEM)]];
-        //设置需要将哪些类型的会话在会话列表中聚合显示
-        [self setCollectionConversationType:@[@(ConversationType_DISCUSSION),
-                                              @(ConversationType_GROUP)]];
 
     }
     return self;
@@ -35,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"小纸条";
-    
+ 
     self.navigationController.navigationBar.backgroundColor = navigationTabColor;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.barTintColor=navigationTabColor;
@@ -48,6 +45,7 @@
                atIndexPath:(NSIndexPath *)indexPath {
 
     RCSDKConversationViewController *conversation;
+    
     conversation = [[RCSDKConversationViewController alloc]init];
 
     conversation.conversationType = model.conversationType;

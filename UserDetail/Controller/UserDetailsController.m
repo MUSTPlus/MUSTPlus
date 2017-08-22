@@ -162,7 +162,12 @@ static CGRect oldframe;
     [super viewDidLoad];
     
     [self.tabBarController.tabBar setHidden:YES];
-
+    self.navigationController.navigationBarHidden=NO;
+    self.navigationController.navigationBar.backgroundColor = navigationTabColor;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor=navigationTabColor;
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     changeFace = false;
     changeBG = false;
     //_currentUser = [[UserModel alloc]getUserModel:_studID];

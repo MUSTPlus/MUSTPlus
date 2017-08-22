@@ -7,7 +7,7 @@
 //
 
 #import <RongIMKit/RongIMKit.h>
-
+#import "UserDetailsController.h"
 @interface RCSDKConversationViewController : RCConversationViewController
 
 @end

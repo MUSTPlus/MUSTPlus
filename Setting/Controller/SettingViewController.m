@@ -106,7 +106,7 @@
 
     NSInteger status = [[UIApplication sharedApplication] currentUserNotificationSettings].types;
     NSLog(@"status = %ld",(long)status);
-    if (status >0){
+    if (status == 0){
         NSString * identifier = [NSBundle mainBundle].bundleIdentifier;
         NSString * str = [NSString stringWithFormat:@"App-Prefs:root=NOTIFICATIONS_ID&path=%@",identifier];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
@@ -219,16 +219,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"cell";
     NSInteger row = indexPath.row;
-    UserDetailCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil){
-        cell = [[UserDetailCellTableViewCell alloc]init];
-    }
     if (indexPath.section == 1){
         UITableViewCell*cell = [[UITableViewCell alloc]init];
         cell.textLabel.text = @"退出当前账号";
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
 
-    } else
+    } else{
+        UserDetailCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (cell == nil){
+            cell = [[UserDetailCellTableViewCell alloc]init];
+        }
+
     switch (row){
         case 0:
             {
@@ -264,8 +265,10 @@
             cell.userInteractionEnabled = NO;
             break;
 
+        }
+        return cell;
     }
-    return cell;
+    return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 50;
