@@ -10,7 +10,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 @interface MLSelectPhotoPickerGroup : NSObject
 
 /**
@@ -41,3 +42,4 @@
 @property (nonatomic , strong) ALAssetsGroup *group;
 
 @end
+#pragma clang diagnostic pop

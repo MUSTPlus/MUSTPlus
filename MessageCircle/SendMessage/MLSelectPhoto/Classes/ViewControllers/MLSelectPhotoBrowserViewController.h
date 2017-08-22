@@ -9,7 +9,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 @interface MLSelectPhotoBrowserViewController : UIViewController
 // 展示的图片 MLSelectAssets
 @property (strong,nonatomic) NSArray *photos;
@@ -22,3 +23,5 @@
 // 最多能选择图片的个数
 @property (assign,nonatomic) long maxCount;
 @end
+
+#pragma clang diagnostic pop

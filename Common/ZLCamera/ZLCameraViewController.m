@@ -5,7 +5,8 @@
 //  Created by ZL on 14-9-11.
 //  Copyright (c) 2014年 beiqing. All rights reserved.
 //
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 #import <AVFoundation/AVFoundation.h>
 #import <ImageIO/ImageIO.h>
 #import <objc/message.h>
@@ -610,4 +611,4 @@ static CGFloat BOTTOM_HEIGHT = 60;
     [self cancel:nil];
 }
 @end
-
+#pragma clang diagnostic pop

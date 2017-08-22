@@ -10,7 +10,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 @interface MLSelectPhotoAssets : NSObject
 
 + (instancetype)photoAssetsWithImage:(UIImage *)image;

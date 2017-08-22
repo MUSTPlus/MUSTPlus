@@ -7,7 +7,8 @@
 //
 
 #import "QHHead.h"
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 @interface AlertViewWithBlockOrSEL : UIAlertView
 - (id)initWithTitle:(NSString *)title message:(NSString *)message;
 - (id)initWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate;
@@ -20,3 +21,4 @@
 - (void)addOtherButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action withObject:(id)object;
 - (void)addOtherButtonWithTitle:(NSString *)title onTapped:(void(^)())tappedBlock;
 @end
+#pragma clang diagnostic pop

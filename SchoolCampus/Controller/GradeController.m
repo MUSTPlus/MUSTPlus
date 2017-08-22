@@ -99,12 +99,9 @@
     }else{
         msg = @"保存图片成功" ;
     }
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存图片结果提示"
-                                                    message:msg
-                                                   delegate:self
-                                          cancelButtonTitle:@"确定"
-                                          otherButtonTitles:nil];
+    Alert * alert = [[Alert alloc]initWithTitle:@"保存图片提示" message:msg delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
     [alert show];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

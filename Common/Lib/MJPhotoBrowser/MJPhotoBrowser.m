@@ -6,6 +6,8 @@
 
 #import "MJPhotoBrowser.h"
 #import "Alert.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 @interface MJPhotoBrowser () <MJPhotoViewDelegate,UIActionSheetDelegate>
 {
     // 滚动的view
@@ -298,3 +300,4 @@
     [self updateTollbarState];
 }
 @end
+#pragma clang diagnostic pop

@@ -14,7 +14,8 @@
 #import "MLSelectPhotoPickerGroupViewController.h"
 #import "MLSelectPhotoCommon.h"
 #import "MLSelectPhotoAssets.h"
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 @interface MLSelectPhotoPickerViewController ()
 @property (nonatomic , weak) MLSelectPhotoPickerGroupViewController *groupVc;
 @end
@@ -124,3 +125,4 @@
 }
 
 @end
+#pragma clang diagnostic pop

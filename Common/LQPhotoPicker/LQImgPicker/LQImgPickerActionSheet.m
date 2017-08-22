@@ -8,7 +8,8 @@
 
 #import "LQImgPickerActionSheet.h"
 #import "CirnoError.h"
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 @implementation LQImgPickerActionSheet
 
 - (instancetype)init

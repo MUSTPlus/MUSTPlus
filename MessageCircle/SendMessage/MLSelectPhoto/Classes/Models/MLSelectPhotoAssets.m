@@ -9,7 +9,8 @@
 //
 
 #import "MLSelectPhotoAssets.h"
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 @interface MLSelectPhotoAssets ()
 /**
  *  自己定义的Image，拍照可以用

@@ -89,11 +89,12 @@
     _mainBodyArray = [receiveMyMessageLogic getDataFromCoreData];
     [self.tableView reloadData];
 }
-
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-}
+   }
 
 -(void)ClickAdd:(id)button{
     [self.navigationController popViewControllerAnimated:YES];

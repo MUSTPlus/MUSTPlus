@@ -8,6 +8,8 @@
 //  模仿（chaoxi)QQ
 //
 //
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 #import "UserDetailsController.h"
 #import "UserDetailCellTableViewCell.h"
 #import "BasicHead.h"

@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 typedef void (^arrBlock)(NSArray *arrObj);
 @interface MImaLibTool : NSObject
 + (id)shareMImaLibTool;

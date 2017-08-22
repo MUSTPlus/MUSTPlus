@@ -5,7 +5,8 @@
 //  Created by Cirno on 05/10/2016.
 //  Copyright © 2016 zbc. All rights reserved.
 //
-
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
 #import "MessageCircleController.h"
 #import "BasicHead.h"
 #import "ComposeViewController.h"

@@ -96,12 +96,13 @@ int pageNum = 0;//tableHeaderView消失时记录banner翻到第几页
     showNewsArray = [self addNewsByTag];
 
 }
-
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleDefault;
+}
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     NSString* page = @"News";
     [MTA trackPageViewBegin:page];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     //banner显示时开始滚动
     [_bannerView bannerStartScroll];
 

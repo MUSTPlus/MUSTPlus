@@ -1,6 +1,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, ‘8.0’
-target "MUSTPlus” do
+platform :ios, '8.0'
+inhibit_all_warnings!
+target "MUSTPlus" do
 pod 'AFNetworking', '~> 3.0'
 pod 'SDWebImage' , '~> 3.8’
 pod 'MJRefresh'
