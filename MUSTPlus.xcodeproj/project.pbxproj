@@ -18,6 +18,7 @@
 		2119AAB91F0BEE7800F1E825 /* SchoolFileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2119AAB81F0BEE7800F1E825 /* SchoolFileController.m */; };
 		2119AABC1F0C8A5000F1E825 /* SchoolFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2119AABB1F0C8A5000F1E825 /* SchoolFile.m */; };
 		212A36B01E7D06A400DE376C /* t-rex in Resources */ = {isa = PBXBuildFile; fileRef = 212A36AF1E7D06A400DE376C /* t-rex */; };
+		214553CF1F4C8D050025F411 /* RCDUIBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 214553CE1F4C8D050025F411 /* RCDUIBarButtonItem.m */; };
 		2158BFBF1EB5BCE10002CD19 /* AttendanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2158BFBE1EB5BCE10002CD19 /* AttendanceViewController.m */; };
 		2158BFC61EB5C3A50002CD19 /* AttendanceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2158BFC51EB5C3A50002CD19 /* AttendanceHeaderView.m */; };
 		2158BFC81EB5C3B50002CD19 /* AttendanceHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2158BFC71EB5C3B50002CD19 /* AttendanceHeaderView.xib */; };
@@ -40,6 +41,8 @@
 		21BDF2F31E97D44600992CF7 /* symbol.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21BDF2EE1E97D44600992CF7 /* symbol.plist */; };
 		21C4D7A31F48201200FD6A4D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21C4D7A21F48201200FD6A4D /* GoogleService-Info.plist */; };
 		21C5D04E1F404C2E005E682A /* (null) in Sources */ = {isa = PBXBuildFile; };
+		21F18E811F5178E3002317B2 /* BlackListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F18E801F5178E3002317B2 /* BlackListController.m */; };
+		21F18E841F517F3E002317B2 /* RCSDKSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F18E831F517F3E002317B2 /* RCSDKSettingViewController.m */; };
 		21F87BDF1F4442E4004E45DA /* AttendanceHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F87BDE1F4442E4004E45DA /* AttendanceHistoryTableViewController.m */; };
 		21F87BE21F44462F004E45DA /* AttendanceHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F87BE11F44462F004E45DA /* AttendanceHistory.m */; };
 		21FEE33B1EAE7036006C5538 /* WeekTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FEE33A1EAE7036006C5538 /* WeekTool.m */; };
@@ -401,6 +404,8 @@
 		2119AABA1F0C8A5000F1E825 /* SchoolFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchoolFile.h; sourceTree = "<group>"; };
 		2119AABB1F0C8A5000F1E825 /* SchoolFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolFile.m; sourceTree = "<group>"; };
 		212A36AF1E7D06A400DE376C /* t-rex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "t-rex"; path = "Common/EasterEgg/t-rex"; sourceTree = SOURCE_ROOT; };
+		214553CD1F4C8D050025F411 /* RCDUIBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCDUIBarButtonItem.h; sourceTree = "<group>"; };
+		214553CE1F4C8D050025F411 /* RCDUIBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDUIBarButtonItem.m; sourceTree = "<group>"; };
 		2158BFBD1EB5BCE10002CD19 /* AttendanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AttendanceViewController.h; path = Timetable/Controller/AttendanceViewController.h; sourceTree = "<group>"; };
 		2158BFBE1EB5BCE10002CD19 /* AttendanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AttendanceViewController.m; path = Timetable/Controller/AttendanceViewController.m; sourceTree = "<group>"; };
 		2158BFC41EB5C3A50002CD19 /* AttendanceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceHeaderView.h; sourceTree = "<group>"; };
@@ -435,6 +440,10 @@
 		21BDF2ED1E97D44600992CF7 /* sport.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sport.plist; sourceTree = "<group>"; };
 		21BDF2EE1E97D44600992CF7 /* symbol.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = symbol.plist; sourceTree = "<group>"; };
 		21C4D7A21F48201200FD6A4D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		21F18E7F1F5178E3002317B2 /* BlackListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackListController.h; sourceTree = "<group>"; };
+		21F18E801F5178E3002317B2 /* BlackListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlackListController.m; sourceTree = "<group>"; };
+		21F18E821F517F3E002317B2 /* RCSDKSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSDKSettingViewController.h; sourceTree = "<group>"; };
+		21F18E831F517F3E002317B2 /* RCSDKSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCSDKSettingViewController.m; sourceTree = "<group>"; };
 		21F87BDD1F4442E4004E45DA /* AttendanceHistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceHistoryTableViewController.h; sourceTree = "<group>"; };
 		21F87BDE1F4442E4004E45DA /* AttendanceHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceHistoryTableViewController.m; sourceTree = "<group>"; };
 		21F87BE01F44462F004E45DA /* AttendanceHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceHistory.h; sourceTree = "<group>"; };
@@ -1173,6 +1182,8 @@
 			children = (
 				21968FCD1F4580D800381A03 /* RCSDKConversationViewController.h */,
 				21968FCE1F4580D800381A03 /* RCSDKConversationViewController.m */,
+				21F18E821F517F3E002317B2 /* RCSDKSettingViewController.h */,
+				21F18E831F517F3E002317B2 /* RCSDKSettingViewController.m */,
 				2195C16C1F3713510046B689 /* MessageController.h */,
 				2195C16D1F3713510046B689 /* MessageController.m */,
 			);
@@ -1189,6 +1200,8 @@
 		21C4D7A61F488F8000FD6A4D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				214553CD1F4C8D050025F411 /* RCDUIBarButtonItem.h */,
+				214553CE1F4C8D050025F411 /* RCDUIBarButtonItem.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2560,6 +2573,8 @@
 				319AFE8C1E7C0F5D0050E10C /* UserChangeDetailsController.m */,
 				319AFE8D1E7C0F5D0050E10C /* UserDetailsController.h */,
 				319AFE8E1E7C0F5D0050E10C /* UserDetailsController.m */,
+				21F18E7F1F5178E3002317B2 /* BlackListController.h */,
+				21F18E801F5178E3002317B2 /* BlackListController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2921,6 +2936,7 @@
 				319AFF7D1E7C0F5E0050E10C /* ImageListView.m in Sources */,
 				319AFF871E7C0F5E0050E10C /* FacePageView.m in Sources */,
 				319AFEDC1E7C0F5E0050E10C /* ViewController+MASAdditions.m in Sources */,
+				21F18E841F517F3E002317B2 /* RCSDKSettingViewController.m in Sources */,
 				319AFEAF1E7C0F5D0050E10C /* MJPhotoProgressView.m in Sources */,
 				319AFFE41E7C0F5E0050E10C /* CutSchoolClassScrollView.m in Sources */,
 				319AFED71E7C0F5E0050E10C /* MASViewAttribute.m in Sources */,
@@ -2948,6 +2964,7 @@
 				319AFFBA1E7C0F5E0050E10C /* ZBCNewView.m in Sources */,
 				319AFFB81E7C0F5E0050E10C /* ZBCBannerView.m in Sources */,
 				319AFEDE1E7C0F5E0050E10C /* LogoutLogic.m in Sources */,
+				214553CF1F4C8D050025F411 /* RCDUIBarButtonItem.m in Sources */,
 				319AFFEB1E7C0F5E0050E10C /* SchoolClassScrollView.m in Sources */,
 				319AFFAE1E7C0F5E0050E10C /* ChangePinNumberView.m in Sources */,
 				319AFF801E7C0F5E0050E10C /* ChatToolBarItem.m in Sources */,
@@ -2977,6 +2994,7 @@
 				319AFEE61E7C0F5E0050E10C /* NSObject+DataSecurity.m in Sources */,
 				319AFEEE1E7C0F5E0050E10C /* RootPopView.m in Sources */,
 				319AFF321E7C0F5E0050E10C /* messageDetailHeaderView.m in Sources */,
+				21F18E811F5178E3002317B2 /* BlackListController.m in Sources */,
 				319AFEE31E7C0F5E0050E10C /* REMenuItemView.m in Sources */,
 				319AFEF41E7C0F5E0050E10C /* HeiHei.m in Sources */,
 				319AFF031E7C0F5E0050E10C /* UIView+Layout.m in Sources */,

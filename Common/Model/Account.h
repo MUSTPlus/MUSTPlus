@@ -34,6 +34,7 @@
 -(NSString*)getSemester;
 -(NSString*)getAllCourse;
 -(NSString*)getMailPw;
+-(NSString*)getLoginStatus;
 -(void)setStudentLongID:(NSString*)str;
 -(void)setStudentShortID:(NSString*)str;
 -(void)setPassword:(NSString*)str;
@@ -51,6 +52,6 @@
 -(void)setSemester:(NSString*)str;
 -(void)setAllCourse:(NSString*)str;
 -(void)setMailPw:(NSString*)str;
-
+-(void)setLoginStatus;
 
 @end

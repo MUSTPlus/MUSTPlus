@@ -347,6 +347,7 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+
     [self getRongCloudToken];
     _colorArray =[[NSArray alloc]initWithObjects:
                   kColor(84,188,225),
@@ -454,7 +455,7 @@
         NSData *data = [decode dataUsingEncoding:NSUTF8StringEncoding];
         id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         //CirnoLog(@"接收到的学期为%@ %@ %@",json,data,decode);
-        CirnoLog(@"JSON:%@",json);
+//CirnoLog(@"JSON:%@",json);
         @try {
             float ver = [json[@"lastestversion"]floatValue];
             id type = [NSBundle.mainBundle infoDictionary][@"CFBundleShortVersionString"];
@@ -533,14 +534,16 @@
 
 -(void) setTarBar{
     NSString* studid = [[Account shared]getStudentLongID];
-    if ([studid isEqual:@"1509853G-I011-0243"]){
 
-    }
     [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:NSLocalizedString(@"课程表", @"")];
     [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:NSLocalizedString(@"资讯", @"")];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"校友圈", @"")];
     [[self.tabBarController.tabBar.items objectAtIndex:3] setTitle:NSLocalizedString(@"小纸条", @"")];
     [[self.tabBarController.tabBar.items objectAtIndex:4] setTitle:NSLocalizedString(@"校园", @"")];
+
+    if ([studid isEqual:@"1409853D-I011-0107"]){
+        [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:NSLocalizedString(@"学神圈", @"")];
+    }
 
 }
 
@@ -967,7 +970,7 @@
 
 
 -(void)RongCloudLogin:(NSString*)token{
-    [[RCIM sharedRCIM] initWithAppKey:@"lmxuhwaglz8gd"];
+    [[RCIM sharedRCIM] initWithAppKey:@"z3v5yqkbz6ob0"];
     [[RCIM sharedRCIM] connectWithToken:token
                                 success:^(NSString *userId) {
 
@@ -979,9 +982,13 @@
                                     
                                 }];
     [[RCIM sharedRCIM]setUserInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
-    [RCIM sharedRCIM].enablePersistentUserInfoCache=YES;
-    [RCIM sharedRCIM].enableTypingStatus = YES;
     [[RCIM sharedRCIM] setGroupInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
+    [[RCIM sharedRCIM]setGroupUserInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
+    [[RCIM sharedRCIM]setGroupMemberDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
+    [RCIM sharedRCIM].enablePersistentUserInfoCache=NO;
+    [RCIM sharedRCIM].enableTypingStatus = YES;
+    [[RCIM sharedRCIM]setEnableMessageMentioned:YES];
+
 }
 -(void)chekcNotification{
     NSInteger status = [[UIApplication sharedApplication] currentUserNotificationSettings].types;
@@ -1009,33 +1016,19 @@
             NSString* vip = [NSString stringWithFormat:@"%@",[[Account shared]getVip]];
             if (![vip isEqualToString:@"1"]){
                 NSString *mess =[[NSString alloc]initWithFormat:@"返回代码%d,tags%@,别名%@",iResCode,tags,iAlias];
-                Alert * alert = [[Alert alloc]initWithTitle:NSLocalizedString(@"推送状态", "")
-                                                    message:mess
-                                                   delegate:nil
-                                          cancelButtonTitle:NSLocalizedString(@"好", "")
-                                          otherButtonTitles: nil ];
-                [alert show];
+                 NSLog(@"%@",mess);
             } else {
                 if (iResCode==0){
 
                     NSString *mess =[[NSString alloc]initWithFormat:NSLocalizedString(@"注册成功", "")];
-                    Alert * alert = [[Alert alloc]initWithTitle:NSLocalizedString(@"推送状态", "")
-                                                        message:mess
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"好", "")
-                                              otherButtonTitles: nil ];
-                    [alert show];
+                    NSLog(@"%@",mess);
                 } else {
                     NSString *mess =[[NSString alloc]initWithFormat:@"%@%d",NSLocalizedString(@"注册失败", ""),iResCode];
-                    Alert * alert = [[Alert alloc]initWithTitle:NSLocalizedString(@"推送状态", "")
-                                                        message:mess
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"好", "")
-                                              otherButtonTitles: nil ];
-                    [alert show];
+                    NSLog(@"%@",mess);
                 }
-                
+
             }
+
         }];
 
     }
@@ -1043,6 +1036,8 @@
 
 
 -(void)getRongCloudToken{
+    [RCIM sharedRCIM].receiveMessageDelegate = self;
+
     NSDictionary *o1 =@{@"ec":@"9987",
                         @"studentID": [[Account shared]getStudentLongID]};
     NSError *error;
@@ -1068,7 +1063,27 @@
     }];
 }
 
-
+-(void)onRCIMMessageRecalled:(long)messageId{
+    NSLog(@"%ld",messageId);
+}
+-(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+    
+}
+-(BOOL)onRCIMCustomLocalNotification:(RCMessage*)message
+                      withSenderName:(NSString *)senderName{
+    NSLog(@"%@",message);
+    NSLog(@"%@",senderName);
+    [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:@""];
+    return NO;
+}
+-(BOOL)onRCIMCustomAlertSound:(RCMessage*)message{
+    NSLog(@"%@",message);
+     dispatch_sync(dispatch_get_main_queue(), ^{
+         UITabBarItem* item =[self.tabBarController.tabBar.items objectAtIndex:3];
+          [item setBadgeValue:@" "];
+     });
+    return NO;
+}
 @end
 
 #pragma clang diagnostic pop

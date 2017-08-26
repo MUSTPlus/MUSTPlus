@@ -34,6 +34,7 @@
 #pragma clang diagnostic pop
     UserDetailsController* udc = [[UserDetailsController alloc]init];
     udc.isSelf = NO;
+    udc.naviGo = YES;
     udc.studID = zxczxc;
     [self.navigationController pushViewController:udc animated:YES];
 }

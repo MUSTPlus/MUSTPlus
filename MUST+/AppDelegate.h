@@ -12,7 +12,7 @@
 #import "MTA.h"
 #import "MTAConfig.h"
 #import <RongIMKit/RongIMKit.h>
-@interface AppDelegate : UIResponder <UIApplicationDelegate,JPUSHRegisterDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMGroupMemberDataSource>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,JPUSHRegisterDelegate,RCIMUserInfoDataSource,RCIMGroupInfoDataSource,RCIMGroupMemberDataSource,RCIMGroupUserInfoDataSource>
 
 @property (strong, nonatomic) UIWindow *window;
 

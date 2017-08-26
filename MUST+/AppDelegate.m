@@ -26,7 +26,7 @@
 #import <Bugly/Bugly.h>
 #import <JSPatchPlatform/JSPatch.h>
 #import "MessageController.h"
-
+#import <UserNotifications/UserNotifications.h>
 
 #import <Google/Analytics.h>
 
@@ -50,7 +50,6 @@
     NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
     NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
     [[RCIMClient sharedRCIMClient] recordRemoteNotificationEvent:userInfo];
-
     /**
      * 获取融云推送服务扩展字段
      * nil 表示该启动事件不包含来自融云的推送服务
@@ -84,17 +83,21 @@
     NSLog(@"userinfo=%@",userInfo);
     [[RCIMClient sharedRCIMClient] recordRemoteNotificationEvent:userInfo];
     NSDictionary *pushServiceData = [[RCIMClient sharedRCIMClient] getPushExtraFromRemoteNotification:userInfo];
+
     if (pushServiceData) {
         NSLog(@"该远程推送包含来自融云的推送服务");
-        for (id key in [pushServiceData allKeys]) {
-            NSLog(@"key = %@, value = %@", key, pushServiceData[key]);
-        }
+
     } else {
-        NSLog(@"该远程推送不包含来自融云的推送服务");
+
     }
 
     NSDictionary *aps = [userInfo valueForKey:@"aps"];
     NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
+    NSString *attendance = [userInfo valueForKey:@"attendance"];
+    if (attendance!=NULL){
+        [self gotoAttendance];
+
+    }
 //    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
 //    NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
     if (application.applicationState == UIApplicationStateActive) {
@@ -114,7 +117,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+    [[RCIM sharedRCIM]setUserInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
+    [[RCIM sharedRCIM] setGroupInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
+    [[RCIM sharedRCIM]setGroupUserInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
+    [[RCIM sharedRCIM]setGroupMemberDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
+     [[RCIM sharedRCIM] setGroupInfoDataSource:self];
     [Bugly startWithAppId:@"62d853eb65"];
     [JSPatch startWithAppKey:@"0ce6d775096fc96e"];
     [JSPatch setupRSAPublicKey:@"-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHgDRAfslCfgURdHAZomQNO52w\nIfHcrhNvmW71DW0GEm21UAUMmTuJs8WbcbDu5nm2/nfExoqQeYATHKVS8glTD36n\nzBTDesfhp4LrmwXUa2kcBeqB9UPdiDyYVuSWHjaVFL73XOAVKTqd/BiEHUCi/xva\no9/TJUTYF+4IAzE7rwIDAQAB\n-----END PUBLIC KEY-----"];
@@ -260,8 +267,35 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
     [[RCIMClient sharedRCIMClient] setDeviceToken:token];
 }
+-(void)gotoAttendance{
+    AttendanceViewController* controller = [[AttendanceViewController alloc]init];
+    controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    UINavigationController *passcodeNavigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+    [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:passcodeNavigationController animated:YES completion:^{}];
+}
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
+    // Required
 
+    NSDictionary * userInfo = notification.request.content.userInfo;
+    if ([userInfo valueForKey:@"attendance"]!=NULL){
+        [self gotoAttendance];
+    }
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+    completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+}
 
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+    // Required
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+    completionHandler();  // 系统要求执行这个方法
+}
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -377,6 +411,12 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
                                                         portrait:@"https://must.plus/logo.jpg"];
         return completion(userinfo);
     }
+    if ([userId hasPrefix:@"GROUPADMIN"]){
+        RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:userId
+                                                            name:@"系统消息"
+                                                        portrait:@"https://must.plus/logo.jpg"];
+        return completion(userinfo);
+    }
     NSDictionary *o1 =@{@"ec":@"1032",
                         @"studentID":userId};
 
@@ -437,9 +477,152 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 }
 
+- (void)getGroupInfoWithGroupId:(NSString *)groupId
+                     completion:(void (^)(RCGroup *groupInfo))completion{
+    NSDictionary *o1 =@{@"ec":@"5001",
+                        @"groupid":groupId};
 
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    NSDictionary *parameters = @{@"ec":data};
 
+    NSURL *URL = [NSURL URLWithString:BaseURL];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
+    //转成最原始的data,一定要加
+    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
+    [manager POST:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if ([json[@"state"]isEqualToString:@"1"]){
+            RCGroup* group = [[RCGroup alloc]initWithGroupId:groupId groupName:json[@"ret"][@"name"] portraitUri:nil];
+            return completion(group);
+        } else{
+            RCGroup* group = [[RCGroup alloc]initWithGroupId:groupId groupName:groupId portraitUri:nil];
+            return completion(group);
+        }
+    }failure:^(NSURLSessionTask *operation, NSError *error){
+        RCGroup* group = [[RCGroup alloc]initWithGroupId:groupId groupName:groupId portraitUri:nil];
+        return completion(group);
+    }];
+    RCGroup* group = [[RCGroup alloc]initWithGroupId:groupId groupName:groupId portraitUri:nil];
+    return completion(group);
+}
+- (void)getAllMembersOfGroup:(NSString *)groupId result:(void (^)(NSArray<NSString *> *))resultBlock{
+    NSDictionary *o1 =@{@"ec":@"5002",
+                        @"groupid":groupId};
+
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    NSDictionary *parameters = @{@"ec":data};
+
+    NSURL *URL = [NSURL URLWithString:BaseURL];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+
+    //转成最原始的data,一定要加
+    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
+    [manager POST:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+        NSMutableArray<NSString*>* r = [[NSMutableArray alloc]init];
+
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if ([json[@"state"]isEqualToString:@"1"]){
+            id students = json[@"ret"];
+
+            for (NSArray* stu in students)
+                [r addObject:[NSString stringWithFormat:@"%@",stu[0]]];
+            return resultBlock([r copy]);
+        } else
+            return resultBlock(nil);
+
+    }failure:^(NSURLSessionTask *operation, NSError *error){
+        NSLog(@"erroris%@",error);
+        
+    }];
+    return resultBlock(nil);
+}
+-(void)getUserInfoWithUserId:(NSString *)userId inGroup:(NSString *)groupId completion:(void (^)(RCUserInfo *))completion{
+    if ([userId hasPrefix:@"ADMIN"]){
+        RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:userId
+                                                            name:@"系统消息"
+                                                        portrait:@"https://must.plus/logo.jpg"];
+        return completion(userinfo);
+    }
+    if ([userId hasPrefix:@"GROUPADMIN"]){
+        RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:userId
+                                                            name:@"系统消息"
+                                                        portrait:@"https://must.plus/logo.jpg"];
+        return completion(userinfo);
+    }
+    NSDictionary *o1 =@{@"ec":@"1032",
+                        @"studentID":userId};
+
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    NSDictionary *parameters = @{@"ec":data};
+
+    NSURL *URL = [NSURL URLWithString:BaseURL];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+
+    //转成最原始的data,一定要加
+    manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
+
+    [manager POST:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if([json[@"state"] isEqualToString:@"1"]){
+            @try {
+                NSDictionary *newjson = json[@"info"];
+                RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:[newjson objectForKey:@"studentID"]
+                                                                    name:[newjson objectForKey:@"nickName"]
+                                                                portrait:[newjson objectForKey:@"face"]];
+
+                return completion(userinfo);
+
+            } @catch (NSException *exception) {
+                RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:userId
+                                                                    name:@"未知用户"
+                                                                portrait:@"https://must.plus/logo.jpg"];
+                return completion(userinfo);
+            }
+            @finally{
+            }
+        }
+        else{
+            RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:userId
+                                                                name:@"未知用户"
+                                                            portrait:@"https://must.plus/logo.jpg"];
+            return completion(userinfo);
+        }
+
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        RCUserInfo* userinfo = [[RCUserInfo alloc]initWithUserId:userId
+                                                            name:@"未知用户"
+                                                        portrait:@"https://must.plus/logo.jpg"];
+        return completion(userinfo);
+        
+    }];
+    return completion(nil);
+}
 #pragma mark -融云End
 
 

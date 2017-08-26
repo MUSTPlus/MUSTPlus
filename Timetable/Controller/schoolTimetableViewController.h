@@ -23,7 +23,7 @@
 #import "CZPicker.h"
 #import "Semester.h"
 #import "AttendanceViewController.h"
-@interface schoolTimetableViewController : UIViewController<HeadButtonDelegate,SchoolClassScrollDelegate,SchoolClassClickDelegate,MenuDelegate,CZPickerViewDataSource, CZPickerViewDelegate>
+@interface schoolTimetableViewController : UIViewController<HeadButtonDelegate,SchoolClassScrollDelegate,SchoolClassClickDelegate,MenuDelegate,CZPickerViewDataSource, CZPickerViewDelegate,RCIMReceiveMessageDelegate>
 
 @property (nonatomic,strong) WeekTitleScrollView *weakTitle;
 

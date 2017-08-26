@@ -97,7 +97,9 @@
         }
     }
     
-    
+    [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"LoginStatus"];
+
+
     NSString *appDomaion = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomaion];
 }

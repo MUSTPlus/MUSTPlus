@@ -72,6 +72,9 @@
 -(NSString*)getMailPw{
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"MailPw"];
 }
+-(NSString*)getLoginStatus{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"LoginStatus"];
+}
 -(void)setStudentLongID:(NSString*)str{
     [[NSUserDefaults standardUserDefaults] setObject:str forKey:LongID];
 };
@@ -124,5 +127,8 @@
 -(void)setMailPw:(NSString*)str{
     [[NSUserDefaults standardUserDefaults] setObject:str forKey:@"MailPw"];
 }
+-(void)setLoginStatus{
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"LoginStatus"];
 
+}
 @end

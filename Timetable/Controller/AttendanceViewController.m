@@ -345,7 +345,8 @@
                                                             major:[self.major intValue]
                                                             minor:[self.minor intValue]
                                                        identifier:@"C301"];
-
+    if (!_beaconRegion)
+        return;
 //  //  _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:@"FDA50693-A4E2-4FB1-AFCF-C6EB07647825"]
 //                                                            major:1000
 //                                                            minor:1001
@@ -355,8 +356,10 @@
     [self.locationManager startRangingBeaconsInRegion:_beaconRegion];
 }
 -(void)endMonitoring{
+    if (_beaconRegion){
     [self.locationManager stopMonitoringForRegion:_beaconRegion];
     [self.locationManager stopRangingBeaconsInRegion:_beaconRegion];
+    }
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [self endMonitoring];

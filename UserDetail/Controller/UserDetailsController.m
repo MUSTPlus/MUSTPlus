@@ -22,7 +22,9 @@
 #import "HeiHei.h"
 #import "NSString+AES.h"
 #import "MyMessageCircleViewController.h"
+#import "RCSDKConversationViewController.h"
 
+#import <RongIMKit/RongIMKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "MLSelectPhotoBrowserViewController.h"
 #import "MLSelectPhotoPickerAssetsViewController.h"
@@ -201,7 +203,7 @@ static CGRect oldframe;
     // _backbutton = [UIButton buttonWithType:UIButtonTypeCustom];
     _information = [[UILabel alloc]initWithFrame:CGRectMake(0, StatusBarHeight, Width, NavBarHeight-StatusBarHeight)];
     _information.text = _isSelf?NSLocalizedString(@"我的资料", ""):NSLocalizedString(@"资料", "");
-    self.navigationController.title= _isSelf?NSLocalizedString(@"我的资料", ""):NSLocalizedString(@"资料", "");
+    //self.navigationController.title= _isSelf?NSLocalizedString(@"我的资料", ""):NSLocalizedString(@"资料", "");
     _information.textAlignment = NSTextAlignmentCenter;
     _information.textColor = [UIColor whiteColor];
     [_navibar addSubview:_information];
@@ -210,6 +212,7 @@ static CGRect oldframe;
     if (!_isSelf){
 
     }
+    NSLog(@"naviGo is %d",_naviGo);
     if (!_naviGo){
     [_navibar addSubview:_backbutton];
         [self.view addSubview:_navibar];
@@ -296,7 +299,7 @@ static CGRect oldframe;
         // _changesay.layer.borderWidth = 1.0f;
         _changesay.layer.cornerRadius = 3;
         _privacy = [[UIButton alloc]initWithFrame:CGRectMake(Width/2, 5, Width/2-20, bottomHeight-10)];
-        [_privacy setTitle:NSLocalizedString(@"隐私", "") forState:UIControlStateNormal];
+        [_privacy setTitle:NSLocalizedString(@"黑名单管理", "") forState:UIControlStateNormal];
         [_privacy setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _privacy.layer.borderColor = kColor(195, 200, 204).CGColor;
         _privacy.layer.borderWidth = 1.0f;
@@ -307,10 +310,89 @@ static CGRect oldframe;
         [_privacy addTarget:self action:@selector(privacyShow) forControlEvents:UIControlEventTouchDown];
         [_changesay addTarget:self action:@selector(changeQianming) forControlEvents:UIControlEventTouchDown];
         [self.view addSubview:_bottom];
+    } else {
+        _bottom = [[UIView alloc]initWithFrame:CGRectMake(0, Height-bottomHeight, Width, bottomHeight)];
+        _bottom.backgroundColor = kColor(247, 247, 249);
+        _changesay = [[UIButton alloc]initWithFrame:CGRectMake(10, 5, Width/2-20, bottomHeight-10)];
+        [_changesay setTitle:NSLocalizedString(@"发送消息", "") forState:UIControlStateNormal];
+        [_changesay setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _changesay.layer.borderColor = kColor(195, 200, 204).CGColor;
+        _changesay.backgroundColor = sidebarBackGroundColor;
+        // _changesay.layer.borderWidth = 1.0f;
+        _changesay.layer.cornerRadius = 3;
+        _privacy = [[UIButton alloc]initWithFrame:CGRectMake(Width/2, 5, Width/2-20, bottomHeight-10)];
+        if ([_studID isEqualToString:@"1509853G-I011-0243"]){
+            _privacy.userInteractionEnabled =NO;
+        }
+        [[RCIMClient sharedRCIMClient]getBlacklistStatus:_studID success:^(int bit){
+            if (bit == 0){
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [_privacy setTitle:NSLocalizedString(@"解除黑名单", "") forState:UIControlStateNormal];
+                }];
+            } else {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [_privacy setTitle:NSLocalizedString(@"加入黑名单", "") forState:UIControlStateNormal];
+                }];
+            }
+        }error:^(RCErrorCode status){
+
+        }];
+
+        [_privacy setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _privacy.layer.borderColor = kColor(195, 200, 204).CGColor;
+        _privacy.layer.borderWidth = 1.0f;
+        _privacy.layer.cornerRadius = 3;
+        _privacy.backgroundColor = [UIColor whiteColor];
+        [_bottom addSubview:_privacy];
+        [_bottom addSubview:_changesay];
+        [_privacy addTarget:self action:@selector(blackList) forControlEvents:UIControlEventTouchDown];
+        [_changesay addTarget:self action:@selector(sendMsg) forControlEvents:UIControlEventTouchDown];
+        [self.view addSubview:_bottom];
     }
 
 }
+-(void)blackList{
+    if (_currentUser == NULL)
+        return ;
+    if ([_privacy.titleLabel.text isEqualToString:NSLocalizedString(@"解除黑名单", "")]){
+        [[RCIMClient sharedRCIMClient]removeFromBlacklist:_studID success:^{
+            Alert * alert = [[Alert alloc]initWithTitle:@"提示" message:@"解除黑名单成功" delegate:self cancelButtonTitle:@"确定"   otherButtonTitles: nil];
+            [alert show];
+            [self updateBlackListStatus];
+        }error:^(RCErrorCode status){
+            [CirnoError ShowErrorWithText:@"解除黑名单失败！"];
+        }];
+        return;
+    }
+    [[RCIMClient sharedRCIMClient]addToBlacklist:_studID success:^{
+        Alert * alert = [[Alert alloc]initWithTitle:@"提示" message:@"加入黑名单成功" delegate:self cancelButtonTitle:@"确定"   otherButtonTitles: nil];
+        [alert show];
+       [self updateBlackListStatus];
+    }error:^(RCErrorCode status){
+        [CirnoError ShowErrorWithText:@"加入黑名单失败！"];
+    }];
+}
+-(void)sendMsg{
+    if (_currentUser == NULL)
+        return ;
 
+    RCSDKConversationViewController* con = [[RCSDKConversationViewController alloc]init];
+    con.conversationType = ConversationType_PRIVATE;
+    con.targetId = _studID;
+    con.title = _currentUser.nickname;
+    con.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:con animated:YES];
+}
+-(void)updateBlackListStatus{
+[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+    if ([_privacy.titleLabel.text isEqualToString:@"加入黑名单"]){
+        [_privacy setTitle:NSLocalizedString(@"解除黑名单", "") forState:UIControlStateNormal];
+    } else {
+        [_privacy setTitle:NSLocalizedString(@"加入黑名单", "") forState:UIControlStateNormal];
+    }
+}];
+
+}
 -(void) viewDidAppear:(BOOL)animated {
     [MTA trackPageViewBegin:@"UserDetail"];
     [super viewDidAppear:animated];
@@ -323,6 +405,8 @@ static CGRect oldframe;
 }
 
 -(void)changeQianming{
+    if (_currentUser == NULL)
+        return ;
     self.navigationController.navigationBarHidden=NO;
     UserChangeDetailsController* ucdc = [[UserChangeDetailsController alloc]init];
     ucdc.usrmodel=_currentUser;
@@ -330,9 +414,8 @@ static CGRect oldframe;
 }
 
 -(void)privacyShow{
-    Alert *alert = [[Alert alloc] initWithTitle:NSLocalizedString(@"提示", @"") message:NSLocalizedString(@"隐私提示", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"好", @"") otherButtonTitles: nil];
-    alert.contentAlignment =NSTextAlignmentLeft;
-    [alert show];
+    if (_currentUser == NULL)
+        return ;
 
 
 }

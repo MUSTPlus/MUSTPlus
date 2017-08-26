@@ -8,6 +8,9 @@
 
 #import <RongIMKit/RongIMKit.h>
 #import "UserDetailsController.h"
+#import "RCSDKSettingViewController.h"
 @interface RCSDKConversationViewController : RCConversationViewController
-
+@property (nonatomic,strong) RCSDKSettingViewController *settingsVC;
+@property (nonatomic,strong) NSArray* userid;
+@property (nonatomic,strong) NSMutableArray* users;
 @end
