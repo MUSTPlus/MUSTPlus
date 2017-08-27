@@ -51,7 +51,12 @@
 }
 
 
-
+-(void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = NO;
+}
 -(void)Click:(UIButton *)btn{
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -60,7 +60,7 @@
         [self.webView stringByEvaluatingJavaScriptFromString:@"hide();"];
         NSLog(@"点击确认");
     }]];
-    NSString* vip = [[Account shared]getVip];
+    NSString* vip = [[[NSUserDefaults standardUserDefaults] objectForKey:Vip]stringValue];
     if (![vip isEqualToString:@"1"])
     [alertController addAction:[UIAlertAction actionWithTitle:@"神秘按钮" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         [self.webView stringByEvaluatingJavaScriptFromString:@"display();"];

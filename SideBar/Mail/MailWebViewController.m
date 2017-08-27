@@ -126,7 +126,13 @@
     }
     return request;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = YES;
+}
 
+-(void)viewWillDisappear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = NO;
+}
 // 加载网页中的图片
 - (void) _loadImages {
     NSString * result = [_webView stringByEvaluatingJavaScriptFromString:@"findCIDImageURL()"];

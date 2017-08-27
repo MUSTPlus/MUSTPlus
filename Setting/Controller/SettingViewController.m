@@ -219,11 +219,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"cell";
     NSInteger row = indexPath.row;
+    CirnoLog(@"%ld,%ld",indexPath.section,indexPath.row);
     if (indexPath.section == 1){
         UITableViewCell*cell = [[UITableViewCell alloc]init];
         cell.textLabel.text = @"退出当前账号";
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
-
+        return cell;
     } else{
         UserDetailCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil){
