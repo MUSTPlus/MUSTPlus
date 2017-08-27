@@ -994,6 +994,10 @@
 
 }
 -(void)chekcNotification{
+    NSString* check = [[Account shared]getLoginStatus];
+    if (![check isEqual:@"1"]){
+        return;
+    }
     NSInteger status = [[UIApplication sharedApplication] currentUserNotificationSettings].types;
     if (status == 0){
         NSInteger a = arc4random()%100;
