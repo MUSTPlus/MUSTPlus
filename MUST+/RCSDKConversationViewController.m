@@ -50,7 +50,6 @@
     } else {
         AppDelegate* delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [delegate getAllMembersOfGroup:self.targetId result:^(NSArray<NSString*>*result){
-            NSLog(@"%@",result);
             _userid = result;
             [self update];
         }];
@@ -72,12 +71,12 @@
     // Dispose of any resources that can be recreated.
 }
 -(RCMessage*)willAppendAndDisplayMessage:(RCMessage *)message{
-    [super willAppendAndDisplayMessage:message];
+
     if ((message.content.class == [RCInformationNotificationMessage class])&&
         [message.senderUserId isEqualToString:@"GROUPADMIN"]){
         return nil;
     }
-
+    [super willAppendAndDisplayMessage:message];
     
     //if (message.content)
     return message;

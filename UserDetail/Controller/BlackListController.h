@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BasicHead.h"
 @interface BlackListController : UITableViewController
+@property (nonatomic,strong) NSArray<NSString*>* blackList;
 
 @end

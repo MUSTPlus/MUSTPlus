@@ -43,6 +43,7 @@
 		21C5D04E1F404C2E005E682A /* (null) in Sources */ = {isa = PBXBuildFile; };
 		21F18E811F5178E3002317B2 /* BlackListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F18E801F5178E3002317B2 /* BlackListController.m */; };
 		21F18E841F517F3E002317B2 /* RCSDKSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F18E831F517F3E002317B2 /* RCSDKSettingViewController.m */; };
+		21F18E871F519600002317B2 /* SystemNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F18E861F519600002317B2 /* SystemNotification.m */; };
 		21F87BDF1F4442E4004E45DA /* AttendanceHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F87BDE1F4442E4004E45DA /* AttendanceHistoryTableViewController.m */; };
 		21F87BE21F44462F004E45DA /* AttendanceHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F87BE11F44462F004E45DA /* AttendanceHistory.m */; };
 		21FEE33B1EAE7036006C5538 /* WeekTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 21FEE33A1EAE7036006C5538 /* WeekTool.m */; };
@@ -444,6 +445,8 @@
 		21F18E801F5178E3002317B2 /* BlackListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlackListController.m; sourceTree = "<group>"; };
 		21F18E821F517F3E002317B2 /* RCSDKSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSDKSettingViewController.h; sourceTree = "<group>"; };
 		21F18E831F517F3E002317B2 /* RCSDKSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCSDKSettingViewController.m; sourceTree = "<group>"; };
+		21F18E851F519600002317B2 /* SystemNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemNotification.h; sourceTree = "<group>"; };
+		21F18E861F519600002317B2 /* SystemNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemNotification.m; sourceTree = "<group>"; };
 		21F87BDD1F4442E4004E45DA /* AttendanceHistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceHistoryTableViewController.h; sourceTree = "<group>"; };
 		21F87BDE1F4442E4004E45DA /* AttendanceHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceHistoryTableViewController.m; sourceTree = "<group>"; };
 		21F87BE01F44462F004E45DA /* AttendanceHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceHistory.h; sourceTree = "<group>"; };
@@ -1193,6 +1196,8 @@
 		21C4D7A51F488F7B00FD6A4D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				21F18E851F519600002317B2 /* SystemNotification.h */,
+				21F18E861F519600002317B2 /* SystemNotification.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -3035,6 +3040,7 @@
 				319AFEFB1E7C0F5E0050E10C /* UILabel+Copy.m in Sources */,
 				319AFF931E7C0F5E0050E10C /* StatusCell.m in Sources */,
 				319AFFCC1E7C0F5E0050E10C /* FileViewController.m in Sources */,
+				21F18E871F519600002317B2 /* SystemNotification.m in Sources */,
 				319AFFE21E7C0F5E0050E10C /* TimetableLogic.m in Sources */,
 				319AFFDE1E7C0F5E0050E10C /* MyClass+CoreDataProperties.m in Sources */,
 				319AFF161E7C0F5E0050E10C /* PressButton.m in Sources */,

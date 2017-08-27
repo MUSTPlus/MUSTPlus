@@ -970,7 +970,10 @@
 
 
 -(void)RongCloudLogin:(NSString*)token{
+
     [[RCIM sharedRCIM] initWithAppKey:@"z3v5yqkbz6ob0"];
+  //  [[RCIM sharedRCIM] initWithAppKey:@"lmxuhwaglz8gd"];
+
     [[RCIM sharedRCIM] connectWithToken:token
                                 success:^(NSString *userId) {
 
@@ -1067,6 +1070,8 @@
     NSLog(@"%ld",messageId);
 }
 -(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+
+    self.tabBarController.selectedIndex = 3;//自动跳转到消息窗口
     
 }
 -(BOOL)onRCIMCustomLocalNotification:(RCMessage*)message

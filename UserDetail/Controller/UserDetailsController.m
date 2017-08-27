@@ -416,7 +416,7 @@ static CGRect oldframe;
 -(void)privacyShow{
     if (_currentUser == NULL)
         return ;
-
+    [CirnoError ShowErrorWithText:@"null"];
 
 }
 -(void)updateByUsrModel:(UserModel*)usrModel{

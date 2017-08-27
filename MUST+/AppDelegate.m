@@ -27,7 +27,7 @@
 #import <JSPatchPlatform/JSPatch.h>
 #import "MessageController.h"
 #import <UserNotifications/UserNotifications.h>
-
+#import <RongIMKit/RongIMKit.h>
 #import <Google/Analytics.h>
 
 
@@ -54,6 +54,10 @@
      * 获取融云推送服务扩展字段
      * nil 表示该启动事件不包含来自融云的推送服务
      */
+
+
+
+
     NSDictionary *pushServiceData = [[RCIMClient sharedRCIMClient] getPushExtraFromRemoteNotification:userInfo];
     if (pushServiceData) {
         NSLog(@"该远程推送包含来自融云的推送服务");
@@ -77,39 +81,47 @@
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
 }
-
+-(void)gotoTalk:(RCConversationType)type
+       targetid:(NSString*)targetid
+          title:(NSString*)title{
+//    
+//    RCSDKConversationViewController *conversation;
+//
+//    conversation = [[RCSDKConversationViewController alloc]init];
+//
+//    conversation.conversationType = type;
+//
+//    conversation.targetId =targetid;
+//
+//    conversation.title = title;
+//
+//    conversation.hidesBottomBarWhenPushed = YES;
+//
+//    conversation.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:conversation];
+//    [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:nc animated:YES completion:^{}];
+//
+ 
+}
 //iOS 7 Remote Notification
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:  (NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    NSLog(@"userinfo=%@",userInfo);
     [[RCIMClient sharedRCIMClient] recordRemoteNotificationEvent:userInfo];
-    NSDictionary *pushServiceData = [[RCIMClient sharedRCIMClient] getPushExtraFromRemoteNotification:userInfo];
-
-    if (pushServiceData) {
-        NSLog(@"该远程推送包含来自融云的推送服务");
-
-    } else {
-
-    }
-
-    NSDictionary *aps = [userInfo valueForKey:@"aps"];
-    NSString *content = [aps valueForKey:@"alert"]; //推送显示的内容
     NSString *attendance = [userInfo valueForKey:@"attendance"];
     if (attendance!=NULL){
         [self gotoAttendance];
 
     }
+//
+//    NSDictionary* rc = [aps valueForKey:@"rc"];
+//    if (rc!=NULL){
+//        NSString* ctype = [rc valueForKey:@"ctype"];
+//        NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:@"PR",ConversationType_PRIVATE,@"DS",ConversationType_DISCUSSION,@"GRP",ConversationType_GROUP,@"CS",ConversationType_CUSTOMERSERVICE,@"SYS",ConversationType_SYSTEM ,nil];
+//        NSString* fid = [rc valueForKey:@"tId"];
+//
+//        [self gotoTalk:(RCConversationType)[dic valueForKey:ctype] targetid:fid title:@""];
+//    }
 //    NSInteger badge = [[aps valueForKey:@"badge"] integerValue]; //badge数量
 //    NSString *sound = [aps valueForKey:@"sound"]; //播放的声音
-    if (application.applicationState == UIApplicationStateActive) {
-        Alert *alert = [[Alert alloc]initWithTitle:@"提醒" message:content delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", "") otherButtonTitles: nil];
-        [alert show];
-    }
-    else if(application.applicationState == UIApplicationStateInactive)
-    {
-        Alert *alert = [[Alert alloc]initWithTitle:@"提醒" message:content delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", "") otherButtonTitles: nil];
-        [alert show];
-
-    }
     // iOS 10 以下 Required
     [JPUSHService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
@@ -228,7 +240,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
    // NSLog(@"urlis %@",url);
-    [CirnoError ShowErrorWithText:[url absoluteString]];
+
     if ([[url absoluteString]isEqualToString:@"mustplus://currency"]){
         CurrencyViewController * cvc = [[CurrencyViewController alloc]init];
         cvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -273,14 +285,32 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     UINavigationController *passcodeNavigationController = [[UINavigationController alloc] initWithRootViewController:controller];
     [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:passcodeNavigationController animated:YES completion:^{}];
 }
+-(RCConversationType)replaceType:(NSString*)str{
+//    [[NSDictionary alloc]initWithObjectsAndKeys:@"PR",ConversationType_PRIVATE,@"DS",ConversationType_DISCUSSION,@"GRP",ConversationType_GROUP,@"CS",ConversationType_CUSTOMERSERVICE,@"SYS",ConversationType_SYSTEM ,nil];
+    if ([str isEqualToString:@"PR"]){
+        return ConversationType_PRIVATE;
+    } else if ([str isEqualToString:@"DS"]){
+        return ConversationType_DISCUSSION;
+    } else if ([str isEqualToString:@"GRP"]){
+        return ConversationType_GROUP;
+    } else if ([str isEqualToString:@"CS"]){
+        return ConversationType_CUSTOMERSERVICE;
+    } else if ([str isEqualToString:@"SYS"])
+        return ConversationType_SYSTEM;
+    else
+        return ConversationType_GROUP;
+
+}
 // iOS 10 Support
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
     // Required
-
     NSDictionary * userInfo = notification.request.content.userInfo;
     if ([userInfo valueForKey:@"attendance"]!=NULL){
         [self gotoAttendance];
     }
+    [[RCIMClient sharedRCIMClient] recordRemoteNotificationEvent:userInfo];
+
+
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
     }
@@ -290,7 +320,16 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 // iOS 10 Support
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
     // Required
+
     NSDictionary * userInfo = response.notification.request.content.userInfo;
+    [[RCIMClient sharedRCIMClient] recordRemoteNotificationEvent:userInfo];
+    NSDictionary *pushServiceData = [[RCIMClient sharedRCIMClient] getPushExtraFromRemoteNotification:userInfo];
+    if (pushServiceData) {
+
+    } else {
+        //若后台没杀会走到这里
+
+    }
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
     }
