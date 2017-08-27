@@ -63,14 +63,16 @@
 
 }
 -(void)viewDidAppear:(BOOL)animated{
+
     [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:nil];
 
 }
+
 -(void)viewWillAppear:(BOOL)animated{
-    self.tabBarController.tabBar.hidden =YES;
+
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    self.tabBarController.tabBar.hidden =NO;
+
 }
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType
          conversationModel:(RCConversationModel *)model

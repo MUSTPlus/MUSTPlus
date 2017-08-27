@@ -70,6 +70,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBar.hidden = NO;
+    [self.tabBarController.tabBar setHidden: YES];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [self.tabBarController.tabBar setHidden: NO];
+}
 -(RCMessage*)willAppendAndDisplayMessage:(RCMessage *)message{
 
     if ((message.content.class == [RCInformationNotificationMessage class])&&
@@ -114,8 +121,5 @@
 
 
 }
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = NO;
-}
+
 @end
