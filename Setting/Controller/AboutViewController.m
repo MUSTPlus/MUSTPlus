@@ -52,12 +52,14 @@
     UserDetailsController* udc = [[UserDetailsController alloc]init];
     udc.isSelf = NO;
     udc.studID = @"1509853G-I011-0243";
+    udc.naviGo = YES;
     //udc.currentUser = [[UserModel alloc]getUserModel:zxczxc];
     [self.navigationController pushViewController:udc animated:YES];
 }
 -(void)ClickAva2{
     UserDetailsController* udc = [[UserDetailsController alloc]init];
     udc.isSelf = NO;
+    udc.naviGo = YES;
     udc.studID = @"1309853Z-I011-0011";
     //udc.currentUser = [[UserModel alloc]getUserModel:zxczxc];
     [self.navigationController pushViewController:udc animated:YES];
