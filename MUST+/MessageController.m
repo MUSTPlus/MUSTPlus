@@ -63,16 +63,16 @@
 
 }
 -(void)viewDidAppear:(BOOL)animated{
-
+    [super viewDidAppear:animated];
     [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:nil];
 
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-
+    [super viewWillAppear:animated];
 }
 -(void)viewWillDisappear:(BOOL)animated{
-
+    [super viewWillDisappear:animated];
 }
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType
          conversationModel:(RCConversationModel *)model
@@ -95,13 +95,13 @@
 }
 -(NSMutableArray *)willReloadTableData:(NSMutableArray *)dataSource{
     [super willReloadTableData:dataSource];
-    for (int i=0;i<dataSource.count;i++){
-        RCConversationModel* model = dataSource[i];
-        if ([model.lastestMessage.senderUserInfo.userId isEqualToString:@"GROUPADMIN"]){
-            [[RCIMClient sharedRCIMClient]removeConversation:model.conversationType targetId:model.targetId];
-            [self refreshConversationTableViewIfNeeded];
-        }
-    }
+//    for (int i=0;i<dataSource.count;i++){
+//        RCConversationModel* model = dataSource[i];
+//        if ([model.lastestMessage.senderUserInfo.userId isEqualToString:@"GROUPADMIN"]){
+//            [[RCIMClient sharedRCIMClient]removeConversation:model.conversationType targetId:model.targetId];
+//            [self refreshConversationTableViewIfNeeded];
+//        }
+//    }
     return dataSource;
 }
 @end

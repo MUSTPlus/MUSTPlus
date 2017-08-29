@@ -975,7 +975,7 @@
 
     [[RCIM sharedRCIM] connectWithToken:token
                                 success:^(NSString *userId) {
-
+                                    NSLog(@"登录成功！");
                                 } error:^(RCConnectErrorCode status) {
                                     [CirnoError ShowErrorWithText:[NSString stringWithFormat:@"小纸条登录失败！错误码为:%ld",(long)status]];
                                 } tokenIncorrect:^{
@@ -987,7 +987,7 @@
     [[RCIM sharedRCIM] setGroupInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
     [[RCIM sharedRCIM]setGroupUserInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
     [[RCIM sharedRCIM]setGroupMemberDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
-    [RCIM sharedRCIM].enablePersistentUserInfoCache=NO;
+    [RCIM sharedRCIM].enablePersistentUserInfoCache=YES;
     [RCIM sharedRCIM].enableTypingStatus = YES;
     [[RCIM sharedRCIM]setEnableMessageMentioned:YES];
     
