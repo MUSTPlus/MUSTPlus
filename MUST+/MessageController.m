@@ -64,15 +64,18 @@
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+
     [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:nil];
 
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [MTA trackPageViewBegin:@"Message"];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [MTA trackPageViewEnd:@"Message"];
 }
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType
          conversationModel:(RCConversationModel *)model

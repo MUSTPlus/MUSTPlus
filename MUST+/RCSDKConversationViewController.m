@@ -73,9 +73,11 @@
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBar.hidden = NO;
     [self.tabBarController.tabBar setHidden: YES];
+    [MTA trackPageViewBegin:@"Talk"];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [self.tabBarController.tabBar setHidden: NO];
+    [MTA trackPageViewEnd:@"Talk"];
 }
 -(RCMessage*)willAppendAndDisplayMessage:(RCMessage *)message{
 
