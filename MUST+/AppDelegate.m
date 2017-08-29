@@ -24,7 +24,6 @@
 #import "Alert.h"
 #import "BasicHead.h"
 #import <Bugly/Bugly.h>
-#import <JSPatchPlatform/JSPatch.h>
 #import "MessageController.h"
 #import <UserNotifications/UserNotifications.h>
 #import <RongIMKit/RongIMKit.h>
@@ -134,12 +133,8 @@
     [[RCIM sharedRCIM]setGroupUserInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
     [[RCIM sharedRCIM]setGroupMemberDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
      [[RCIM sharedRCIM] setGroupInfoDataSource:self];
+    
     [Bugly startWithAppId:@"62d853eb65"];
-    [JSPatch startWithAppKey:@"0ce6d775096fc96e"];
-    [JSPatch setupRSAPublicKey:@"-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHgDRAfslCfgURdHAZomQNO52w\nIfHcrhNvmW71DW0GEm21UAUMmTuJs8WbcbDu5nm2/nfExoqQeYATHKVS8glTD36n\nzBTDesfhp4LrmwXUa2kcBeqB9UPdiDyYVuSWHjaVFL73XOAVKTqd/BiEHUCi/xva\no9/TJUTYF+4IAzE7rwIDAQAB\n-----END PUBLIC KEY-----"];
-    [JSPatch setupDevelopment];
-    [JSPatch sync];
-
     [MTA startWithAppkey:@"ID3AH61T1FZG"];
     [JPUSHService setupWithOption:launchOptions appKey:@"d77ddc38172301d4deec5703"
                           channel:@"mustPlus"

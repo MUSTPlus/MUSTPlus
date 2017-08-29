@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1C9018FF98B65E281A177FF6 /* libPods-MUSTPlus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6AB6CD787BCDB7B332C858 /* libPods-MUSTPlus.a */; };
 		2101119E1EA8B22C004BA3D8 /* NowClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2101119D1EA8B22C004BA3D8 /* NowClassViewController.m */; };
-		211462D11E9009BC001D2FFB /* JSPatchPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211462D01E9009BC001D2FFB /* JSPatchPlatform.framework */; };
 		211462D31E9009D0001D2FFB /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211462D21E9009D0001D2FFB /* JavaScriptCore.framework */; };
 		211462DE1E900C94001D2FFB /* libmtasdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 211462D81E900C94001D2FFB /* libmtasdk.a */; };
 		211462DF1E900C94001D2FFB /* ReleaseNotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 211462DB1E900C94001D2FFB /* ReleaseNotes.txt */; };
@@ -1066,7 +1065,6 @@
 				319A00131E7C12140050E10C /* CoreData.framework in Frameworks */,
 				319A00111E7C120C0050E10C /* Security.framework in Frameworks */,
 				319A000D1E7C11FE0050E10C /* CoreGraphics.framework in Frameworks */,
-				211462D11E9009BC001D2FFB /* JSPatchPlatform.framework in Frameworks */,
 				211462DE1E900C94001D2FFB /* libmtasdk.a in Frameworks */,
 				319A00091E7C11EB0050E10C /* QuartzCore.framework in Frameworks */,
 				319A00071E7C11E50050E10C /* ImageIO.framework in Frameworks */,

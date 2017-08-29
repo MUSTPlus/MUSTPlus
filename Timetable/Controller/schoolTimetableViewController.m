@@ -970,9 +970,8 @@
 
 
 -(void)RongCloudLogin:(NSString*)token{
-
     [[RCIM sharedRCIM] initWithAppKey:@"z3v5yqkbz6ob0"];
-  //  [[RCIM sharedRCIM] initWithAppKey:@"lmxuhwaglz8gd"];
+    //  [[RCIM sharedRCIM] initWithAppKey:@"lmxuhwaglz8gd"];
 
     [[RCIM sharedRCIM] connectWithToken:token
                                 success:^(NSString *userId) {
@@ -980,9 +979,9 @@
                                 } error:^(RCConnectErrorCode status) {
                                     [CirnoError ShowErrorWithText:[NSString stringWithFormat:@"小纸条登录失败！错误码为:%ld",(long)status]];
                                 } tokenIncorrect:^{
-                                    
+
                                     [CirnoError ShowErrorWithText:@"小纸条登录失败！Token错误"];
-                                    
+
                                 }];
     [[RCIM sharedRCIM]setUserInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
     [[RCIM sharedRCIM] setGroupInfoDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
@@ -991,6 +990,7 @@
     [RCIM sharedRCIM].enablePersistentUserInfoCache=NO;
     [RCIM sharedRCIM].enableTypingStatus = YES;
     [[RCIM sharedRCIM]setEnableMessageMentioned:YES];
+    
 
 }
 -(void)chekcNotification{
