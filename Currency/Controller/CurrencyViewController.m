@@ -66,13 +66,14 @@
         _basePrice =
         [
          [
-          [self str:pageSource value1:@"<span style=\"font-size:26px;\">汇率:&nbsp;&nbsp;&nbsp;<span style=\"color:Red;\">" value2:@"</span></span>"]
+          [self str:pageSource value1:@"<span style=\"color:Red;\">" value2:@"</span></span>"]
           stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]
           ]
          floatValue
          ]
         ;
         _basePrice = 1 / _basePrice;
+        NSLog(@"isisisisisisisisisis%f",_basePrice);
         [self updateData];
         //_basePrice = 1 / _basePrice;
     } failure:^(NSURLSessionTask *operation, NSError *error) {
@@ -83,7 +84,7 @@
 
 }
 -(void)updateData{
-
+    NSLog(@"%f",_basePrice);
     CurrencyTableViewCell *cell1 =[[CurrencyTableViewCell alloc]initWithFrame:CGRectMake(0, 0, Width, 90)];
     cell1=[cell1 initWithStyle:UITableViewCellStyleDefault
                reuseIdentifier:@"cell"
@@ -120,7 +121,6 @@
     [super viewDidLoad];
     _selected = 0;
     _backbutton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80, NavBarHeight-StatusBarHeight)];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePrice) name:@"DataDone" object:nil];
     self.navigationController.navigationBar.backgroundColor = navigationTabColor;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.barTintColor=navigationTabColor;

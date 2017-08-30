@@ -1002,14 +1002,27 @@
     if (status == 0){
         NSInteger a = arc4random()%100;
         if (a>30){
+            if ([[UIDevice currentDevice] systemVersion].floatValue<11){
             Alert * alert = [[Alert alloc]initWithTitle:@"提示" message:@"推送未开启，请开启推送以获取最新消息。"
                                                delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+
             [alert setCancelBlock:^(Alert* alert){
                 NSString * identifier = [NSBundle mainBundle].bundleIdentifier;
                 NSString * str = [NSString stringWithFormat:@"App-Prefs:root=NOTIFICATIONS_ID&path=%@",identifier];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
             }];
-            [alert show];
+                [alert show];
+            } else {
+            UIAlertController* a = [UIAlertController alertControllerWithTitle:@"提示" message:@"推送未开启，请开启推送以获取最新消息。" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction * ac = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
+                    NSString * identifier = [NSBundle mainBundle].bundleIdentifier;
+                    NSString * str = [NSString stringWithFormat:@"App-Prefs:root=NOTIFICATIONS_ID&path=%@",identifier];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+            }];
+            [a addAction:ac];
+            [self presentViewController:a animated:YES completion:nil];
+            }
+
         }
     } else {
         NSString *GradeType = [[[Account shared]getGradeType] stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
