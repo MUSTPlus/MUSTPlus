@@ -293,8 +293,8 @@
 
 
 -(void)showCal{
-    MessageController* ctr = [[MessageController alloc]init];
-   // SchoolFileController *ctr = [[SchoolFileController alloc]init];
+   // MessageController* ctr = [[MessageController alloc]init];
+    SchoolFileController *ctr = [[SchoolFileController alloc]init];
     ctr.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:ctr animated:YES];
 }
