@@ -71,11 +71,13 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
     [self.tabBarController.tabBar setHidden: YES];
     [MTA trackPageViewBegin:@"Talk"];
 }
 -(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden: NO];
     [MTA trackPageViewEnd:@"Talk"];
 }
@@ -90,9 +92,7 @@
     //if (message.content)
     return message;
 }
--(void)willDisplayMessageCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath{
-    
-}
+
 -(void)didTapCellPortrait:(NSString *)userId{
     [super didTapCellPortrait:userId];
     UserDetailsController* udc = [[UserDetailsController alloc]init];
