@@ -46,7 +46,7 @@
     [super viewDidLoad];
     
     
-    self.navigationItem.title =NSLocalizedString(@"校友圈", "");
+    self.title =NSLocalizedString(@"校友圈", "");
     self.view.backgroundColor = [UIColor whiteColor];
     
     

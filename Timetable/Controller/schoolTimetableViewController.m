@@ -287,7 +287,7 @@
     } //NSString* page = @"TimeTable";
 }
 -(void)gotoUpdate{
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/cn/app/must/id1216741750?l=en&mt=8"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://must.plus/"]];
 }
 -(void)viewWillDisappear:(BOOL)animated{
 //NSString* page = @"TimeTable";
@@ -1087,9 +1087,11 @@
     NSLog(@"%ld",messageId);
 }
 -(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        self.tabBarController.selectedIndex = 3;//自动跳转到消息窗口
 
-    self.tabBarController.selectedIndex = 3;//自动跳转到消息窗口
-    
+    });
+
 }
 -(BOOL)onRCIMCustomLocalNotification:(RCMessage*)message
                       withSenderName:(NSString *)senderName{
