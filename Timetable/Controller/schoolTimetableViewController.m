@@ -179,9 +179,11 @@
                 return;
             }
             NSError *error = nil;
+            BOOL result1 ;
             BOOL result = [_eventStore saveCalendar:cal commit:YES error:&error];
             NSCalendarIdentifier calendarIdentifier;
             for(MyClass *class in classArray){
+                @try {
                 NSString* classRoom = class.class_Room;
                 NSString* classweek = class.class_Week;
                 NSString* classNum  = class.class_Number;
@@ -197,11 +199,12 @@
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                 NSString* nowYear = [[[[Account shared]getSemester]stringByReplacingOccurrencesOfString:@"09" withString:@""]stringByReplacingOccurrencesOfString:@"02" withString:@""];
              //   CirnoLog(@"%@",nowYear);
-
+                    if (!nowYear) nowYear = @"17";
+                    // TO DO
                 [formatter setTimeZone:[NSTimeZone systemTimeZone]];
                 [formatter setLocale:[NSLocale currentLocale]];
                 [formatter setFormatterBehavior:NSDateFormatterBehaviorDefault];
-                 [formatter setDateFormat:@"yyM月d HH:mm"];
+                 [formatter setDateFormat:@"yyMM月d HH:mm"];
                 NSString*tmpdate = [NSString stringWithFormat:@"%@%@ %@",nowYear,[self fuckthedate:class.class_StartMonth],classStart];
                 CirnoLog(@"tmpdate%@",tmpdate);
                 NSDate * tmp1 =[formatter dateFromString:tmpdate];
@@ -214,14 +217,10 @@
 
                 dayComponent.day = abs(7-[weekday intValue]+[classweek intValue]);
                // dayComponent.day = [classweek intValue]-1;
-                if (dayComponent.day == 7) dayComponent.day =0;
-
-                CirnoLog(@"Add Week:%ld",(long)dayComponent.day);
-              //  if ([weekday intValue]-1 == dayComponent.day)
-             //       dayComponent.day = 0;
                 NSCalendar *theCalendar = [NSCalendar currentCalendar];
                 tmp1 = [theCalendar dateByAddingComponents:dayComponent toDate:tmp1 options:0];
-                NSDate * tmp2 =[formatter dateFromString:[NSString stringWithFormat:@"%@%@ %@",nowYear,[self fuckthedate:class.class_EndMonth],classEnd]];
+                    NSString* endMonth =[self fuckthedate:class.class_EndMonth];
+                NSDate * tmp2 =[formatter dateFromString:[NSString stringWithFormat:@"%@%@ %@",nowYear,endMonth,classEnd]];
                 CirnoLog(@"%@ %@",tmp1,tmp2);
                 NSDate * endToday =[theCalendar dateByAddingComponents:dayComponent toDate:[formatter dateFromString:[NSString stringWithFormat:@"%@%@ %@",nowYear,[self fuckthedate:class.class_StartMonth],classEnd]]options:0];
 
@@ -238,11 +237,11 @@
                 event.location = classRoom;
                 EKAlarm *alarm1 = [EKAlarm alarmWithRelativeOffset:-900];
                 event.alarms = [[NSArray alloc]initWithObjects:alarm1, nil];
-                BOOL result1 ;
-                @try {
-                    result1 = [_eventStore saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
-                } @catch (NSException *exception) {
-                    [CirnoError ShowErrorWithText:[NSString stringWithFormat:@"添加课程%@时由于%@失败",className,exception]];
+                result1 = [_eventStore saveEvent:event span:EKSpanFutureEvents commit:YES error:&error];
+
+                }
+                @catch (NSException *exception) {
+                    [CirnoError ShowErrorWithText:[NSString stringWithFormat:@"添加课程时由于%@失败",exception]];
                 } @finally {
                     if (result1){
 
@@ -321,9 +320,7 @@
 -(NSString*)Semester{
     return @"1709";
 }
--(void)alertView:(Alert *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    [self gotoUpdate];
-}
+
 -(NSArray<UIColor*>*)colorArray{
     if (!_colorArray){
         _colorArray =[[NSArray alloc]initWithObjects:
@@ -430,7 +427,6 @@
                                           otherButtonTitles:nil];
                 [alert setCancelBlock:^(Alert *alertView) {
                     UIWindow *window = [UIApplication sharedApplication].delegate.window;
-
                     [UIView animateWithDuration:0.4f animations:^{
                         window.alpha = 0;
                     } completion:^(BOOL finished) {
@@ -696,15 +692,20 @@
     [KxMenu showMenuInView:self.view fromRect:clickButton.frame menuItems:itemArr withOptions:a];
 }
 -(NSString*)fuckthedate:(NSString*)date{
-    date=[date stringByReplacingOccurrencesOfString:@"一" withString:@"1"];
-    date=[date stringByReplacingOccurrencesOfString:@"二" withString:@"2"];
-    date=[date stringByReplacingOccurrencesOfString:@"三" withString:@"3"];
-    date=[date stringByReplacingOccurrencesOfString:@"四" withString:@"4"];
-    date=[date stringByReplacingOccurrencesOfString:@"五" withString:@"5"];
-    date=[date stringByReplacingOccurrencesOfString:@"六" withString:@"6"];
-    date=[date stringByReplacingOccurrencesOfString:@"七" withString:@"7"];
-    date=[date stringByReplacingOccurrencesOfString:@"八" withString:@"8"];
-    date=[date stringByReplacingOccurrencesOfString:@"九" withString:@"9"];
+    date=[date stringByReplacingOccurrencesOfString:@"十二" withString:@"12"];
+    date=[date stringByReplacingOccurrencesOfString:@"十一" withString:@"11"];
+    date=[date stringByReplacingOccurrencesOfString:@"十" withString:@"10"];
+    date=[date stringByReplacingOccurrencesOfString:@"一" withString:@"01"];
+    date=[date stringByReplacingOccurrencesOfString:@"二" withString:@"02"];
+    date=[date stringByReplacingOccurrencesOfString:@"三" withString:@"03"];
+    date=[date stringByReplacingOccurrencesOfString:@"四" withString:@"04"];
+    date=[date stringByReplacingOccurrencesOfString:@"五" withString:@"05"];
+    date=[date stringByReplacingOccurrencesOfString:@"六" withString:@"06"];
+    date=[date stringByReplacingOccurrencesOfString:@"七" withString:@"07"];
+    date=[date stringByReplacingOccurrencesOfString:@"八" withString:@"08"];
+    date=[date stringByReplacingOccurrencesOfString:@"九" withString:@"09"];
+
+
 
     return date;
 }
