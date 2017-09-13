@@ -299,11 +299,9 @@
     [self.navigationController pushViewController:ctr animated:YES];
 }
 -(void)jumpToBus{
-    BusStationViewController *ctr = [[BusStationViewController alloc] init];
-  //  ctr.showDoneButton = 0;
-    ctr.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    UINavigationController *passcodeNavigationController = [[UINavigationController alloc] initWithRootViewController:ctr];
-    [self presentViewController:passcodeNavigationController animated:YES completion:nil];
+    SFSafariViewController* ctr =[[SFSafariViewController alloc]initWithURL:[NSURL URLWithString:@"http://202.175.87.15:7012/macauweb/"]];
+
+    [self presentViewController:ctr animated:YES completion:nil];
 }
 -(void)jumpToMail{
     SendMailTableViewController *ctr = [[SendMailTableViewController alloc] init];

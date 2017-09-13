@@ -14,7 +14,8 @@
 #import "AFNetworking.h"
 #import "Account.h"
 #import "CirnoError.h"
-@interface MessageController : RCConversationListViewController
+#import "RCSDKConverstionListViewController.h"
+@interface MessageController : RCSDKConverstionListViewController
 
 @property (nonatomic,strong) NSString* token;
 @end

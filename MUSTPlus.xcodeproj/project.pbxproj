@@ -16,6 +16,7 @@
 		21167A301EBB6091001D4A2C /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 21167A2F1EBB6091001D4A2C /* Attendance.m */; };
 		2119AAB91F0BEE7800F1E825 /* SchoolFileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2119AAB81F0BEE7800F1E825 /* SchoolFileController.m */; };
 		2119AABC1F0C8A5000F1E825 /* SchoolFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2119AABB1F0C8A5000F1E825 /* SchoolFile.m */; };
+		212223741F699134002EC345 /* RCSDKConverstionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 212223731F699134002EC345 /* RCSDKConverstionListViewController.m */; };
 		212A36B01E7D06A400DE376C /* t-rex in Resources */ = {isa = PBXBuildFile; fileRef = 212A36AF1E7D06A400DE376C /* t-rex */; };
 		214553CF1F4C8D050025F411 /* RCDUIBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 214553CE1F4C8D050025F411 /* RCDUIBarButtonItem.m */; };
 		2158BFBF1EB5BCE10002CD19 /* AttendanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2158BFBE1EB5BCE10002CD19 /* AttendanceViewController.m */; };
@@ -403,6 +404,8 @@
 		2119AAB81F0BEE7800F1E825 /* SchoolFileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolFileController.m; sourceTree = "<group>"; };
 		2119AABA1F0C8A5000F1E825 /* SchoolFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchoolFile.h; sourceTree = "<group>"; };
 		2119AABB1F0C8A5000F1E825 /* SchoolFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolFile.m; sourceTree = "<group>"; };
+		212223721F699134002EC345 /* RCSDKConverstionListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCSDKConverstionListViewController.h; sourceTree = "<group>"; };
+		212223731F699134002EC345 /* RCSDKConverstionListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCSDKConverstionListViewController.m; sourceTree = "<group>"; };
 		212A36AF1E7D06A400DE376C /* t-rex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "t-rex"; path = "Common/EasterEgg/t-rex"; sourceTree = SOURCE_ROOT; };
 		214553CD1F4C8D050025F411 /* RCDUIBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCDUIBarButtonItem.h; sourceTree = "<group>"; };
 		214553CE1F4C8D050025F411 /* RCDUIBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCDUIBarButtonItem.m; sourceTree = "<group>"; };
@@ -1183,6 +1186,8 @@
 			children = (
 				21968FCD1F4580D800381A03 /* RCSDKConversationViewController.h */,
 				21968FCE1F4580D800381A03 /* RCSDKConversationViewController.m */,
+				212223721F699134002EC345 /* RCSDKConverstionListViewController.h */,
+				212223731F699134002EC345 /* RCSDKConverstionListViewController.m */,
 				21F18E821F517F3E002317B2 /* RCSDKSettingViewController.h */,
 				21F18E831F517F3E002317B2 /* RCSDKSettingViewController.m */,
 				2195C16C1F3713510046B689 /* MessageController.h */,
@@ -3169,6 +3174,7 @@
 				319AFF061E7C0F5E0050E10C /* ZLCameraView.m in Sources */,
 				319AFEE21E7C0F5E0050E10C /* REMenuItem.m in Sources */,
 				319AFF451E7C0F5E0050E10C /* UIColor+Extension.m in Sources */,
+				212223741F699134002EC345 /* RCSDKConverstionListViewController.m in Sources */,
 				319AFF441E7C0F5E0050E10C /* UIButton+Extension.m in Sources */,
 				319AFF091E7C0F5E0050E10C /* CourseViewController.m in Sources */,
 				319AFEDD1E7C0F5E0050E10C /* Account.m in Sources */,

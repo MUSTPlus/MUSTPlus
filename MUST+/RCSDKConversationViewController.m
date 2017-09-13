@@ -83,8 +83,7 @@
 }
 -(RCMessage*)willAppendAndDisplayMessage:(RCMessage *)message{
 
-    if ((message.content.class == [RCInformationNotificationMessage class])&&
-        [message.senderUserId isEqualToString:@"GROUPADMIN"]){
+    if ([message.senderUserId isEqualToString:@"GROUPADMIN"]){
         return nil;
     }
     [super willAppendAndDisplayMessage:message];
@@ -92,6 +91,7 @@
     //if (message.content)
     return message;
 }
+
 
 -(void)didTapCellPortrait:(NSString *)userId{
     [super didTapCellPortrait:userId];

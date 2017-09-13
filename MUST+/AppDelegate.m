@@ -28,7 +28,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import <RongIMKit/RongIMKit.h>
 #import <Google/Analytics.h>
-
+#import <SafariServices/SafariServices.h>
 
 @import CoreLocation;
 
@@ -205,12 +205,11 @@
 };
 -(void)actionWithShortcutItem:(UIApplicationShortcutItem *)item
 {
+
   //  [CirnoError ShowErrorWithText:item.type];
     if ([item.type isEqualToString:@"bus"]){
-        BusStationViewController *controller = [[BusStationViewController alloc] init];
-        controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        UINavigationController *passcodeNavigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:passcodeNavigationController animated:YES completion:^{}];
+        SFSafariViewController* cvc =[[SFSafariViewController alloc]initWithURL:[NSURL URLWithString:@"http://202.175.87.15:7012/macauweb/"]];
+        [self.window.rootViewController presentViewController:cvc animated:YES completion:nil];
     } else if ([item.type isEqualToString:@"currency"]){
         // [CirnoError ShowErrorWithText:[url absoluteString]];
         CurrencyViewController * cvc = [[CurrencyViewController alloc]init];
@@ -242,10 +241,9 @@
         [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:nc animated:YES completion:^{}];
     }
     if ([[url absoluteString]isEqualToString:@"mustplus://bus"]){
-        BusStationViewController *controller = [[BusStationViewController alloc] init];
-        controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        UINavigationController *passcodeNavigationController = [[UINavigationController alloc] initWithRootViewController:controller];
-        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:passcodeNavigationController animated:YES completion:^{}];
+        SFSafariViewController* controller =[[SFSafariViewController alloc]initWithURL:[NSURL URLWithString:@"http://202.175.87.15:7012/macauweb/"]];
+        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:controller];
+       [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:nc animated:YES completion:^{}];
     }
 
 
