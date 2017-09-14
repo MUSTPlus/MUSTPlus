@@ -114,6 +114,7 @@
         [self needsDisplay];
         /*UIWindow *window = ((UIWindow *)[[UIApplication sharedApplication] windows][0]);*/
         UIWindow *window = ((UIWindow *)[UIApplication sharedApplication].keyWindow);
+        
         [window addSubview:self];
         [window endEditing:YES];
         [self performPresentationAnimation];

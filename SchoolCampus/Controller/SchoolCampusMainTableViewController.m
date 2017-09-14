@@ -337,11 +337,12 @@
         //错误对象
         NSError* error = nil;
         NSString* result = NSLocalizedString(@"查看成绩指纹", "");
-
+        
         //首先使用canEvaluatePolicy 判断设备支持状态
         if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
             //支持指纹验证
-            [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:result reply:^(BOOL success, NSError *error) {
+            [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:result
+                              reply:^(BOOL success, NSError *error) {
                 if (success) {
                     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                         //用户选择输入密码，切换主线程处理
@@ -418,32 +419,33 @@
     [self.navigationController pushViewController:next animated:YES];
 }
 -(void)EnterStuPassWord{
-    Alert *alert = [[Alert alloc] initWithTitle:NSLocalizedString(@"输入学生账号密码","") message:nil
-                                       delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"取消","")
-                              otherButtonTitles:NSLocalizedString(@"确定",""), nil];
-    alert.alertStyle = AlertStyleSecureTextInput;
-    __block Alert*alertV = alert;
-    [alert setClickBlock:^(Alert *alertView, NSInteger buttonIndex) {
-        NSLog(@"%@", alertV.textField.text);
-        NSLog(@"%ld",(long)buttonIndex);
+    UIAlertController* ctr = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"输入学生账号密码","") message:NSLocalizedString(@"输入学生账号密码","") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction * cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消","") style:UIAlertActionStyleCancel handler:nil];
 
-        if (buttonIndex == 1) {
-            NSString* pw = [[Account shared] getPassword];
-            if ([alertV.textField.text isEqualToString:pw]){
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    SearchGradeTableViewController *next = [[SearchGradeTableViewController alloc] init];
-                    [self.navigationController pushViewController:next animated:YES];
-                }];
-            } else {
+    UIAlertAction * confirm = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定","") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
+        [ctr dismissViewControllerAnimated:YES completion:nil];
+        UITextField * pw = ctr.textFields[0];
+        if (pw){
+            NSString* pw1 = [[Account shared] getPassword];
+            if ([pw.text isEqualToString:pw1]){
+                 [self gotogradevc];
+            }
+            else {
                 [CirnoError ShowErrorWithText:NSLocalizedString(@"验证失败", "")];
             }
-
+        }
+        else {
+            [CirnoError ShowErrorWithText:NSLocalizedString(@"验证失败", "")];
         }
     }];
-    [alert setCancelBlock:^(Alert *alertView) {
-        // 取消
+    [ctr addAction:cancel];
+    [ctr addAction:confirm];
+    [ctr addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+
+        textField.placeholder = NSLocalizedString(@"输入学生账号密码","");
+
     }];
-    [alert show];
+    [self.navigationController presentViewController:ctr animated:YES completion:nil];
+
 }
 @end
