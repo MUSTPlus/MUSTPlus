@@ -1,8 +1,8 @@
 
-##MUST+ 
+## MUST+ 
 An iOS app build for Macau University of Science and Technology
 
-##Requirement
+## Requirement
 CocoaPods, macOS>=10.10, Xcode 9
 
 
@@ -10,10 +10,10 @@ CocoaPods, macOS>=10.10, Xcode 9
 
 Open terminal,
 
-####sudo gem install cocoapods
+`sudo gem install cocoapods`
 
 then go to workspace for MUST+,
 
-###pod install
+`pod install`
 
 and open the MUSTPlus.workspace!
