@@ -10,14 +10,14 @@
 #import "Alert.h"
 @implementation CirnoError
 +(void) ShowErrorWithText:(NSString*)text{
-    Alert *alert = [[Alert alloc]initWithTitle:NSLocalizedString(@"错误", "")
-                                       message:text
-                                      delegate:nil
-                             cancelButtonTitle:NSLocalizedString(@"好", nil)
-                             otherButtonTitles:nil, nil];
-    alert.contentAlignment = NSTextAlignmentLeft;
-
-    [alert show];
+    UIAlertController* dummy = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"错误", "")
+                                                                    message:text
+                                                             preferredStyle:UIAlertControllerStyleAlert];
+  UIAlertAction* action = [UIAlertAction actionWithTitle:NSLocalizedString(@"好", nil)
+                                                    style:UIAlertActionStyleCancel
+                                                  handler:nil];
+                           [dummy addAction:action];
+   [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:dummy animated:YES completion:^{}];
     
 };
 @end

@@ -162,6 +162,7 @@ static CGRect oldframe;
     Alert *a = [[Alert alloc]initWithTitle:@"提示" message:@"举报成功" delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", "") otherButtonTitles: nil];
     [a show];
 }
+
 -(void)viewDidLoad{
     [super viewDidLoad];
     
@@ -324,6 +325,9 @@ static CGRect oldframe;
         if ([_studID isEqualToString:@"1509853G-I011-0243"]){
             _privacy.userInteractionEnabled =NO;
         }
+        if ([_studID isEqualToString:@"ADMIN"]){
+            _privacy.userInteractionEnabled =NO;
+        }
         [[RCIMClient sharedRCIMClient]getBlacklistStatus:_studID success:^(int bit){
             if (bit == 0){
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -455,6 +459,7 @@ static CGRect oldframe;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden=NO;
     self.tabBarController.tabBar.hidden =YES;
     _tableview1.tableHeaderView = _headview;
     _say.text = @"";

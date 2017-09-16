@@ -19,6 +19,7 @@
 //#import "CirnoSideBarViewController.h"
 #import "UserDetailsController.h"
 #import "CirnoError.h"
+#import <SDWebImage/UIButton+WebCache.h>
 #import "Account.h"
 #import "MTA.h"
 @interface MessageCircleController ()<UserDetailsDelegate>{
@@ -51,20 +52,7 @@
     udc.studID=[[Account shared]getStudentLongID];
     udc.isSelf = YES;
     udc.naviGo = YES;
-    
-//    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:udc];
-//
-//    // navi.navigationBarHidden = YES;
-//    UIBarButtonItem *backbutton = [[UIBarButtonItem alloc]init];
-//    backbutton.title = NSLocalizedString(@"完成", "");
-//    navi.navigationItem.backBarButtonItem=backbutton;
-//    //[self pushViewController:udc animated:YES];
-//    UINavigationBar *bar = [UINavigationBar appearance];
-//    bar.barTintColor = sidebarBackGroundColor;
-//    bar.tintColor = [UIColor whiteColor];
-//    [bar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-//
-//    [self presentViewController:navi animated:YES completion:nil];
+    [self.navigationController pushViewController:udc animated:YES];
 }
 -(void)ClickAdd:(id)button{
     MessageSendViewController *controller = [[MessageSendViewController alloc] init];
@@ -105,10 +93,33 @@
     [super viewDidLoad];
     
     // 1.标题
-    _msgHeadView = [[MessageHeadView alloc] initWithFrame:CGRectMake(0, 0, Width, StatusBarAndNavigationBarHeight)];
-    _msgHeadView.messageHeadAddButtonDelegate = self;
-    [self.view addSubview:_msgHeadView];
-    
+//    _msgHeadView = [[MessageHeadView alloc] initWithFrame:CGRectMake(0, 0, Width, StatusBarAndNavigationBarHeight)];
+//    _msgHeadView.messageHeadAddButtonDelegate = self;
+//    [self.view addSubview:_msgHeadView];
+    self.title = NSLocalizedString(@"校友圈", "");
+    UIButton* face;
+    face = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    face.layer.cornerRadius = face.frame.size.width/2;
+    face.clipsToBounds = YES;
+    face.layer.borderWidth = 2;
+    face.layer.borderColor = [UIColor clearColor].CGColor;
+    UIView* leftV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [leftV addSubview:face];
+    NSURL *url = [NSURL URLWithString:[[Account shared]getAvatar]];
+    [face sd_setImageWithURL:url forState:UIControlStateNormal];
+
+    [face addTarget:self action:@selector(Avatar) forControlEvents:UIControlEventTouchDown];
+    face.adjustsImageWhenHighlighted = NO;
+    UIBarButtonItem* left = [[UIBarButtonItem alloc]initWithCustomView:leftV];
+
+    UIBarButtonItem* right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(ClickAdd:)];
+     self.navigationItem.leftBarButtonItem = left;
+    self.navigationItem.rightBarButtonItem = right;
+
+
+
+
+
     // 2.TableView的初始化
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight, Width, Height-NavigationBarHeight)];
     _tableView.delegate = self;
@@ -168,6 +179,12 @@
 //    CirnoSideBarViewController * sideBar = [CirnoSideBarViewController share];
 //    sideBar.diabled = YES;
     self.tableView.userInteractionEnabled = YES;
+    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBar.backgroundColor = navigationTabColor;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor=navigationTabColor;
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     //体验第一
     _mainBodyArray = [receivceMessageLogic getDataFromCoreData];
@@ -176,7 +193,6 @@
 
 -(void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    self.navigationController.navigationBarHidden=YES;
     NSString* page = @"MessageCircle";
     [MTA trackPageViewBegin:page];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];

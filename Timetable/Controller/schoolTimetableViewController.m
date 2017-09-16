@@ -996,13 +996,15 @@
 }
 -(void)chekcNotification{
     NSString* check = [[Account shared]getLoginStatus];
+    if (TARGET_IPHONE_SIMULATOR)
+        return;
     if (![check isEqual:@"1"]){
         return;
     }
     NSInteger status = [[UIApplication sharedApplication] currentUserNotificationSettings].types;
     if (status == 0){
         NSInteger a = arc4random()%100;
-        if (a>30){
+        if (a>78){
             if ([[UIDevice currentDevice] systemVersion].floatValue<11){
             Alert * alert = [[Alert alloc]initWithTitle:@"提示" message:@"推送未开启，请开启推送以获取最新消息。"
                                                delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
