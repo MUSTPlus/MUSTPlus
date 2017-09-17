@@ -121,7 +121,7 @@
 
 
     // 2.TableView的初始化
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, StatusBarAndNavigationBarHeight, Width, Height-NavigationBarHeight)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, Width, Height)];
     _tableView.delegate = self;
     _tableView.dataSource=self;
     _tableView.mj_footer.backgroundColor = kColor(236, 236, 239);
