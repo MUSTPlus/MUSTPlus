@@ -38,12 +38,31 @@
 
 -(void)getData{
     NSDictionary *o1 =@{@"stuid": [[Account shared]getStudentLongID]};
+    
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    //POST数据
+    NSDictionary *parameters = @{@"ec":data};
+    
+    
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@signHistoryAll",AttendanceURL]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
-    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject){
-        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+    [manager GET:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject){
 
+        
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+        if (result == nil)
+            [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        
         @try {
             [_history removeAllObjects];
             for (id history in json){

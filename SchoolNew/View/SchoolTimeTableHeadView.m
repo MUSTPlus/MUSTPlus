@@ -46,6 +46,7 @@
 //    face.layer.borderWidth = 0.5f;
 //    face.layer.borderColor = kColor(230, 230, 230).CGColor;
 
+
     _title = [[UILabel alloc] initWithFrame:CGRectMake(0,StatusBarHeight-5,Width,NavigationBarHeight/4*3)];
     _title.text = titleString;
     _title.textColor = kColor(22,130,217);
@@ -58,6 +59,22 @@
     _subtitle.font = [UIFont systemFontOfSize:12];
     _subtitle.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_subtitle];
+    
+    face = [[UIButton alloc] initWithFrame:CGRectMake(25, StatusBarHeight + 5, 70, 30)];
+    [face setTitle:@"签到" forState:UIControlStateNormal];
+    [face setImage:[UIImage imageNamed:@"toolbar-sign"] forState:UIControlStateNormal];
+    [face setBackgroundColor:kColor(22,130,217)];
+    face.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+    [face setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [face setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    face.titleLabel.font = [UIFont systemFontOfSize:16];
+    [face addTarget:self action:@selector(ClickFace:) forControlEvents:UIControlEventTouchDown];
+    
+    face.clipsToBounds = YES;
+    face.layer.borderWidth = 0.5f;
+    face.layer.cornerRadius = 2;
+    [self addSubview:face];
+    
     //加号
     UIButton *add = [[UIButton alloc] initWithFrame:CGRectMake(Width-40, StatusBarHeight+10, 30, 30)];
     [add setImage:[UIImage imageNamed:buttonImgString] forState:UIControlStateNormal];

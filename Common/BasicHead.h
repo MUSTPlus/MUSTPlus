@@ -89,7 +89,7 @@ sizeWithAttributes:@{NSFontAttributeName:font}] : CGSizeZero;
 #define UploadImageURL @"https://oss-cn-shanghai.aliyuncs.com/"
 #define ImageURL @"https://mustplus.oss-cn-shanghai.aliyuncs.com/"
 #define oldImageURL @"http://mustplus.img-cn-shanghai.aliyuncs.com/"
-#define AttendanceURL @"https://atsys.must.plus/sapi/"
+#define AttendanceURL @"https://atsys.must.plus/ssapi/"
 //服务器地址
 
 #define kColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]

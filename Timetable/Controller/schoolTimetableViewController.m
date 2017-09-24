@@ -553,11 +553,16 @@
     [MTA trackPageViewBegin:page];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
+
+
 -(void)selectWeek:(NSInteger)week{
     WeekTool* wt = [self wt];
     NSDate* d = [wt WeekDateAt:(int)week+1 On:1];
     [self changeWeek:d];
 }
+
+
+
 -(void)changeWeek:(NSDate*)date{
     NSMutableArray *array = [[NSMutableArray alloc] init];
 
@@ -645,7 +650,7 @@
 }
 
 -(void)ClickFace:(id)button{
-    [self btnLeft];
+    [self attendance];
 }
 
 //右边ADD加键点击事件delegate
@@ -658,11 +663,12 @@
     KxMenuItem *item2 = [KxMenuItem menuItem:NSLocalizedString(@"同步课表", "") image:[UIImage imageNamed:@"SyncTimeTable"] target:self action:@selector(click:)];
     KxMenuItem * item3 =[KxMenuItem menuItem:NSLocalizedString(@"添加到日历", "") image:[UIImage imageNamed:@"toolbar-add"] target:self action:@selector(click:)];
     KxMenuItem * item4 =[KxMenuItem menuItem:NSLocalizedString(@"选择其他周", "") image:[UIImage imageNamed:@"toolbar-changeweek"] target:self action:@selector(click:)];
-    KxMenuItem * item5 =[KxMenuItem menuItem:NSLocalizedString(@"签到", "") image:[UIImage imageNamed:@"toolbar-sign"] target:self action:@selector(click:)];
+//    KxMenuItem * item5 =[KxMenuItem menuItem:NSLocalizedString(@"签到", "") image:[UIImage imageNamed:@"toolbar-sign"] target:self action:@selector(click:)];
 //#if defined(DEBUG)||defined(_DEBUG)
 //    KxMenuItem *item4 = [KxMenuItem menuItem:@"我就是新世界的神" image:[UIImage imageNamed:@"fox"] target:self action:@selector(click:)];
 //#endif
-    itemArr = [[NSArray alloc]initWithObjects:item1,item2,item3,item4,item5,nil];
+    itemArr = [[NSArray alloc]initWithObjects:item1,item2,item3,item4,nil];
+ //   itemArr = [[NSArray alloc]initWithObjects:item1,item2,item3,item4,item5,nil];
 //#if defined(DEBUG)||defined(_DEBUG)
   //  itemArr = [[NSArray alloc] initWithObjects:item1,item2,nil];
 
@@ -757,9 +763,10 @@
         [self AddtoCalendar];
     } else if ([item.title isEqualToString:NSLocalizedString(@"选择其他周", "") ]){
         [self ChangeAnotherWeek];
-    }else if ([item.title isEqualToString:NSLocalizedString(@"签到", "") ]){
-        [self attendance];
     }
+    //else if ([item.title isEqualToString:NSLocalizedString(@"签到", "") ]){
+    //   [self attendance];
+    //}
 }
 -(void)attendance{
 

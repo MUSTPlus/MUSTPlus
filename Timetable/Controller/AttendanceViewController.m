@@ -83,6 +83,13 @@
     [self.view addSubview:self.status];
 
 
+    if ([CLLocationManager locationServicesEnabled] && ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)) {
+        //定位功能可用
+    }else if ([CLLocationManager authorizationStatus] ==kCLAuthorizationStatusDenied) {
+        Alert* alert = [[Alert alloc]initWithTitle:@"提示" message:@"请给予此应用地理位置权限" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        //定位不能用
+    }
 
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"签到历史" style:UIBarButtonItemStylePlain target:self action:@selector(gotoHistory)];
     [self.navigationItem setRightBarButtonItem:rightItem];
@@ -145,11 +152,29 @@
 
 -(void)checkServer{
     NSDictionary *o1 =@{@"stuid": [[Account shared]getStudentLongID]};
+    
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    //POST数据
+    NSDictionary *parameters = @{@"ec":data};
+    
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@nowSchedule",AttendanceURL]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
-    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject){
-         id json = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+    [manager GET:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject){
+        
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+        if (result == nil)
+            [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+         id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        
         @try {
             if ([[json[@"status"]stringValue] isEqual:@"0"]){
                 id result = json[@"result"];
@@ -211,11 +236,28 @@
     if (!self.nowcourse) return;
     NSDictionary *o1 =@{@"stuid": [[Account shared]getStudentLongID],
                         @"sid":     self.nowcourse.sid};
+    
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    //POST数据
+    NSDictionary *parameters = @{@"ec":data};
+    
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@signHistory",AttendanceURL]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
-    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject){
-        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+    [manager GET:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject){
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+        if (result == nil)
+            [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        
         @try {
             if ([json[@"status"] isEqual:@"0"]){
                 id result = json[@"result"];
@@ -244,10 +286,28 @@
     NSDictionary *o1 =@{@"stuid": [[Account shared]getStudentLongID],
                         @"aid":     self.nowcourse.aid};
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@signStatus",AttendanceURL]];
+    
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    //POST数据
+    NSDictionary *parameters = @{@"ec":data};
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
-    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject){
-        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+    [manager GET:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject){
+
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+        if (result == nil)
+            [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        
         @try {
             if ([json[@"status"] isEqual:@"0"]){
                 id result = json[@"result"];
@@ -440,11 +500,29 @@
                         @"token":   [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceID"],
                         @"aid":     self.nowcourse.aid,
                         @"source":@"1"};
+    
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:o1
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *secret = jsonString;
+    NSString *data = [secret AES256_Encrypt:[HeiHei toeknNew_key]];
+    //POST数据
+    NSDictionary *parameters = @{@"ec":data};
+    
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@startSign",AttendanceURL]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
-    [manager GET:URL.absoluteString parameters:o1 progress:nil success:^(NSURLSessionTask *task, id responseObject){
-        id json = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+    [manager GET:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject){
+
+        NSString *result = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] AES256_Decrypt:[HeiHei toeknNew_key]];
+        if (result == nil)
+            [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
+        NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        
         @try {
             id result = json[@"msg"];
             Alert* alert = [[Alert alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];

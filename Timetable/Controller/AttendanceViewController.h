@@ -17,6 +17,8 @@
 #import "MessageController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import <CoreLocation/CLLocationManager.h>
+
 @interface AttendanceViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,CAAnimationDelegate,CBCentralManagerDelegate>
 @property (nonatomic,strong) UITableView* tableView;
 @property (nonatomic,strong) UIButton* attendance;
