@@ -165,6 +165,7 @@
     NSDictionary *parameters = @{@"ec":data};
     
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@nowSchedule",AttendanceURL]];
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
     [manager GET:URL.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject){
@@ -173,7 +174,7 @@
         if (result == nil)
             [CirnoError ShowErrorWithText:NSLocalizedString(@"网络错误", "")];
         NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
-         id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+         id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
         @try {
             if ([[json[@"status"]stringValue] isEqual:@"0"]){
