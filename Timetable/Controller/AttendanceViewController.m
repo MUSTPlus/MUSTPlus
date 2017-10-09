@@ -85,7 +85,9 @@
 
     if ([CLLocationManager locationServicesEnabled] && ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)) {
         //定位功能可用
+        NSLog(@"定位功能可用");
     }else if ([CLLocationManager authorizationStatus] ==kCLAuthorizationStatusDenied) {
+        [self.locationManager requestWhenInUseAuthorization];
         Alert* alert = [[Alert alloc]initWithTitle:@"提示" message:@"请给予此应用地理位置权限" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alert show];
         //定位不能用
@@ -165,6 +167,8 @@
     NSDictionary *parameters = @{@"ec":data};
     
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@nowSchedule",AttendanceURL]];
+    
+    NSLog(@"%@",data);
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [[AFCompoundResponseSerializer alloc] init];
