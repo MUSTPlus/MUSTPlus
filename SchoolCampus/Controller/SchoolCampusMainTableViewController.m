@@ -27,6 +27,7 @@
 #import "SettingViewController.h"
 #import "GradeController.h"
 #import "MessageController.h"
+#import "MailViewController.h"
 @interface SchoolCampusMainTableViewController ()<UIDocumentInteractionControllerDelegate>{
     ChangePinNumberView* cpnv;
 }
@@ -304,8 +305,9 @@
     [self presentViewController:ctr animated:YES completion:nil];
 }
 -(void)jumpToMail{
-    SendMailTableViewController *ctr = [[SendMailTableViewController alloc] init];
-    ctr.dontShowDone = 1;
+//    SendMailTableViewController *ctr = [[SendMailTableViewController alloc] init];
+//    ctr.dontShowDone = 1;
+    MailViewController* ctr = [[MailViewController alloc]init];
     [self.navigationController pushViewController:ctr animated:YES];
 }
 -(void)jumpToSmartCampus{

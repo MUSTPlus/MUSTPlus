@@ -31,6 +31,7 @@
 		215CB1311EB04676004179BC /* Semester.m in Sources */ = {isa = PBXBuildFile; fileRef = 215CB1301EB04676004179BC /* Semester.m */; };
 		215DDD3B1EAB2C9C005C3227 /* MyLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 215DDD3A1EAB2C9C005C3227 /* MyLibraryViewController.m */; };
 		21668EEA1EB5160500F4D16D /* CZPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21668EE91EB5160500F4D16D /* CZPickerView.m */; };
+		2183CC1C1FD0199000BFA254 /* MailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2183CC1B1FD0199000BFA254 /* MailViewController.m */; };
 		2195C16E1F3713510046B689 /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2195C16D1F3713510046B689 /* MessageController.m */; };
 		21968FCF1F4580D800381A03 /* RCSDKConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21968FCE1F4580D800381A03 /* RCSDKConversationViewController.m */; };
 		21A1FE591F2F6AE80078AC94 /* GradeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A1FE581F2F6AE80078AC94 /* GradeController.m */; };
@@ -431,6 +432,8 @@
 		21668EE71EB5160500F4D16D /* CZPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZPicker.h; sourceTree = "<group>"; };
 		21668EE81EB5160500F4D16D /* CZPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZPickerView.h; sourceTree = "<group>"; };
 		21668EE91EB5160500F4D16D /* CZPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZPickerView.m; sourceTree = "<group>"; };
+		2183CC1A1FD0199000BFA254 /* MailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MailViewController.h; sourceTree = "<group>"; };
+		2183CC1B1FD0199000BFA254 /* MailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MailViewController.m; sourceTree = "<group>"; };
 		2195C16C1F3713510046B689 /* MessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageController.h; sourceTree = "<group>"; };
 		2195C16D1F3713510046B689 /* MessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageController.m; sourceTree = "<group>"; };
 		21968FCD1F4580D800381A03 /* RCSDKConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSDKConversationViewController.h; sourceTree = "<group>"; };
@@ -2232,6 +2235,8 @@
 		319AFDD81E7C0F5D0050E10C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2183CC1A1FD0199000BFA254 /* MailViewController.h */,
+				2183CC1B1FD0199000BFA254 /* MailViewController.m */,
 				21A1FE571F2F6AE80078AC94 /* GradeController.h */,
 				21A1FE581F2F6AE80078AC94 /* GradeController.m */,
 				2119AAB71F0BEE7800F1E825 /* SchoolFileController.h */,
@@ -2963,6 +2968,7 @@
 				319AFF871E7C0F5E0050E10C /* FacePageView.m in Sources */,
 				319AFEDC1E7C0F5E0050E10C /* ViewController+MASAdditions.m in Sources */,
 				21F18E841F517F3E002317B2 /* RCSDKSettingViewController.m in Sources */,
+				2183CC1C1FD0199000BFA254 /* MailViewController.m in Sources */,
 				319AFEAF1E7C0F5D0050E10C /* MJPhotoProgressView.m in Sources */,
 				319AFFE41E7C0F5E0050E10C /* CutSchoolClassScrollView.m in Sources */,
 				319AFED71E7C0F5E0050E10C /* MASViewAttribute.m in Sources */,
