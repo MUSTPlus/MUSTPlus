@@ -32,6 +32,9 @@
 		215DDD3B1EAB2C9C005C3227 /* MyLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 215DDD3A1EAB2C9C005C3227 /* MyLibraryViewController.m */; };
 		21668EEA1EB5160500F4D16D /* CZPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21668EE91EB5160500F4D16D /* CZPickerView.m */; };
 		2183CC1C1FD0199000BFA254 /* MailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2183CC1B1FD0199000BFA254 /* MailViewController.m */; };
+		2183CC1F1FD01F1400BFA254 /* ChangeIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 2183CC1E1FD01F1400BFA254 /* ChangeIcon.m */; };
+		2183CC281FD02CAA00BFA254 /* Xmas@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2183CC261FD02CAA00BFA254 /* Xmas@3x.png */; };
+		2183CC291FD02CAA00BFA254 /* Xmas@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2183CC271FD02CAA00BFA254 /* Xmas@2x.png */; };
 		2195C16E1F3713510046B689 /* MessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2195C16D1F3713510046B689 /* MessageController.m */; };
 		21968FCF1F4580D800381A03 /* RCSDKConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21968FCE1F4580D800381A03 /* RCSDKConversationViewController.m */; };
 		21A1FE591F2F6AE80078AC94 /* GradeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A1FE581F2F6AE80078AC94 /* GradeController.m */; };
@@ -434,6 +437,10 @@
 		21668EE91EB5160500F4D16D /* CZPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZPickerView.m; sourceTree = "<group>"; };
 		2183CC1A1FD0199000BFA254 /* MailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MailViewController.h; sourceTree = "<group>"; };
 		2183CC1B1FD0199000BFA254 /* MailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MailViewController.m; sourceTree = "<group>"; };
+		2183CC1D1FD01F1400BFA254 /* ChangeIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeIcon.h; sourceTree = "<group>"; };
+		2183CC1E1FD01F1400BFA254 /* ChangeIcon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeIcon.m; sourceTree = "<group>"; };
+		2183CC261FD02CAA00BFA254 /* Xmas@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Xmas@3x.png"; sourceTree = "<group>"; };
+		2183CC271FD02CAA00BFA254 /* Xmas@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Xmas@2x.png"; sourceTree = "<group>"; };
 		2195C16C1F3713510046B689 /* MessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageController.h; sourceTree = "<group>"; };
 		2195C16D1F3713510046B689 /* MessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageController.m; sourceTree = "<group>"; };
 		21968FCD1F4580D800381A03 /* RCSDKConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSDKConversationViewController.h; sourceTree = "<group>"; };
@@ -1274,6 +1281,8 @@
 		319AF73C1E7BFFB90050E10C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2183CC271FD02CAA00BFA254 /* Xmas@2x.png */,
+				2183CC261FD02CAA00BFA254 /* Xmas@3x.png */,
 				21C4D7A21F48201200FD6A4D /* GoogleService-Info.plist */,
 				215B4C801E97D5E600CC35E0 /* systemEmoji.plist */,
 				21BDF2EA1E97D44600992CF7 /* food.plist */,
@@ -2507,6 +2516,8 @@
 				215CB12D1EB045E6004179BC /* SemesterViewController.m */,
 				319AFE621E7C0F5D0050E10C /* schoolTimetableViewController.h */,
 				319AFE631E7C0F5D0050E10C /* schoolTimetableViewController.m */,
+				2183CC1D1FD01F1400BFA254 /* ChangeIcon.h */,
+				2183CC1E1FD01F1400BFA254 /* ChangeIcon.m */,
 				2101119C1EA8B22C004BA3D8 /* NowClassViewController.h */,
 				2101119D1EA8B22C004BA3D8 /* NowClassViewController.m */,
 			);
@@ -2791,11 +2802,13 @@
 				319AFF551E7C0F5E0050E10C /* xiang.png in Resources */,
 				319AFEB61E7C0F5D0050E10C /* close@3x.png in Resources */,
 				319AFF4B1E7C0F5E0050E10C /* checkbox_pic_non2@2x.png in Resources */,
+				2183CC291FD02CAA00BFA254 /* Xmas@2x.png in Resources */,
 				21BDF2EF1E97D44600992CF7 /* food.plist in Resources */,
 				319AF74F1E7BFFB90050E10C /* LaunchScreen.storyboard in Resources */,
 				319AF7781E7C0B2D0050E10C /* Localizable.strings in Resources */,
 				319AFF101E7C0F5E0050E10C /* coursecell.xib in Resources */,
 				319AFF221E7C0F5E0050E10C /* more-mail_20x20_@3x.png in Resources */,
+				2183CC281FD02CAA00BFA254 /* Xmas@3x.png in Resources */,
 				211462DF1E900C94001D2FFB /* ReleaseNotes.txt in Resources */,
 				319AFEAC1E7C0F5D0050E10C /* MJPhotoBrowser.bundle in Resources */,
 				319AFEBC1E7C0F5D0050E10C /* plus@3x.png in Resources */,
@@ -3130,6 +3143,7 @@
 				21668EEA1EB5160500F4D16D /* CZPickerView.m in Sources */,
 				319AFF901E7C0F5E0050E10C /* LikeButton.m in Sources */,
 				319AFF631E7C0F5E0050E10C /* MLSelectPhotoPickerBrowserPhotoImageView.m in Sources */,
+				2183CC1F1FD01F1400BFA254 /* ChangeIcon.m in Sources */,
 				2158BFBF1EB5BCE10002CD19 /* AttendanceViewController.m in Sources */,
 				319AFF711E7C0F5E0050E10C /* YYTextView.m in Sources */,
 				319AFECA1E7C0F5E0050E10C /* MImaLibTool.m in Sources */,

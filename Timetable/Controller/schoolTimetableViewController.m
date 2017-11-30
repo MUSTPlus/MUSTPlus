@@ -19,7 +19,7 @@
 #import "HeiHei.h"
 #import "NSString+AES.h"
 #import <UserNotifications/UserNotifications.h>
-
+#import "ChangeIcon.h"
 #import "TimetableLogic.h"//判断课程逻辑
 #import "SchoolClassCoreDataManager.h" //课程表数据库
 //#import "FLEXManager.h"
@@ -284,6 +284,7 @@
                                                           UIUserNotificationTypeAlert)
                                               categories:nil];
     } //NSString* page = @"TimeTable";
+
 }
 -(void)gotoUpdate{
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://must.plus/"]];
@@ -344,7 +345,27 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+    //////
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //////
     [self getRongCloudToken];
     _colorArray =[[NSArray alloc]initWithObjects:
                   kColor(84,188,225),
@@ -391,7 +412,6 @@
                         andEndDate:
                         [self.eDate objectForKey:self.Semester]
                         andSemester:self.Semester];
-
     dispatch_group_async(group, queue2, ^{
         NSDictionary *o1 =@{@"ec":@"9992",
                             @"getBannedStatus": [[Account shared]getStudentLongID]};
@@ -445,6 +465,68 @@
         }];
 
     });
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        NSURL *url = [NSURL URLWithString:@"https://must.plus/xmas.html"];
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:
+                                          ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                              NSString* s = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                              if ([s length] == 1){
+                                                  BOOL flag = [[NSUserDefaults standardUserDefaults]boolForKey:@"Xmas"];
+                                                  if (flag)
+                                                      return;
+
+                                                  if ([[UIApplication sharedApplication] supportsAlternateIcons]) {
+                                                                      [[UIApplication sharedApplication] setAlternateIconName:@"Xmas" completionHandler:^(NSError * _Nullable error) {
+
+                                                                          if (error) {
+                                                                              NSLog(@"更换app图标发生错误了 ： %@",error);
+                                                                          } else {
+                                                                               [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"Xmas"];
+                                                                          }
+                                                                      }];
+                                                  }
+
+                                              } else {
+                                                  BOOL flag = [[NSUserDefaults standardUserDefaults]boolForKey:@"Xmas"];
+                                                  if (!flag)
+                                                      return;
+                                                  if ([[UIApplication sharedApplication] supportsAlternateIcons]) {
+                                                      [[UIApplication sharedApplication] setAlternateIconName:nil completionHandler:^(NSError * _Nullable error) {
+                                                          [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"xmas"];
+                                                          if (error) {
+                                                              NSLog(@"更换app图标发生错误了 ： %@",error);
+                                                          } else {
+                                                               [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"Xmas"];
+                                                          }
+                                                      }];
+                                                  }
+
+
+                                              }
+
+                                          }];
+        [dataTask resume];
+//        [manager GET:@"https://must.plus/xmas.html" parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject){
+//            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//            if ([[UIApplication sharedApplication] supportsAlternateIcons]) {
+//                [[UIApplication sharedApplication] setAlternateIconName:@"Xmas" completionHandler:^(NSError * _Nullable error) {
+//                    if (error) {
+//                        NSLog(@"更换app图标发生错误了 ： %@",error);
+//                    }
+//                }];
+//            }
+//        } failure:^(NSURLSessionTask *operation, NSError *error) {
+//            [[UIApplication sharedApplication] setAlternateIconName:nil completionHandler:^(NSError * _Nullable error) {
+//                if (error) {
+//                    NSLog(@"更换app图标发生错误了 ： %@",error);
+//                }
+//            }];
+//        }];
+
+    });
+
+
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         NSString *decode = [semester AES256_Decrypt:[HeiHei toeknNew_key]];
         decode =[decode stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\"" ];
@@ -777,6 +859,7 @@
     
 }
 -(void)ChangeAnotherWeek{
+
     CZPickerView *picker = [[CZPickerView alloc] initWithHeaderTitle:[NSString stringWithFormat:@"%@学期 - 选择周",self.Semester] cancelButtonTitle:@"Cancel" confirmButtonTitle:@"Confirm"];
     picker.headerTitleFont = [UIFont systemFontOfSize: 25];
     picker.delegate = self;
