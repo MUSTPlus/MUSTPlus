@@ -319,7 +319,7 @@
     return dic;
 }
 -(NSString*)Semester{
-    return @"1709";
+    return @"1802";
 }
 
 -(NSArray<UIColor*>*)colorArray{
