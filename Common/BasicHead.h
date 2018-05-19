@@ -14,11 +14,11 @@
 #import "MTA.h"
 #import "HeiHei.h"
 #import "NSString+AES.h"
-#define APP_KEY_WEIXIN            @"wx0185f297e144f34a"
+#define APP_KEY_WEIXIN            @""
 
-#define APP_KEY_QQ                @"222222"
+#define APP_KEY_QQ                @""
 
-#define APP_KEY_WEIBO             @"2045436852"
+#define APP_KEY_WEIBO             @""
 
 #define APP_KEY_WEIBO_RedirectURL @"http://www.sina.com"
 
@@ -84,12 +84,12 @@ sizeWithAttributes:@{NSFontAttributeName:font}] : CGSizeZero;
 
 #define CirnoLog(...) NSLog(@"%s line:%d\n %@ \n\n", __func__, __LINE__, [NSString stringWithFormat:__VA_ARGS__])
 
-#define BaseURL @"https://must.plus/api/"
-#define MirrorURL @"https://must.plus/api/"
+#define BaseURL @"api"
+#define MirrorURL @"api"
 #define UploadImageURL @"https://oss-cn-shanghai.aliyuncs.com/"
 #define ImageURL @"https://mustplus.oss-cn-shanghai.aliyuncs.com/"
 #define oldImageURL @"http://mustplus.img-cn-shanghai.aliyuncs.com/"
-#define AttendanceURL @"http://10.20.103.100/ssapi/"
+#define AttendanceURL @""
 //服务器地址
 
 #define kColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]

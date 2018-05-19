@@ -134,9 +134,9 @@
     [[RCIM sharedRCIM]setGroupMemberDataSource:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
      [[RCIM sharedRCIM] setGroupInfoDataSource:self];
     
-    [Bugly startWithAppId:@"62d853eb65"];
-    [MTA startWithAppkey:@"ID3AH61T1FZG"];
-    [JPUSHService setupWithOption:launchOptions appKey:@"d77ddc38172301d4deec5703"
+    [Bugly startWithAppId:@""];
+    [MTA startWithAppkey:@""];
+    [JPUSHService setupWithOption:launchOptions appKey:@""
                           channel:@"mustPlus"
                  apsForProduction:1
             advertisingIdentifier:nil];
@@ -164,7 +164,7 @@
 
     // Optional: configure GAI options.
     GAI *gai = [GAI sharedInstance];
-    [[GAI sharedInstance] trackerWithTrackingId:@"UA-104938440-1"];
+    [[GAI sharedInstance] trackerWithTrackingId:@"UA--1"];
     gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
     gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
 
