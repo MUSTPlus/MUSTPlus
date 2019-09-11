@@ -2,6 +2,9 @@
 ## 简介
 [MUSTPlus](https://must.plus) 是一款服务澳门科技大学的校园应用。
 本应用需要使用配对的服务端进行运作，相关隐私代码已删除，所以您可能无法正确运行项目。代码仅供参考。
+截止 2019 年，本应用因不可抗力原因停止更新。
+本程序共获得七千余次下载，约占全校学生的 1/3。
+![Statistics](https://raw.githubusercontent.com/MUSTPlus/MUSTPlus/master/ana.png)
 
 ## 如何编译
 ### 需求环境
